@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+	margin: 0;
+	text-decoration: none;
+}  
+
+.sidebar{
+    height: 90%;
+    width: 20%;
+    background-color: #3a9c73;
+    position: fixed !important;
+    z-index: 1;
+    overflow: auto;
+	bottom: 0;
+	text-align: left;
+	padding-top: 10px;
+	display: none;
+}
+
+.sidebarOpenButton{
+    display: inline-block;
+	font-size: 40px;
+	cursor: pointer;
+}
+
+.menuIcon{
+	width: 35px;
+	height: 35px;
+}
+
+.sidebarOptionText{
+	font-size: 30px;
+	color: black;
+	padding-left: 10px;
+	cursor: pointer;
+}
+
+.sidebarOptionIcon{
+	width: 28px;
+	height: 28px;
+	cursor: pointer;
+}
+
+.sidebarOptionButton{
+	height: 9%;
+	width: 100%;
+	background-color: #3a9c73;
+	padding-top: 12px;
+	padding-left: 15px;
+}
+
+.sidebarOptionButton:hover{
+	background-color: #37c087;
+}
+
+.nav{
+	background-color: #208f61fa;
+	color: rgb(26, 23, 23);
+	padding: 5px;
+    text-align: left;
+	position: fixed;
+    width: 100%;
+    height: 10%;
+}
+
+h1{
+	font-size: 50px;
+    font-family: 'Sansita Swashed', cursive;
+    display: inline-block;
+}
+
+/* Content column */
+.content {
+	width: 80%;
+	float: right;
+	padding: 10px;
+	height: 3000px;
+}
+
+/* Clear float for the footer */
+.row:after {
+  	content: "";
+  	display: table;
+  	clear: both;
+}
+
+/* Style the footer */
+.footer {
+	background-color: #208f61fa;
+	color: white;
+  	padding: 10px;
+  	text-align: center;
+}

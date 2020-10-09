@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Filmbrary</title>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/homeTemplate.css" />
+    </head>
+    
+    <body>
+        <div class="nav">
+            <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
+                <img class = "menuIcon" src = "../media/threeDots.png"></img>
+            </div>
+            <h1 class="toTheCenter vitalSpace">Filmbrary</h1>
+        </div>
+          
+        <div class="row">
+            <div class="content"></div>
+            <div class="sidebar" id="menu">
+                <div class="sidebarOptionButton">
+                    <a href = "../copiar/ejemplaso.html">
+                        <img class="sidebarOptionIcon" src = "../media/ShoppingCart1.png"></img>
+                    </a>
+                    <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        Cesta
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a href = "../copiar/ejemplaso.html">
+                        <img class="sidebarOptionIcon" src = "../media/Ticket.png"></img>
+                    </a>
+                    <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        Película del día
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a onclick="categoriesButton()">
+                        <img id="desplegable" class="sidebarOptionIcon" src = "../media/Desplegable.png"></img>
+                    </a>
+                    <a onclick="categoriesButton()" class="sidebarOptionText">
+                        Categorías
+                    </a>
+                </div>
+                <div id="category" class="hidden vitalSpace">
+                    <div class="sidebarOptionButton">
+                        <a href = "../copiar/ejemplaso.html">
+                            <img class="sidebarOptionIcon" src = "../media/Romance.png"></img>
+                        </a>
+                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                            Romance
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "../copiar/ejemplaso.html">
+                            <img class="sidebarOptionIcon" src = "../media/Action.png"></img>
+                        </a>
+                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                            Acción
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "../copiar/ejemplaso.html">
+                            <img class="sidebarOptionIcon" src = "../media/Comedy.png"></img>
+                        </a>
+                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                            Comedia
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "../copiar/ejemplaso.html">
+                            <img class="sidebarOptionIcon" src = "../media/Animation.png"></img>
+                        </a>
+                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                            Animación
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        <div class="footer">
+            <p>Footer</p>
+        </div>
+
+        <script>
+            function menuButton(){
+                var x = document.getElementById("menu");
+                if(window.getComputedStyle(x, null).getPropertyValue("display") != "none"){
+                    x.style.display = "none";
+                } else{
+                    x.style.display = "block";
+                }
+            }
+
+            function categoriesButton(){
+                var x = document.getElementById("category");
+                var y = document.getElementById("desplegable");
+                if(window.getComputedStyle(x, null).getPropertyValue("display") != "none"){
+                    x.style.display = "none";
+                    y.src="../media/Desplegable.png";
+                } else{
+                    x.style.display = "block";
+                    y.src="../media/Desplegable2.png";
+                }
+            }
+        </script>
+    </body>
+
+</html>
