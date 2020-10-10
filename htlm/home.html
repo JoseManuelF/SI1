@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>Filmbrary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../css/main.css" />
         <link rel="stylesheet" href="../css/homeTemplate.css" />
     </head>
@@ -13,17 +14,17 @@
                 <img class = "menuIcon" src = "../media/threeDots.png"></img>
             </div>
             <h1 class="toTheCenter vitalSpace">Filmbrary</h1>
-            <div class="searchBar">
+            <div class="searchBar col-4">
                 <form action="/action_page.php">
                     <input type="text" placeholder="Search.." name="search">
                     <button type="submit"><img class = "menuIcon" src= "../media/Search.png"></button>
                 </form>
             </div>
-            <div class="login sidebarOpenButton">
+            <div class="login">
                 <a id="profile" href = "../copiar/ejemplaso.html" onclick="profileStatus()">
                     Login
                 </a>
-                <a href = "../copiar/ejemplaso.html">
+                <a href = "#profile">
                     <img class="menuIcon" src = "../media/Login.png"></img>
                 </a>
             </div>
@@ -94,7 +95,7 @@
         </div>
           
         <div class="footer">
-            <p>Footer</p>
+            <p>© Copyright Filmbrary.com | J.M Freire - Miguel Herrera</p>
         </div>
 
         <script>
