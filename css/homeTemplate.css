@@ -57,7 +57,7 @@
 	position: fixed;
     width: 100%;
 	height: 10%;
-	padding-top: 5px;
+
 }
 
 .menuIcon{
@@ -68,11 +68,11 @@
 h1{
 	font-size: 50px;
     font-family: 'Sansita Swashed', cursive;
-    display: inline-block;
+	display: inline-block;
 }
 
 .searchBar{
-	padding-left: 100px;
+	padding-left: 180px;
 	display: inline-block;
 	width: 50%;
 }
@@ -108,6 +108,14 @@ h1{
 #profile{
 	color: black;
 	padding-right: 5px;
+	font-size: 25px;
+}
+
+.loginButton{
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	vertical-align: bottom;
 }
   
 /* Content column */
@@ -140,9 +148,11 @@ h1{
 /* Para ajustar los elementos a la pantalla */  
 @media only screen and (max-width: 1120px) {
 	.col-1 {width: 8.33%;}
-	.col-2 {width: 16.66%;}
+	.col-2 {width: 16.66%;
+			font-size: 35px;}
 	.col-3 {width: 25%;}
-	.col-4 {width: 33.33%;}
+	.col-4 {width: 33.33%;
+			padding: 20px;}
 	.col-5 {width: 41.66%;}
 	.col-6 {width: 50%;}
 	.col-7 {width: 58.33%;}
