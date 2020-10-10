@@ -13,6 +13,20 @@
                 <img class = "menuIcon" src = "../media/threeDots.png"></img>
             </div>
             <h1 class="toTheCenter vitalSpace">Filmbrary</h1>
+            <div class="searchBar">
+                <form action="/action_page.php">
+                    <input type="text" placeholder="Search.." name="search">
+                    <button type="submit"><img class = "menuIcon" src= "../media/Search.png"></button>
+                </form>
+            </div>
+            <div class="login sidebarOpenButton">
+                <a id="profile" href = "../copiar/ejemplaso.html" onclick="profileStatus()">
+                    Login
+                </a>
+                <a href = "../copiar/ejemplaso.html">
+                    <img class="menuIcon" src = "../media/Login.png"></img>
+                </a>
+            </div>
         </div>
           
         <div class="row">
@@ -103,6 +117,11 @@
                     x.style.display = "block";
                     y.src="../media/Desplegable2.png";
                 }
+            }
+
+            function profileStatus(){
+                var x = document.getElementById("profile");
+                x.innerHTML = "Log out";
             }
         </script>
     </body>

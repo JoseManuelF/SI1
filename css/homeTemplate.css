@@ -4,6 +4,7 @@
 	text-decoration: none;
 }  
 
+/* Menú desplegable del lado izquierdo */
 .sidebar{
     height: 90%;
     width: 20%;
@@ -21,11 +22,6 @@
     display: inline-block;
 	font-size: 40px;
 	cursor: pointer;
-}
-
-.menuIcon{
-	width: 35px;
-	height: 35px;
 }
 
 .sidebarOptionText{
@@ -53,6 +49,7 @@
 	background-color: #37c087;
 }
 
+/* Header */
 .nav{
 	background-color: #208f61fa;
 	color: rgb(26, 23, 23);
@@ -63,12 +60,49 @@
     height: 10%;
 }
 
+.menuIcon{
+	width: 35px;
+	height: 35px;
+}
+
 h1{
 	font-size: 50px;
     font-family: 'Sansita Swashed', cursive;
     display: inline-block;
 }
 
+.searchBar{
+	padding-left: 100px;
+	display: inline-block;
+	width: 50%;
+}
+
+.searchBar input[type=text] {
+	font-size: 20px;
+	border: 2px solid black;
+	background: #f1f1f1;
+	width: 85%;
+	padding-top: 10px;
+}
+  
+.searchBar button {
+	float: right;
+	width: 15%;
+	background: #208f61fa;
+	font-size: 13px;
+	border: none;
+	cursor: pointer;
+}
+
+.searchBar button:hover {
+	background: #3a9c73;
+}
+
+.login{
+	padding-left: 190px;
+	font-size: 32px;
+}
+  
 /* Content column */
 .content {
 	width: 80%;
