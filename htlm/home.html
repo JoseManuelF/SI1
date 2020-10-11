@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 
+<!-- Código html de la página principal y del formulario de iniciar sesión -->
 <html>
     <head>
         <title>Filmbrary</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="../js/home.js"></script>
         <link rel="stylesheet" href="../css/main.css" />
         <link rel="stylesheet" href="../css/homeTemplate.css" />
+        <link rel="stylesheet" href="../css/loginTemplate.css" />
     </head>
     
     <body>
@@ -16,16 +19,16 @@
             <h1 class="toTheCenter vitalSpace">Filmbrary</h1>
             <div class="searchBar col-4">
                 <form action="/action_page.php">
-                    <input type="text" placeholder="Search.." name="search">
+                    <input type="text" placeholder="Buscar.." name="search">
                     <button type="submit"><img class = "menuIcon" src= "../media/Search.png"></button>
                 </form>
             </div>
             <div class="login">
-                <a id="profile" href = "../copiar/ejemplaso.html" onclick="profileStatus()">
-                    Login
-                </a>
+                <button id="profile" onclick="loginWindow()">
+                    Iniciar sesión
+                </button>
                 <a href = "#profile">
-                    <img class="loginButton" src = "../media/Login.png"></img>
+                    <img class="profileButton" src = "../media/Login.png"></img>
                 </a>
             </div>
         </div>
@@ -34,18 +37,18 @@
             <div class="content"></div>
             <div class="sidebar" id="menu">
                 <div class="sidebarOptionButton">
-                    <a href = "../copiar/ejemplaso.html">
+                    <a href = "#cesta">
                         <img class="sidebarOptionIcon" src = "../media/ShoppingCart1.png"></img>
                     </a>
-                    <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                    <a href = "#cesta" class="sidebarOptionText">
                         Cesta
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
-                    <a href = "../copiar/ejemplaso.html">
+                    <a href = "#pelicula-del-dia">
                         <img class="sidebarOptionIcon" src = "../media/Ticket.png"></img>
                     </a>
-                    <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                    <a href = "#pelicula-del-dia" class="sidebarOptionText">
                         Película del día
                     </a>
                 </div>
@@ -59,72 +62,76 @@
                 </div>
                 <div id="category" class="hidden vitalSpace">
                     <div class="sidebarOptionButton">
-                        <a href = "../copiar/ejemplaso.html">
+                        <a href = "#categoria-romance">
                             <img class="sidebarOptionIcon" src = "../media/Romance.png"></img>
                         </a>
-                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        <a href = "#categoria-romance" class="sidebarOptionText">
                             Romance
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
-                        <a href = "../copiar/ejemplaso.html">
+                        <a href = "#categoria-accion">
                             <img class="sidebarOptionIcon" src = "../media/Action.png"></img>
                         </a>
-                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        <a href = "#categoria-accion" class="sidebarOptionText">
                             Acción
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
-                        <a href = "../copiar/ejemplaso.html">
+                        <a href = "#categoria-comedia">
                             <img class="sidebarOptionIcon" src = "../media/Comedy.png"></img>
                         </a>
-                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        <a href = "#categoria-comedia" class="sidebarOptionText">
                             Comedia
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
-                        <a href = "../copiar/ejemplaso.html">
+                        <a href = "#categoria-animacion">
                             <img class="sidebarOptionIcon" src = "../media/Animation.png"></img>
                         </a>
-                        <a href = "../copiar/ejemplaso.html" class="sidebarOptionText">
+                        <a href = "#categoria-animacion" class="sidebarOptionText">
                             Animación
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-          
+        
+        <!-- Footer information -->
         <div class="footer">
             <p>© Copyright Filmbrary.com | J.M Freire - Miguel Herrera</p>
         </div>
 
-        <script>
-            function menuButton(){
-                var x = document.getElementById("menu");
-                if(window.getComputedStyle(x, null).getPropertyValue("display") != "none"){
-                    x.style.display = "none";
-                } else{
-                    x.style.display = "block";
-                }
-            }
+        <!-- Login formulario -->
+        <div id="loginForm" class="modal">
+            <form class="modal-content" action="/action_page.php" method="post">
+                <div class="imgcontainer">
+                    <span class="close" onclick="loginWindow()" title="Close Window">&times;</span>
+                    <img src="../media/Login.png" alt="Avatar" class="avatar">
+                </div>
+            
+                <div class="container">
+                    <label for="uname"><b>Nombre de Usuario</b></label>
+                    <input type="text" placeholder="Escribir Nombre de Usuario" name="uname" required>
+            
+                    <label for="psw"><b>Contraseña</b></label>
+                    <input type="password" placeholder="Escribir Contraseña" name="psw" required>
+                    
+                    <button type="submit">Iniciar sesión</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Recuérdame
+                    </label>
+                </div>
+            
+                <div class="container">
+                    <span class="register">
+                        Compra de forma segura y a un click totalmente gratis.
+                        <a href="../htlm/register.html">¡Hazte una cuenta!</a>
+                    </span>
+                </div>
+            </form>
+        </div>
 
-            function categoriesButton(){
-                var x = document.getElementById("category");
-                var y = document.getElementById("desplegable");
-                if(window.getComputedStyle(x, null).getPropertyValue("display") != "none"){
-                    x.style.display = "none";
-                    y.src="../media/Desplegable.png";
-                } else{
-                    x.style.display = "block";
-                    y.src="../media/Desplegable2.png";
-                }
-            }
-
-            function profileStatus(){
-                var x = document.getElementById("profile");
-                x.innerHTML = "Tu nombre";
-            }
-        </script>
     </body>
 
 </html>
