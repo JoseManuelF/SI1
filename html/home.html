@@ -14,13 +14,13 @@
     <body>
         <div class="nav">
             <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
-                <img class = "menuIcon" src = "../media/threeDots.png"></img>
+                <img class = "menuIcon" src = "../media/icons/threeDots.png"></img>
             </div>
-            <h1 class="toTheCenter vitalSpace">Filmbrary</h1>
-            <div class="searchBar col-4">
+            <h1 class="toTheCenter vitalSpace col-3">Filmbrary</h1>
+            <div class="searchBar col-2">
                 <form action="/action_page.php">
                     <input type="text" placeholder="Buscar.." name="search">
-                    <button type="submit"><img class = "menuIcon" src= "../media/Search.png"></button>
+                    <button type="submit"><img class = "menuIcon" src= "../media/icons/Search.png"></button>
                 </form>
             </div>
             <div class="login">
@@ -28,7 +28,7 @@
                     Iniciar sesión
                 </button>
                 <a href = "#profile">
-                    <img class="profileButton" src = "../media/Login.png"></img>
+                    <img class="profileButton col-4" src = "../media/icons/Login.png"></img>
                 </a>
             </div>
         </div>
@@ -38,58 +38,66 @@
             <div class="sidebar" id="menu">
                 <div class="sidebarOptionButton">
                     <a href = "#cesta">
-                        <img class="sidebarOptionIcon" src = "../media/ShoppingCart1.png"></img>
+                        <img class="sidebarOptionIcon col-5" src = "../media/icons/ShoppingCart1.png"></img>
                     </a>
-                    <a href = "#cesta" class="sidebarOptionText">
+                    <a href = "#cesta" class="sidebarOptionText col-1">
                         Cesta
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
                     <a href = "#pelicula-del-dia">
-                        <img class="sidebarOptionIcon" src = "../media/Ticket.png"></img>
+                        <img class="sidebarOptionIcon col-5" src = "../media/icons/Ticket.png"></img>
                     </a>
-                    <a href = "#pelicula-del-dia" class="sidebarOptionText">
+                    <a href = "#pelicula-del-dia" class="sidebarOptionText col-1">
                         Película del día
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
                     <a onclick="categoriesButton()">
-                        <img id="desplegable" class="sidebarOptionIcon" src = "../media/Desplegable.png"></img>
+                        <img id="desplegable" class="sidebarOptionIcon col-5" src = "../media/icons/Desplegable.png"></img>
                     </a>
-                    <a onclick="categoriesButton()" class="sidebarOptionText">
+                    <a onclick="categoriesButton()" class="sidebarOptionText col-1">
                         Categorías
                     </a>
                 </div>
                 <div id="category" class="hidden vitalSpace">
                     <div class="sidebarOptionButton">
-                        <a href = "#categoria-romance">
-                            <img class="sidebarOptionIcon" src = "../media/Romance.png"></img>
+                        <a href = "#categoria-todas">
+                            <img class="sidebarOptionIcon col-5" src = "../media/icons/AllCategories.png"></img>
                         </a>
-                        <a href = "#categoria-romance" class="sidebarOptionText">
+                        <a href = "#categoria-todas" class="sidebarOptionText col-1">
+                            Todas
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-romance">
+                            <img class="sidebarOptionIcon col-5" src = "../media/icons/Romance.png"></img>
+                        </a>
+                        <a href = "#categoria-romance" class="sidebarOptionText col-1">
                             Romance
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
                         <a href = "#categoria-accion">
-                            <img class="sidebarOptionIcon" src = "../media/Action.png"></img>
+                            <img class="sidebarOptionIcon col-5" src = "../media/icons/Action.png"></img>
                         </a>
-                        <a href = "#categoria-accion" class="sidebarOptionText">
+                        <a href = "#categoria-accion" class="sidebarOptionText col-1">
                             Acción
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
                         <a href = "#categoria-comedia">
-                            <img class="sidebarOptionIcon" src = "../media/Comedy.png"></img>
+                            <img class="sidebarOptionIcon col-5" src = "../media/icons/Comedy.png"></img>
                         </a>
-                        <a href = "#categoria-comedia" class="sidebarOptionText">
+                        <a href = "#categoria-comedia" class="sidebarOptionText col-1">
                             Comedia
                         </a>
                     </div>
                     <div class="sidebarOptionButton">
                         <a href = "#categoria-animacion">
-                            <img class="sidebarOptionIcon" src = "../media/Animation.png"></img>
+                            <img class="sidebarOptionIcon col-5" src = "../media/icons/Animation.png"></img>
                         </a>
-                        <a href = "#categoria-animacion" class="sidebarOptionText">
+                        <a href = "#categoria-animacion" class="sidebarOptionText col-1">
                             Animación
                         </a>
                     </div>
@@ -107,7 +115,7 @@
             <form class="modal-content" action="/action_page.php" method="post">
                 <div class="imgcontainer">
                     <span class="close" onclick="loginWindow()" title="Close Window">&times;</span>
-                    <img src="../media/Login.png" alt="Avatar" class="avatar">
+                    <img src="../media/icons/Login.png" alt="Avatar" class="avatar">
                 </div>
             
                 <div class="container">
@@ -124,9 +132,9 @@
                 </div>
             
                 <div class="container">
-                    <span class="register">
+                    <span class="gotoRegister">
                         Compra de forma segura y a un click totalmente gratis.
-                        <a href="../htlm/register.html">¡Hazte una cuenta!</a>
+                        <a href="../html/register.html">¡Hazte una cuenta!</a>
                     </span>
                 </div>
             </form>

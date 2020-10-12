@@ -21,8 +21,8 @@
 .modal-content {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    width: 80%;
-    height: 75%;
+    width: 360px;
+    height: 450px;
 }
 
 .container {
@@ -40,7 +40,7 @@
 }
 
 .container button {
-    background-color: #4CAF50;
+    background-color: #208f61fa;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -79,6 +79,6 @@ img.avatar {
     cursor: pointer;
 }
 
-.register {
+.gotoRegister {
     width: auto !important;
 }

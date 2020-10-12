@@ -4,11 +4,16 @@
     box-sizing: border-box;
 	margin: 0;
 	text-decoration: none;
-}  
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+	background-color: rgb(211, 203, 203);
+}
 
 /* Menú desplegable del lado izquierdo */
 .sidebar{
-    height: 90%;
+    height: 675px;
     width: 20%;
     background-color: #3a9c73;
     position: fixed !important;
@@ -40,7 +45,7 @@
 }
 
 .sidebarOptionButton{
-	height: 9%;
+	height: 60px;
 	width: 100%;
 	background-color: #3a9c73;
 	padding-top: 12px;
@@ -58,7 +63,7 @@
     text-align: left;
 	position: fixed;
     width: 100%;
-	height: 10%;
+	height: 75px;
 }
 
 .menuIcon{
@@ -153,20 +158,33 @@ h1{
 	position: fixed;
 }
 
-/* Para ajustar los elementos a la pantalla */  
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */ 
+@media only screen and (max-width: 1400px){
+	.col-1 {
+		display: none;
+	}
+	.col-5 {
+		margin: auto;
+		display: block;
+	}
+}
+
 @media only screen and (max-width: 1240px) {
-	.col-1 {width: 8.33%;}
-	.col-2 {width: 16.66%;
-			font-size: 35px;}
-	.col-3 {width: 25%;}
-	.col-4 {width: 33.33%;
-			padding: 20px;}
-	.col-5 {width: 41.66%;}
-	.col-6 {width: 50%;}
-	.col-7 {width: 58.33%;}
-	.col-8 {width: 66.66%;}
-	.col-9 {width: 75%;}
-	.col-10 {width: 83.33%;}
-	.col-11 {width: 91.66%;}
-	.col-12 {width: 100%;}
+	.col-2 {
+		width: 33.33%;
+		padding-top: 20px;
+		padding-left: 10px;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+	.col-3 {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.col-4 {
+		display: none;
+	}
 }

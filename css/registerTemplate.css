@@ -1,0 +1,35 @@
+body {
+    font-family: 'Roboto', sans-serif;
+	background-color: rgb(211, 203, 203);
+}
+
+h1 {
+    text-align: center;
+}
+
+.container {
+    padding: 2% 30%;
+}
+
+.container input[type=text], .container input[type=password], .container input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.container button {
+    background-color: #208f61fa;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.container button:hover {
+    opacity: 0.8;
+}

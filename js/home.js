@@ -16,10 +16,10 @@ function categoriesButton(){
 
     if(window.getComputedStyle(categ, null).getPropertyValue("display") != "none"){
         categ.style.display = "none";
-        despl.src="../media/Desplegable.png"; // Las categorías no han sido desplegadas
+        despl.src="../media/icons/Desplegable.png"; // Las categorías no han sido desplegadas
     } else{
         categ.style.display = "block";
-        despl.src="../media/Desplegable2.png"; // Las categorías se despliegan
+        despl.src="../media/icons/Desplegable2.png"; // Las categorías se despliegan
     }
 }
 
