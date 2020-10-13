@@ -132,6 +132,13 @@ h1{
 	vertical-align: bottom;
 }
   
+/* Movie info frame */
+.movieFrame{
+	width: 100%;
+	height: 900px;
+	padding: 75px 10px 30px;
+}
+
 /* Content column */
 .content {
 	padding: 100px 10px 50px 105px;
@@ -152,7 +159,9 @@ h1{
 	top: 0;
 	color: white!important;
 	background-color: black !important;
-	padding: 8px 16px!important
+	opacity: 80%;
+	padding: 8px 16px !important;
+	width: 55%;
 }
 
 .content-image {
@@ -211,14 +220,38 @@ h1{
 }
 
 /* Content */
-@media (min-width: 601px) {
+
+@media (min-width: 0px) {
 	.cont-col-1 {
-		width: 49.99999%;
+		width: 79.99999%;
+		height: 320px;
 	}
 }
 
-@media (min-width: 993px) {
-	.cont-col-2 {
+@media (min-width: 480px) {
+	.cont-col-1 {
+		width: 79.99999%;
+		height: 600px;
+	}
+}
+
+@media (min-width: 760px) {
+	.cont-col-1 {
+		width: 49.99999%;
+		height: 525px;
+	}
+}
+
+@media (min-width: 1050px) {
+	.cont-col-1 {
+		width: 33.33332%;
+		height: 500px;
+	}
+}
+
+@media (min-width: 1380px) {
+	.cont-col-1 {
 		width: 24.99999%;
+		height: 480px;
 	}
 }
