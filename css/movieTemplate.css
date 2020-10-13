@@ -1,5 +1,55 @@
 /* CSS de la información de la película */
+
 body {
     font-family: 'Quicksand', sans-serif;
 	background-color: rgb(211, 203, 203);
+    padding-top: 20px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.previewImg {
+    width: 100%;
+}
+
+.title {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 80px;
+    font-size: 30px;
+}
+
+.price {
+    background-color: rgba(32, 143, 97, 0.3);
+}
+
+.actionDisplay {
+    width: 100%;
+}
+
+.actionButton {
+    width: 49%;
+    border-style: solid;
+    border-color: rgb(26, 25, 25);
+    text-align: center;
+    background-color: #208f61fa;
+}
+
+.addCartButton {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.addCartButton:hover {
+    background: #3a9c73;
+}
+
+.buyButton {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.buyButton:hover {
+    background: #3a9c73;
 }

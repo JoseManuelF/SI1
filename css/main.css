@@ -22,6 +22,14 @@
     text-align: center !important;
 }
 
+.floatLeft{
+    float: left;
+}
+
+.floatRight{
+    float: right;
+}
+
 .vitalSpace{
     padding-left: 20px;
     padding-right: 20px;

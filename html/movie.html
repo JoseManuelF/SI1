@@ -3,25 +3,38 @@
 <!-- Código html de la información de la película -->
 <html>
     <head>
+        <link rel="stylesheet" href="../css/main.css" />
         <link rel="stylesheet" href="../css/movieTemplate.css" />
     </head>
     
-    <!-- Foto, título, precio, año... -->
-    <div>
-        <img class = "previewImg" src = "../media/previews/Interestellar.png"></img>
+    <body>
+        <!-- Foto, título, precio, año... -->
+        <div>
+            <img class="previewImg" src = "../media/previews/Interestellar.png"></img>
+        
+            <div class="title">
+                <div class="floatLeft"> Interestellar (2014)</div>
+                <div class="price floatRight">
+                    12,99 €
+                </div>  
+            </div>
+        </div>
 
-        <h1>Interestellar (2014)</h1>
-        <h2>12,99 €</h2>
-    </div>
+        <!-- Botones para añadir al carrito y comprar -->
+        <div class="actionDisplay">
+            <button class = "actionButton" type="submit">
+                <img class = "addCartButton" src= "../media/icons/AddShoppingCart.png">
+            </button>
+            <button class = "actionButton buyButton" type="submit">
+                Comprar
+            </button>
+        </div>
 
-    <!-- Acciones (Carrito de la compra, favoritos, etc... -->
-    <div>
-        <h2>Carrito y esas vainas</h2>
-    </div>
-
-    <!-- Sinopsis, reparto y otro texto. -->
-    <div>
-        <p>Sinopsis: El brayan se va al espacio en busca de porros intergalácticos.</p>
-        <p>Reparto: El brayan.</p>
-    </div>
+        <!-- Sinopsis, reparto y otros textos. -->
+        <div>
+            <p>Sinopsis: El brayan se va al espacio en busca de porros intergalácticos.</p>
+            <p>Reparto: El brayan.</p>
+        </div>
+    </body>
+    
 </html>
