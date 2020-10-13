@@ -62,6 +62,7 @@ body {
 	color: rgb(26, 23, 23);
     text-align: left;
 	position: fixed;
+	z-index: 1;
     width: 100%;
 	height: 75px;
 }
@@ -133,10 +134,29 @@ h1{
   
 /* Content column */
 .content {
-	width: 80%;
-	float: right;
-	padding: 10px;
-	height: 3000px;
+	padding: 100px 10px 50px 105px;
+}
+
+.content-margin {
+	float: left;
+	width: 100%;
+}
+
+.content-display {
+	position: relative;
+}
+
+.content-title {
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: white!important;
+	background-color: black !important;
+	padding: 8px 16px!important
+}
+
+.content-image {
+	width: 75%;
 }
 
 /* Clear float for the footer */
@@ -158,7 +178,8 @@ h1{
 	position: fixed;
 }
 
-/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */ 
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+/* Navigation and sidebar */ 
 @media only screen and (max-width: 1400px){
 	.col-1 {
 		display: none;
@@ -186,5 +207,18 @@ h1{
 @media only screen and (max-width: 600px) {
 	.col-4 {
 		display: none;
+	}
+}
+
+/* Content */
+@media (min-width: 601px) {
+	.cont-col-1 {
+		width: 49.99999%;
+	}
+}
+
+@media (min-width: 993px) {
+	.cont-col-2 {
+		width: 24.99999%;
 	}
 }

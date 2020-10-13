@@ -11,7 +11,9 @@ h1 {
     padding: 2% 30%;
 }
 
-.container input[type=text], .container input[type=password], .container input[type=email] {
+.container input[type=text],
+.container input[type=password], 
+.container input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
