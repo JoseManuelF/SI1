@@ -2,10 +2,8 @@
 
 body {
     font-family: 'Quicksand', sans-serif;
-	background-color: rgb(211, 203, 203);
-    padding-top: 20px;
-    padding-left: 15%;
-    padding-right: 15%;
+    background-color: rgb(211, 203, 203);
+    padding: 20px 15%;
 }
 
 .previewImg {
@@ -25,31 +23,52 @@ body {
 
 .actionDisplay {
     width: 100%;
+    padding-bottom: 50px;
 }
 
 .actionButton {
-    width: 49%;
+    width: 49.7%;
     border-style: solid;
+    height: 30px;
     border-color: rgb(26, 25, 25);
-    text-align: center;
     background-color: #208f61fa;
+    cursor: pointer;
+}
+
+.actionButton:hover {
+    background: #3a9c73;
 }
 
 .addCartButton {
     width: 25px;
     height: 25px;
-    cursor: pointer;
-}
-
-.addCartButton:hover {
-    background: #3a9c73;
 }
 
 .buyButton {
-    cursor: pointer;
-    font-size: 20px;
+    font-size: 25px;
 }
 
-.buyButton:hover {
-    background: #3a9c73;
+.movieText {
+    font-family: 'Roboto', sans-serif;
+}
+
+t{
+    font-size: 20px;
+    font-weight: bold;
+    color: #156342fa;
+}
+
+p{
+    font-size: 16px;
+    color: black;
+}
+
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+@media only screen and (max-width: 1063px){
+	.col-1 {
+        text-align: center;
+    }
+    .col-2{
+        font-size: 20px;
+    }
 }
