@@ -24,12 +24,13 @@ body {
 .actionDisplay {
     width: 100%;
     padding-bottom: 50px;
+    height: 30px;
 }
 
 .actionButton {
     width: 49.7%;
     border-style: solid;
-    height: 30px;
+    height: 35px;
     border-color: rgb(26, 25, 25);
     background-color: #208f61fa;
     cursor: pointer;
@@ -46,6 +47,7 @@ body {
 
 .buyButton {
     font-size: 25px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .movieText {

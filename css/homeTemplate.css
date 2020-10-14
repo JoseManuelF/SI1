@@ -119,6 +119,7 @@ h1{
 	background: #208f61fa;
 	border: none;
 	cursor: pointer;
+	font-family: 'Quicksand';
 }
 
 .login button:hover {

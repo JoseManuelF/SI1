@@ -1,7 +1,19 @@
 /* CSS general compartido entre varios html */
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Secular+One&display=swap&family=Sansita+Swashed:wght@900");
+@font-face{
+    font-family: "Sansita Swashed";
+    src: url("../media/fonts/SansitaSwashed-Black.ttf") format("truetype");
+}
+
+@font-face{
+    font-family: "Roboto";
+    src: url("../media/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face{
+    font-family: "Quicksand";
+    src: url("../media/fonts/Quicksand-Medium.ttf") format("truetype");
+}
 
 /*
     font-family: 'Secular One', sans-serif;
