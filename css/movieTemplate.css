@@ -46,7 +46,7 @@ body {
 }
 
 .buyButton {
-    font-size: 25px;
+    font-size: 27px;
     font-family: 'Quicksand', sans-serif;
 }
 
@@ -66,11 +66,11 @@ p{
 }
 
 /* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
-@media only screen and (max-width: 1063px){
-	.col-1 {
-        text-align: center;
+@media only screen and (max-width: 1100px){
+    .col-1{
+        font-size: 20px;
     }
     .col-2{
-        font-size: 20px;
+        width: 100%;
     }
 }
