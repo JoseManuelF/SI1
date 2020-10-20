@@ -1,0 +1,20 @@
+{ "peliculas": 
+  [ 
+    { 
+			"id": 1,
+			"titulo": "Interestellar (2014)",
+      "poster": "static/media/movies/Interestellar.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2014,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    }
+  ]
+}

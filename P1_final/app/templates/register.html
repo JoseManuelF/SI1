@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<!-- Código html del formulario de registro de un nuevo usuario -->
+<html>
+    <head>
+        <title>Join Filmbrary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="../js/register.js"></script>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/registerTemplate.css" />
+    </head>
+
+    <body>
+        <form action="../html/home.html">
+            <div class="container">
+                <h1>Join us</h1>
+                <label for="uname"><b>Nombre de Usuario</b></label>
+                <input type="text" placeholder="Escribir Nombre de Usuario" name="uname" required>
+
+                <label for="email"><b>Correo electrónico</b></label>
+                <input type="email" placeholder="Escribir Correo Electrónico" name="email" required>
+
+                <label for="psw"><b>Contraseña</b></label>
+                <input type="password" placeholder="Escribir Contraseña" name="psw" onchange="checkPassword()" required>
+
+                <label for="repeat_psw"><b>Repetir Contraseña</b></label>
+                <input type="password" placeholder="Confirmar Contraseña" name="repeat_psw" 
+                title = "Las contraseñas deben coincidir" onkeyup="checkPassword()" required>
+
+                <label for="tarjeta"><b>Tarjeta de Crédito</b></label>
+                <input type="text" placeholder="Escribir Tarjeta de Crédito válida" name="tarjeta" required>
+                
+                <button type="submit">Crear cuenta</button>
+                <label>
+                    <input type="checkbox" name="emailPref">
+                    Mándame correos ocasionales sobre lo que está pasando.
+                </label>
+            </div>
+        
+            <div class="container">
+                <span>
+                    ¿Ya tienes una cuenta?
+                    <a href="../html/home.html">¡Inicia sesión!</a>
+                </span>
+            </div>
+        </form>
+    </body>
+
+</html>

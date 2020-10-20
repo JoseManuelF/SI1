@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<!-- Código html de la página principal y del formulario de iniciar sesión -->
+<html>
+    <head>
+        <title>Filmbrary</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="../static/js/home.js"></script>
+        <link rel="stylesheet" href="../static/css/main.css" />
+        <link rel="stylesheet" href="../static/css/homeTemplate.css" />
+        <link rel="stylesheet" href="../static/css/loginTemplate.css" />
+    </head>
+    
+    <body>
+        <div class="nav">
+            <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
+                <img class = "menuIcon" src = "../static/media/icons/threeDots.png"></img>
+            </div>
+            <h1 class="toTheCenter vitalSpace col-3" onclick="openHome()">Filmbrary</h1>
+            <div class="searchBar col-2">
+                <form action="/action_page.php">
+                    <input type="text" placeholder="Buscar.." name="search">
+                    <button type="submit"><img class = "menuIcon" src= "../static/media/icons/Search.png"></button>
+                </form>
+            </div>
+            <div class="login">
+                {% if not session['usuario'] %}
+                <button id="profile" onclick="loginWindow()">Iniciar sesión</button>
+                {% else %}
+                <a href= "{{ url_for('logout') }}">{{ session['usuario'] }}</a>
+                {% endif %}
+                <a href = "#profile">
+                    <img class="profileButton col-4" src = "../static/media/icons/Login.png"></img>
+                </a>
+            </div>
+        </div>
+          
+        <div class="row">
+            <!-- Frame del html de la información de la película -->
+            <iframe class="movieFrame" src="{{ url_for('movie') }}"></iframe>
+            <!-- <iframe class="movieFrame" src="../templates/movie.html"></iframe> -->
+
+            <!-- Contenido con las películas -->
+            <div class="content">
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Interestellar (2014)</div>
+                        <img class="content-image" src="../static/media/movies/Interestellar.png" alt="Interestellar"
+                         onclick="openMovie()">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Your name (2016)</div>
+                        <img class="content-image" src="../static/media/movies/YourName.png" alt="Your name">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Coherence (2013)</div>
+                        <img class="content-image" src="../static/media/movies/Coherence.png" alt="Coherence">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">About time (2013)</div>
+                        <img class="content-image" src="../static/media/movies/aboutTime.png" alt="About time">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">John Doe: Vigilante (2014)</div>
+                        <img class="content-image" src="../static/media/movies/John Doe Vigilante.png" alt="John Doe: Vigilante">
+                        </img>
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Un espía y medio (2016)</div>
+                        <img class="content-image" src="../static/media/movies/Un Espía y Medio.png" alt="Un espía y medio">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Un italiano en Noruega (2016)</div>
+                        <img class="content-image" src="../static/media/movies/Un Italiano en Noruega.png" alt="Un italiano en Noruega">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Ratatouille (2007)</div>
+                        <img class="content-image" src="../static/media/movies/Ratatouille.png" alt="Ratatouille">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">El hundimiento (2004)</div>
+                        <img class="content-image" src="../static/media/movies/El hundimiento.png" alt="El hundimiento">
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Il prefeto di ferro (1977)</div>
+                        <img class="content-image" src="../static/media/movies/Il prefeto di ferro.png" alt=Il prefeto di ferro>
+                    </div>
+                </div>
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">Sully (2016)</div>
+                        <img class="content-image" src="../static/media/movies/Sully.png" alt="Sully">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu lateral -->
+            <div class="sidebar" id="menu">
+                <div class="sidebarOptionButton">
+                    <a href = "#cesta">
+                        <img class="sidebarOptionIcon col-5" src = "../static/media/icons/ShoppingCart1.png"></img>
+                    </a>
+                    <a href = "#cesta" class="sidebarOptionText col-1">
+                        Cesta
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a href = "#pelicula-del-dia">
+                        <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Ticket.png"></img>
+                    </a>
+                    <a href = "#pelicula-del-dia" class="sidebarOptionText col-1">
+                        Película del día
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a onclick="categoriesButton()">
+                        <img id="desplegable" class="sidebarOptionIcon col-5" src = "../static/media/icons/Desplegable.png"></img>
+                    </a>
+                    <a onclick="categoriesButton()" class="sidebarOptionText col-1">
+                        Categorías
+                    </a>
+                </div>
+                <div id="category" class="hidden vitalSpace">
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-todas">
+                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/AllCategories.png"></img>
+                        </a>
+                        <a href = "#categoria-todas" class="sidebarOptionText col-1">
+                            Todas
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-romance">
+                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Romance.png"></img>
+                        </a>
+                        <a href = "#categoria-romance" class="sidebarOptionText col-1">
+                            Romance
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-accion">
+                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Action.png"></img>
+                        </a>
+                        <a href = "#categoria-accion" class="sidebarOptionText col-1">
+                            Acción
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-comedia">
+                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Comedy.png"></img>
+                        </a>
+                        <a href = "#categoria-comedia" class="sidebarOptionText col-1">
+                            Comedia
+                        </a>
+                    </div>
+                    <div class="sidebarOptionButton">
+                        <a href = "#categoria-animacion">
+                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Animation.png"></img>
+                        </a>
+                        <a href = "#categoria-animacion" class="sidebarOptionText col-1">
+                            Animación
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer information -->
+        <div class="footer">
+            <p>© Copyright Filmbrary.com | J.M Freire - Miguel Herrera</p>
+        </div>
+
+        <!-- Login formulario -->
+        <div id="loginForm" class="modal">
+            <form class="modal-content" action="{{ url_for('login') }}" method="post">
+                <div class="imgcontainer">
+                    <span class="close" onclick="loginWindow()" title="Close Window">&times;</span>
+                    <img src="../static/media/icons/Login.png" alt="Avatar" class="avatar">
+                </div>
+            
+                <div class="container">
+                    <label for="uname"><b>Nombre de Usuario</b></label>
+                    <input type="text" placeholder="Escribir Nombre de Usuario" name="uname" required>
+            
+                    <label for="psw"><b>Contraseña</b></label>
+                    <input type="password" placeholder="Escribir Contraseña" name="psw" required>
+                    
+                <button type="submit">Iniciar sesión</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Recuérdame
+                    </label>
+                </div>
+            
+                <div class="container">
+                    <span class="gotoRegister">
+                        Compra de forma segura y a un click totalmente gratis.
+                        <a href="../templates/register.html">¡Hazte una cuenta!</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+    </body>
+
+</html>
