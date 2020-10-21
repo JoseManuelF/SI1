@@ -6,6 +6,7 @@
         <title>Filmbrary</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script src="../static/js/home.js"></script>
+        <link rel="icon" href="data:,"> <!-- Para dejar de hacer request a favicon.ico -->
         <link rel="stylesheet" href="../static/css/main.css" />
         <link rel="stylesheet" href="../static/css/homeTemplate.css" />
         <link rel="stylesheet" href="../static/css/loginTemplate.css" />
@@ -37,79 +38,20 @@
           
         <div class="row">
             <!-- Frame del html de la información de la película -->
-            <iframe class="movieFrame" src="{{ url_for('movie') }}"></iframe>
-            <!-- <iframe class="movieFrame" src="../templates/movie.html"></iframe> -->
+            <iframe class="movieFrame" src="{{ url_for('movie', id=0) }}"></iframe>
 
             <!-- Contenido con las películas -->
             <div class="content">
+                {% for item in movies %}
                 <div class="content-margin cont-col-1">
                     <div class="content-display">
-                        <div class="content-title">Interestellar (2014)</div>
-                        <img class="content-image" src="../static/media/movies/Interestellar.png" alt="Interestellar"
-                         onclick="openMovie()">
+                        <div class="content-title">{{ item.titulo }} ({{ item.año }})</div>
+                        <a href="{{ url_for('movie', id=item.id) }}">
+                            <img class="content-image" src="{{ item.poster }}" alt="{{ item.titulo }}">
+                        </a>
                     </div>
                 </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Your name (2016)</div>
-                        <img class="content-image" src="../static/media/movies/YourName.png" alt="Your name">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Coherence (2013)</div>
-                        <img class="content-image" src="../static/media/movies/Coherence.png" alt="Coherence">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">About time (2013)</div>
-                        <img class="content-image" src="../static/media/movies/aboutTime.png" alt="About time">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">John Doe: Vigilante (2014)</div>
-                        <img class="content-image" src="../static/media/movies/John Doe Vigilante.png" alt="John Doe: Vigilante">
-                        </img>
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Un espía y medio (2016)</div>
-                        <img class="content-image" src="../static/media/movies/Un Espía y Medio.png" alt="Un espía y medio">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Un italiano en Noruega (2016)</div>
-                        <img class="content-image" src="../static/media/movies/Un Italiano en Noruega.png" alt="Un italiano en Noruega">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Ratatouille (2007)</div>
-                        <img class="content-image" src="../static/media/movies/Ratatouille.png" alt="Ratatouille">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">El hundimiento (2004)</div>
-                        <img class="content-image" src="../static/media/movies/El hundimiento.png" alt="El hundimiento">
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Il prefeto di ferro (1977)</div>
-                        <img class="content-image" src="../static/media/movies/Il prefeto di ferro.png" alt=Il prefeto di ferro>
-                    </div>
-                </div>
-                <div class="content-margin cont-col-1">
-                    <div class="content-display">
-                        <div class="content-title">Sully (2016)</div>
-                        <img class="content-image" src="../static/media/movies/Sully.png" alt="Sully">
-                    </div>
-                </div>
+                {% endfor %}
             </div>
 
             <!-- Menu lateral -->
@@ -212,7 +154,7 @@
                 <div class="container">
                     <span class="gotoRegister">
                         Compra de forma segura y a un click totalmente gratis.
-                        <a href="../templates/register.html">¡Hazte una cuenta!</a>
+                        <a href="{{ url_for('register') }}">¡Hazte una cuenta!</a>
                     </span>
                 </div>
             </form>

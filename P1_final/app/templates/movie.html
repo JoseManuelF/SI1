@@ -3,6 +3,7 @@
 <!-- Código html de la información de la película -->
 <html>
     <head>
+        <link rel="icon" href="data:,"> <!-- Para dejar de hacer request a favicon.ico -->
         <link rel="stylesheet" href="../static/css/main.css" />
         <link rel="stylesheet" href="../static/css/movieTemplate.css" />
     </head>
@@ -10,12 +11,12 @@
     <body>
         <!-- Foto, título, precio, año... -->
         <div>
-            <img class="previewImg" src = "../static/media/previews/Interestellar.png"></img>
+            <img class="previewImg" src = "{{ movie.preview }}"></img>
         
             <div class="title col-1">
-                <div class="floatLeft"> Interestellar (2014)</div>
+                <div class="floatLeft"> {{ movie.titulo }} ({{ movie.año }})</div>
                 <div class="price floatRight">
-                    12,99 €
+                    {{ movie.precio }} €
                 </div>  
             </div>
         </div>

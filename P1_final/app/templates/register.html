@@ -5,13 +5,14 @@
     <head>
         <title>Join Filmbrary</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="../js/register.js"></script>
-        <link rel="stylesheet" href="../css/main.css" />
-        <link rel="stylesheet" href="../css/registerTemplate.css" />
+        <script src="../static/js/register.js"></script>
+        <link rel="icon" href="data:,"> <!-- Para dejar de hacer request a favicon.ico -->
+        <link rel="stylesheet" href="../static/css/main.css" />
+        <link rel="stylesheet" href="../static/css/registerTemplate.css" />
     </head>
 
     <body>
-        <form action="../html/home.html">
+        <form action="{{ url_for('register') }}">
             <div class="container">
                 <h1>Join us</h1>
                 <label for="uname"><b>Nombre de Usuario</b></label>
@@ -40,7 +41,7 @@
             <div class="container">
                 <span>
                     ¿Ya tienes una cuenta?
-                    <a href="../html/home.html">¡Inicia sesión!</a>
+                    <a href="{{ url_for('home') }}">¡Inicia sesión!</a>
                 </span>
             </div>
         </form>

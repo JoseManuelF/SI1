@@ -2,12 +2,183 @@
   [ 
     { 
 			"id": 1,
-			"titulo": "Interestellar (2014)",
+			"titulo": "Interestellar",
       "poster": "static/media/movies/Interestellar.png",
+      "director": "George Lucas",
+      "precio": 12.99,
+      "categoria": "Aventura",
+      "año": 2014,
+      "preview": "static/media/previews/Interestellar.png",
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 2,
+			"titulo": "Your name",
+      "poster": "static/media/movies/YourName.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2016,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 3,
+			"titulo": "Coherence",
+      "poster": "static/media/movies/Coherence.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2013,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 4,
+			"titulo": "About time",
+      "poster": "static/media/movies/aboutTime.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2013,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 5,
+			"titulo": "John Doe: Vigilante",
+      "poster": "static/media/movies/John Doe Vigilante.png",
       "director": "George Lucas",
       "precio": 18.99,
       "categoria": "Aventura",
       "año": 2014,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+    
+    { 
+			"id": 6,
+			"titulo": "Un espía y medio",
+      "poster": "static/media/movies/Un Espía y Medio.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2016,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 7,
+			"titulo": "Un italiano en Noruega",
+      "poster": "static/media/movies/Un Italiano en Noruega.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2016,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 8,
+			"titulo": "Ratatouille",
+      "poster": "static/media/movies/Ratatouille.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2007,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 9,
+			"titulo": "El hundimiento",
+      "poster": "static/media/movies/El hundimiento.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2004,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 10,
+			"titulo": "Il prefeto di ferro",
+      "poster": "static/media/movies/Il prefeto di ferro.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 1977,
+      "actores": 
+      [
+        { "nombre": "Jake Lloyd",
+          "personaje": "Anakin Skywalker",
+          "foto": "imagenes/anakin.jpg"
+        }
+      ]
+    },
+
+    { 
+			"id": 11,
+			"titulo": "Sully",
+      "poster": "static/media/movies/Sully.png",
+      "director": "George Lucas",
+      "precio": 18.99,
+      "categoria": "Aventura",
+      "año": 2016,
       "actores": 
       [
         { "nombre": "Jake Lloyd",

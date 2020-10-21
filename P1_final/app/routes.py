@@ -29,17 +29,26 @@ def home():
     print (url_for('static', filename='homeTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='loginTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='main.css'), file=sys.stderr) '''
-    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    # catalogue = json.loads(catalogue_data)
-    return render_template('home.html')# , title = "Home", movies=catalogue['peliculas'])
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    return render_template('home.html', movies=catalogue['peliculas'])
 
-@app.route('/movie')
-def movie():
+@app.route('/<id>')
+def movie(id):
+    '''
     print (url_for('static', filename='movieTemplate.css'), file=sys.stderr)
-    print (url_for('static', filename='main.css'), file=sys.stderr)
-    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    # catalogue = json.loads(catalogue_data)
-    return render_template('movie.html')# , title = "Home", movies=catalogue['peliculas'])
+    print (url_for('static', filename='main.css'), file=sys.stderr) '''
+
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    movie = None
+    for item in movies:
+        if item['id'] == int(id):
+            movie = item.copy()
+
+    return render_template('movie.html', movie=movie)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,7 +62,7 @@ def login():
             return redirect(url_for('home'))
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('home.html')
+            return redirect(url_for('register'))
     else:
         # se puede guardar la pagina desde la que se invoca 
         session['url_origen']=request.referrer
@@ -67,3 +76,7 @@ def login():
 def logout():
     session.pop('usuario', None)
     return redirect(url_for('home'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    return render_template('register.html')
