@@ -3,6 +3,9 @@
 body {
     font-family: 'Quicksand', sans-serif;
     background-color: rgb(211, 203, 203);
+}
+
+.movieBody {
     padding: 20px 15%;
 }
 
@@ -23,7 +26,7 @@ body {
 
 .actionDisplay {
     width: 100%;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
     height: 30px;
 }
 
@@ -55,14 +58,15 @@ body {
 }
 
 t{
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 25px;
     color: #156342fa;
 }
 
 p{
-    font-size: 16px;
+    font-size: 20px;
     color: black;
+    padding-top: 15px;
+    padding-bottom: 20px;
 }
 
 /* Para ajustar los elementos a la pantalla dependiendo de su tamaño */

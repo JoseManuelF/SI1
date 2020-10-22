@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+{% extends "home.html" %}
 
 <!-- Código html de la información de la película -->
+{% block content %}
 <html>
     <head>
         <link rel="icon" href="data:,"> <!-- Para dejar de hacer request a favicon.ico -->
@@ -9,46 +11,50 @@
     </head>
     
     <body>
-        <!-- Foto, título, precio, año... -->
-        <div>
-            <img class="previewImg" src = "{{ movie.preview }}"></img>
-        
-            <div class="title col-1">
-                <div class="floatLeft"> {{ movie.titulo }} ({{ movie.año }})</div>
-                <div class="price floatRight">
-                    {{ movie.precio }} €
-                </div>  
+        <div class="movieBody">
+            <!-- Foto, título, precio, año... -->
+            <div>
+                <img class="previewImg" src = "{{ movie.preview }}"></img>
+            
+                <div class="title col-1">
+                    <div class="floatLeft"> {{ movie.título }} ({{ movie.año }})</div>
+                    <div class="price floatRight">
+                        {{ movie.precio }} €
+                    </div>  
+                </div>
             </div>
-        </div>
 
-        <!-- Botones para añadir al carrito y comprar -->
-        <div class="actionDisplay">
-            <button class = "actionButton col-2" type="submit">
-                <img class = "addCartButton" src= "../static/media/icons/AddShoppingCart.png">
-            </button>
-            <button class = "actionButton buyButton col-2" type="submit">
-                Comprar Ahora
-            </button>
-        </div>
+            <!-- Botones para añadir al carrito y comprar -->
+            <div class="actionDisplay">
+                <button class = "actionButton col-2" type="submit">
+                    <img class = "addCartButton" src= "../static/media/icons/AddShoppingCart.png">
+                </button>
+                <button class = "actionButton buyButton col-2" type="submit">
+                    Comprar Ahora
+                </button>
+            </div>
 
-        <!-- Sinopsis, reparto y otros textos. -->
-        <div class="movieText">
-            <t>Sinopsis:</t>
-            <p>Cuando la vida humana en la Tierra se ve amenazada por una plaga que mata los cultivos, Cooper, ex-piloto de la Nasa, se embarcará en una aventura por el espacio en busca de un planeta habitable al que puedan trasladar a la humanidad.</p>
-            </br>
-            <t>Reparto:</t>
-            <p>
-                Matthew McConaughey como Cooper,</br>
-                Anne Hatthaw como Amelia,</br>
-                Jessica Chastain como Murphy,</br>
-                Michael Caine como Profesor Brand.
-            </p>
-            </br>
-            <t>Crítica:</t>
-            <p>
-                -- --
-            </p>
+            <!-- Sinopsis, reparto y otros textos. -->
+            <div class="movieText">
+                <t>Sinopsis:</t>
+                <p>{{ movie.sinopsis }}</p>
+                </br>
+                <t>Reparto:</t>
+                <p>
+                    Matthew McConaughey como Cooper,</br>
+                    Anne Hatthaw como Amelia,</br>
+                    Jessica Chastain como Murphy,</br>
+                    Michael Caine como Profesor Brand.
+                </p>
+                </br>
+                <t>Crítica:</t>
+                <p>
+                    {{ movie.puntuación }} / 10 </br>
+                    {{ movie.crítica }}
+                </p>
+            </div>
         </div>
     </body>
     
 </html>
+{% endblock %}

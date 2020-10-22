@@ -17,7 +17,9 @@
             <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
                 <img class = "menuIcon" src = "../static/media/icons/threeDots.png"></img>
             </div>
-            <h1 class="toTheCenter vitalSpace col-3" onclick="openHome()">Filmbrary</h1>
+            <a href="{{ url_for('home') }}">
+                <h1 class="toTheCenter vitalSpace col-3">Filmbrary</h1>
+            </a>
             <div class="searchBar col-2">
                 <form action="/action_page.php">
                     <input type="text" placeholder="Buscar.." name="search">
@@ -37,21 +39,20 @@
         </div>
           
         <div class="row">
-            <!-- Frame del html de la información de la película -->
-            <iframe class="movieFrame" src="{{ url_for('movie', id=0) }}"></iframe>
-
             <!-- Contenido con las películas -->
             <div class="content">
+                {% block content %}
                 {% for item in movies %}
                 <div class="content-margin cont-col-1">
                     <div class="content-display">
-                        <div class="content-title">{{ item.titulo }} ({{ item.año }})</div>
+                        <div class="content-title">{{ item.título }} ({{ item.año }})</div>
                         <a href="{{ url_for('movie', id=item.id) }}">
-                            <img class="content-image" src="{{ item.poster }}" alt="{{ item.titulo }}">
+                            <img class="content-image" src="{{ item.poster }}" alt="{{ item.título }}">
                         </a>
                     </div>
                 </div>
                 {% endfor %}
+                {% endblock %}
             </div>
 
             <!-- Menu lateral -->
@@ -127,7 +128,7 @@
         
         <!-- Footer information -->
         <div class="footer">
-            <p>© Copyright Filmbrary.com | J.M Freire - Miguel Herrera</p>
+            © Copyright Filmbrary.com | J.M Freire - Miguel Herrera
         </div>
 
         <!-- Login formulario -->

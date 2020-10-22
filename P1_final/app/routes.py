@@ -33,7 +33,7 @@ def home():
     catalogue = json.loads(catalogue_data)
     return render_template('home.html', movies=catalogue['peliculas'])
 
-@app.route('/<id>')
+@app.route('/movie_id_<int:id>')
 def movie(id):
     '''
     print (url_for('static', filename='movieTemplate.css'), file=sys.stderr)
@@ -45,7 +45,7 @@ def movie(id):
 
     movie = None
     for item in movies:
-        if item['id'] == int(id):
+        if item['id'] == id:
             movie = item.copy()
 
     return render_template('movie.html', movie=movie)

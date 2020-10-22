@@ -73,7 +73,8 @@ body {
 
 h1{
 	font-size: 50px;
-    font-family: 'Sansita Swashed', cursive;
+	font-family: 'Sansita Swashed', cursive;
+	color: black;
 	display: inline-block;
 	cursor: pointer;
 }
@@ -131,14 +132,6 @@ h1{
 	height: 32px;
 	cursor: pointer;
 	vertical-align: bottom;
-}
-  
-/* Movie info frame */
-.movieFrame{
-	display: none;
-	height: 725px;
-	width: 100%;
-	padding-top: 73px;
 }
 
 /* Content column */

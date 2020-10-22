@@ -47,19 +47,3 @@ window.onclick = function(event) {
         login.style.display = "none";
     }
 }
-
-function openMovie(){
-    var frame = document.getElementsByClassName("movieFrame")[0];
-    var content = document.getElementsByClassName("content")[0];
-
-    frame.style.display = 'block';
-    content.style.display = 'none';  
-}
-
-function openHome(){
-    var frame = document.getElementsByClassName("movieFrame")[0];
-    var content = document.getElementsByClassName("content")[0];
-
-    // Volvemos a la página principal
-    location.reload();
-}
