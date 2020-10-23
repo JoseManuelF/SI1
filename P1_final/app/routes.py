@@ -43,10 +43,15 @@ def movie(id):
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
+    # Buscamos la película dada por el id en el catálogo
     movie = None
     for item in movies:
         if item['id'] == id:
             movie = item.copy()
+
+    # Si la película no existe te redirige a la página principal
+    if (movie == None):
+        return redirect(url_for('home'))
 
     return render_template('movie.html', movie=movie)
 
@@ -69,7 +74,7 @@ def login():
         session.modified=True        
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('home.html', title = "Sign In")
+        return render_template('home.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])

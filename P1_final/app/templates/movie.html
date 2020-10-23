@@ -41,10 +41,9 @@
                 </br>
                 <t>Reparto:</t>
                 <p>
-                    Matthew McConaughey como Cooper,</br>
-                    Anne Hatthaw como Amelia,</br>
-                    Jessica Chastain como Murphy,</br>
-                    Michael Caine como Profesor Brand.
+                    {% for actor in movie.reparto %}
+                    {{ actor.nombre }} como <strong>{{ actor.personaje }}</strong> </br>
+                    {% endfor %}
                 </p>
                 </br>
                 <t>Crítica:</t>

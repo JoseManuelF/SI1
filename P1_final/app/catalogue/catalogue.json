@@ -13,8 +13,20 @@
       "puntuación": 8.5,
       "reparto": 
       [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker"
+        { "nombre": "Matthew McConaughey",
+          "personaje": "Cooper"
+        },
+
+        { "nombre": "Anne Hatthaw",
+          "personaje": "Amelia"
+        },
+
+        { "nombre": "Jessica Chastain",
+          "personaje": "Murphy"
+        },
+
+        { "nombre": "Michael Caine",
+          "personaje": "Profesor Brand"
         }
       ]
     },
@@ -32,8 +44,8 @@
       "puntuación": 6.8,
       "reparto": 
       [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker"
+        { "nombre": "--",
+          "personaje": "--"
         }
       ]
     },
@@ -51,8 +63,160 @@
       "puntuación": 8.2,
       "reparto": 
       [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker"
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 4,
+			"título": "Un Espía y Medio",
+      "poster": "../static/media/movies/Un Espía y Medio.png",
+      "precio": 12.99,
+      "categoria": ["Comedia, Acción"],
+      "año": 2016,
+      "preview": "../static/media/previews/Un Espía y Medio.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 8.7,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 5,
+			"título": "About Time",
+      "poster": "../static/media/movies/aboutTime.png",
+      "precio": 9.99,
+      "categoria": ["Romance"],
+      "año": 2013,
+      "preview": "../static/media/previews/aboutTime.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 8.1,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 6,
+			"título": "John Doe: Vigilante",
+      "poster": "../static/media/movies/John Doe Vigilante.png",
+      "precio": 7.99,
+      "categoria": ["Acción"],
+      "año": 2014,
+      "preview": "../static/media/previews/John Doe Vigilante.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 7.9,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 7,
+			"título": "Il Prefetto di Ferro",
+      "poster": "../static/media/movies/Il Prefetto di Ferro.png",
+      "precio": 0.99,
+      "categoria": ["Drama, Acción"],
+      "año": 1977,
+      "preview": "../static/media/previews/Il Prefetto di Ferro.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 6.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 8,
+			"título": "Ratatouille",
+      "poster": "../static/media/movies/Ratatouille.png",
+      "precio": 4.99,
+      "categoria": ["Animación"],
+      "año": 2007,
+      "preview": "../static/media/previews/Ratatouille.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 8.9,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 9,
+			"título": "Un Italiano en Noruega",
+      "poster": "../static/media/movies/Un Italiano en Noruega.png",
+      "precio": 2.99,
+      "categoria": ["Comedia"],
+      "año": 2016,
+      "preview": "../static/media/previews/Un Italiano en Noruega.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 6.2,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 10,
+			"título": "El hundimiento",
+      "poster": "../static/media/movies/El hundimiento.png",
+      "precio": 6.99,
+      "categoria": ["Drama, Bélico"],
+      "año": 2004,
+      "preview": "../static/media/previews/El hundimiento.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 7.2,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 11,
+			"título": "Sully",
+      "poster": "../static/media/movies/Sully.png",
+      "precio": 9.99,
+      "categoria": ["Drama"],
+      "año": 2016,
+      "preview": "../static/media/previews/Sully.png",
+      "sinopsis": "--",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
         }
       ]
     }
