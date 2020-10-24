@@ -33,11 +33,6 @@ function loginWindow(){
     }
 }
 
-function profileStatus(){
-    var prof = document.getElementById("profile");
-    prof.innerHTML = "Your name"; // Actualiza el nombre del usuario
-}
-
 // When the user clicks anywhere outside of the login form, close it
 window.onclick = function(event) {
     // Get the login form

@@ -37,3 +37,8 @@ h1 {
 .container button:hover {
     opacity: 0.8;
 }
+
+.user_exists {
+    color: red;
+    padding: 0% 30%;
+}
