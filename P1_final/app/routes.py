@@ -66,7 +66,6 @@ def login():
             # se puede usar request.referrer para volver a la pagina desde la que se hizo login
             return redirect(url_for('home'))
         else:
-            # aqui se le puede pasar como argumento un mensaje de login invalido
             return redirect(url_for('register'))
     else:
         # se puede guardar la pagina desde la que se invoca 
@@ -74,8 +73,7 @@ def login():
         session.modified=True        
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('home.html')
-
+        return redirect(url_for('home'))
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -84,4 +82,19 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    if 'uname' not in request.form:
+        print("Entra")
+        username = request.form['uname']
+        email = request.form['email']
+        password = request.form['psw']
+        card = request.form['tarjeta']
+        print("usuario = " + username)
+
+        f = open("../data/users.dat", "a")
+        f.write(username + '|' + email + '|' + password + '|' + card)
+        f.close()
+
+        return redirect(url_for('home'))
+    else:
+        print("Xao no mas")
+        return render_template('register.html')
