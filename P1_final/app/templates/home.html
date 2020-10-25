@@ -30,7 +30,9 @@
                 {% if not session['usuario'] %}
                 <button id="profile" onclick="loginWindow()">Iniciar sesión</button>
                 {% else %}
-                <a href= "{{ url_for('logout') }}">{{ session['usuario'] }}</a>
+                <a href= "{{ url_for('logout') }}">
+                    <button>{{ session['usuario'] }}</button>
+                </a>
                 {% endif %}
                 <a href = "#profile">
                     <img class="profileButton col-4" src = "../static/media/icons/Login.png"></img>
@@ -66,10 +68,10 @@
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
-                    <a href = "#pelicula-del-dia">
+                    <a href = "{{ url_for('movie', id=8) }}">
                         <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Ticket.png"></img>
                     </a>
-                    <a href = "#pelicula-del-dia" class="sidebarOptionText col-1">
+                    <a href = "{{ url_for('movie', id=8) }}" class="sidebarOptionText col-1">
                         Película del día
                     </a>
                 </div>
@@ -83,45 +85,24 @@
                 </div>
                 <div id="category" class="hidden vitalSpace">
                     <div class="sidebarOptionButton">
-                        <a href = "#categoria-todas">
+                        <a href = "{{ url_for('home') }}">
                             <img class="sidebarOptionIcon col-5" src = "../static/media/icons/AllCategories.png"></img>
                         </a>
-                        <a href = "#categoria-todas" class="sidebarOptionText col-1">
+                        <a href = "{{ url_for('home') }}" class="sidebarOptionText col-1">
                             Todas
                         </a>
                     </div>
+
+                    {% for category in categories %}
                     <div class="sidebarOptionButton">
-                        <a href = "#categoria-romance">
-                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Romance.png"></img>
+                        <a href = "{{ url_for('home', category=category.nombre) }}">
+                            <img class="sidebarOptionIcon col-5" src = "{{ category.icono }}"></img>
                         </a>
-                        <a href = "#categoria-romance" class="sidebarOptionText col-1">
-                            Romance
+                        <a href = "{{ url_for('home', category=category.nombre) }}" class="sidebarOptionText col-1">
+                            {{ category.nombre }}
                         </a>
                     </div>
-                    <div class="sidebarOptionButton">
-                        <a href = "#categoria-accion">
-                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Action.png"></img>
-                        </a>
-                        <a href = "#categoria-accion" class="sidebarOptionText col-1">
-                            Acción
-                        </a>
-                    </div>
-                    <div class="sidebarOptionButton">
-                        <a href = "#categoria-comedia">
-                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Comedy.png"></img>
-                        </a>
-                        <a href = "#categoria-comedia" class="sidebarOptionText col-1">
-                            Comedia
-                        </a>
-                    </div>
-                    <div class="sidebarOptionButton">
-                        <a href = "#categoria-animacion">
-                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Animation.png"></img>
-                        </a>
-                        <a href = "#categoria-animacion" class="sidebarOptionText col-1">
-                            Animación
-                        </a>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

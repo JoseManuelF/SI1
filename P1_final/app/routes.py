@@ -10,20 +10,46 @@ import random
 import hashlib
 
 @app.route('/')
-def home():
+@app.route('/<category>')
+def home(category = None):
     print (url_for('static', filename='css/homeTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/loginTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
+    # Cargamos el catálogo de las películas
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
-    return render_template('home.html', movies=catalogue['peliculas'])
+
+    # Cargamos las categorías
+    categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
+    categories = json.loads(categories_data)
+
+    # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
+    # Por lo que muestra todas las películas en el catalogue.json
+    if(category == None):
+        return render_template('home.html', movies=catalogue['peliculas'], categories=categories['categorias'])
+
+    # Si una categoría ha sido especificada, la filtramos y solo mostramos
+    # las películas que tengan esa categoría.
+    else:
+        print(category)
+        categoryMovies = []
+        for movie in catalogue['peliculas']:
+            print(movie['título'] + ": ", end = "")
+            if category in movie["categoria"]:
+                print("v", end = "\n")
+                categoryMovies.append(movie)
+            else:
+                print("x", end = "\n")
+        return render_template('home.html', movies=categoryMovies, categories=categories['categorias'])
+
 
 @app.route('/movie_id_<int:id>')
 def movie(id):
     print (url_for('static', filename='css/movieTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
+    # Cargamos el catálogo de las películas
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
@@ -52,10 +78,24 @@ def login():
         users_list = os.listdir(users_path)
         for u in users_list:
             if request.form['uname'] == u:
-                session['usuario'] = request.form['uname']
-                session.modified=True
-                # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-                return redirect(url_for('home'))
+                # Accedemos a los datos de la carpeta del usuario
+                user_dir = os.path.join(users_path, "%s" %u)
+                datos_path = os.path.join(user_dir, "datos.dat")
+
+                # Comprobamos si la hash password coincide con la dada en el login
+                login_password = request.form['psw']
+                with open(datos_path, "r+") as f_datos:
+                    # Hasheamos la contraseña dada en el login
+                    hash_login = hashlib.sha512(("%s" %login_password).encode('utf-8')).hexdigest()
+
+                    # Vemos si las contraseñas son iguales
+                    if hash_login == f_datos.readline().split(" | ")[1]:
+                        session['usuario'] = request.form['uname']
+                        session.modified=True
+                        # se puede usar request.referrer para volver a la pagina desde la que se hizo login
+                        return redirect(url_for('home'))
+                    else:
+                        return redirect(url_for('home'))
 
         # El usuario no está registrado en la carpeta de usuarios
         return redirect(url_for('register'))

@@ -1,0 +1,43 @@
+{ "categorias" :
+  [
+    {
+      "nombre": "Sci-Fi", 
+      "icono": "../static/media/icons/Sci-Fi.png"
+    },
+
+    {
+      "nombre": "Animación", 
+      "icono": "../static/media/icons/Animation.png"
+    },
+
+    {
+      "nombre": "Romance", 
+      "icono": "../static/media/icons/Romance.png"
+    },
+
+    {
+      "nombre": "Psicológica", 
+      "icono": "../static/media/icons/Psicológica.png"
+    },
+    
+    {
+      "nombre": "Comedia", 
+      "icono": "../static/media/icons/Comedy.png"
+    },
+    
+    {
+      "nombre": "Acción", 
+      "icono": "../static/media/icons/Action.png"
+    },
+    
+    {
+      "nombre": "Drama", 
+      "icono": "../static/media/icons/Drama.png"
+    },
+
+    {
+      "nombre": "Bélico", 
+      "icono": "../static/media/icons/Bélico.png"
+    }
+  ]
+}
