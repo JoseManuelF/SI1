@@ -26,9 +26,22 @@
 
             <!-- Botones para añadir al carrito y comprar -->
             <div class="actionDisplay">
-                <button class = "actionButton col-2" type="submit">
-                    <img class = "addCartButton" src= "../static/media/icons/AddShoppingCart.png">
-                </button>
+                {% if added > 0 %}
+                <a href="{{ url_for('cesta', add=movie.id) }}">
+                    <button class = "actionButton buyButton col-2" type="submit">
+                        <img class = "addCartButton" src= "../static/media/icons/AddShoppingCart.png">
+                        ({{ added }})
+                    </button>
+                </a>
+            
+                {% else %}
+                <a href="{{ url_for('cesta', add=movie.id) }}">
+                    <button class = "actionButton buyButton col-2" type="submit">
+                        <img class = "addCartButton" src= "../static/media/icons/AddShoppingCart.png">
+                    </button>
+                </a>
+                {% endif %}
+
                 <button class = "actionButton buyButton col-2" type="submit">
                     Comprar Ahora
                 </button>

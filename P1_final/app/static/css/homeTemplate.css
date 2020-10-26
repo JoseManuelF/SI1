@@ -11,6 +11,10 @@ body {
 	background-color: rgb(211, 203, 203);
 }
 
+.categoryListSidebar{
+	padding-bottom: 80px;
+}
+
 /* Menú desplegable del lado izquierdo */
 .sidebar{
     height: 100%;
@@ -130,7 +134,6 @@ h1{
 .profileButton{
 	width: 32px;
 	height: 32px;
-	cursor: pointer;
 	vertical-align: bottom;
 }
 

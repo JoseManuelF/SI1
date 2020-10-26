@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends "home.html" %}
+
+<!-- Código html del perfil del usuario -->
+{% block content %}
+<html>
+    <head>
+        <link rel="icon" href="../static/media/icons/favicon.ico"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="../static/css/main.css" />
+        <link rel="stylesheet" href="../static/css/profileTemplate.css" />
+    </head>
+    
+    {% if session['usuario'] %}
+    <body>
+        <div class="buttonPadding">
+            <div class="username">
+                {{ session['usuario'] }}
+            </div>
+            <a href="{{ url_for('logout') }}">
+                <div class="actionButton">
+                    Cerrar Sesión
+                </div>
+            </a>
+        </div>
+            
+        <div>
+            <div class="saldo">
+                Saldo: {{ session['saldo'] }}€
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <th>Película</th>
+                <th>Precio</th>
+                <th>Fecha</th>
+            </tr>
+            
+            {% for movie in history %}
+            <tr>
+                <td>{{ movie.titulo }}</th>
+                <td>{{ movie.precio }}</th>
+                <td>{{ movie.fecha }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+    {% endif %}
+
+</html>
+{% endblock %}

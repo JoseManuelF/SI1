@@ -8,10 +8,12 @@ import os
 import sys
 import random
 import hashlib
+import datetime
 
 @app.route('/')
 @app.route('/<category>')
-def home(category = None):
+@app.route('/login/<login>')
+def home(category = None, login = False):
     print (url_for('static', filename='css/homeTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/loginTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
@@ -27,7 +29,7 @@ def home(category = None):
     # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
     # Por lo que muestra todas las películas en el catalogue.json
     if(category == None):
-        return render_template('home.html', movies=catalogue['peliculas'], categories=categories['categorias'])
+        return render_template('home.html', movies=catalogue['peliculas'], categories=categories['categorias'], login=login)
 
     # Si una categoría ha sido especificada, la filtramos y solo mostramos
     # las películas que tengan esa categoría.
@@ -37,12 +39,41 @@ def home(category = None):
         for movie in catalogue['peliculas']:
             print(movie['título'] + ": ", end = "")
             if category in movie["categoria"]:
-                print("v", end = "\n")
+                print("V", end = "\n")
                 categoryMovies.append(movie)
             else:
                 print("x", end = "\n")
-        return render_template('home.html', movies=categoryMovies, categories=categories['categorias'])
+        return render_template('home.html', movies=categoryMovies, categories=categories['categorias'], login=login)
 
+@app.route('/profile')
+def profile():
+    print (url_for('static', filename='css/homeTemplate.css'), file=sys.stderr)
+    print (url_for('static', filename='css/profileTemplate.css'), file=sys.stderr)
+    print (url_for('static', filename='css/main.css'), file=sys.stderr)
+
+    # Si el usuario no ha iniciado sesión, te redirige a hacer login
+    if 'usuario' not in session:
+        return redirect(url_for('home', login=True))
+
+    # Hallamos la ruta de la carpeta de usuarios
+    this_dir = os.path.dirname(__file__)
+    previous_dir = os.path.dirname(this_dir)
+    users_path = os.path.join(previous_dir, "usuarios/")
+
+    # Accedemos al historial de la carpeta del usuario
+    user_dir = os.path.join(users_path, "%s" %session['usuario'])
+    historial_path = os.path.join(user_dir, "historial.json")
+    
+    # Cargamos el historial.json del usuario
+    f = open(historial_path, "r")
+    oldData = f.readline()
+
+    if oldData == "":
+        data = []
+    else:
+        data = json.loads(oldData)
+
+    return render_template('profile.html', history=data)
 
 @app.route('/movie_id_<int:id>')
 def movie(id):
@@ -64,7 +95,17 @@ def movie(id):
     if (movie == None):
         return redirect(url_for('home'))
 
-    return render_template('movie.html', movie=movie)
+    # Si no existe, creamos una cesta con las películas en la sesión 
+    if 'cesta' not in session:
+        session['cesta'] = []
+
+    # Vemos cuántas veces la película ya ha sido añadida a la cesta
+    added = 0
+    for m in session['cesta']:
+        if m['id'] == id:
+            added += 1
+            
+    return render_template('movie.html', movie=movie, added=added)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -89,10 +130,11 @@ def login():
                     hash_login = hashlib.sha512(("%s" %login_password).encode('utf-8')).hexdigest()
 
                     # Vemos si las contraseñas son iguales
-                    if hash_login == f_datos.readline().split(" | ")[1]:
+                    line = f_datos.readline()
+                    if hash_login == line.split(" | ")[1]:
                         session['usuario'] = request.form['uname']
+                        session['saldo'] = line.split(" | ")[4]
                         session.modified=True
-                        # se puede usar request.referrer para volver a la pagina desde la que se hizo login
                         return redirect(url_for('home'))
                     else:
                         return redirect(url_for('home'))
@@ -147,6 +189,7 @@ def register():
         datos_path = os.path.join(user_dir, "datos.dat")
         historial_path = os.path.join(user_dir, "historial.json")
 
+        saldo = 0
         with open(datos_path, "w+") as f_datos:
             # Hasheamos la contraseña
             hash_password = hashlib.sha512(("%s" %password).encode('utf-8')).hexdigest()
@@ -162,7 +205,158 @@ def register():
 
         # Registración completa. Volver a la página principal ya con la sesión iniciada
         session['usuario'] = request.form['uname']
+        session['saldo'] = saldo
         session.modified=True
         return redirect(url_for('home'))
     else:
         return render_template('register.html', user_exists="")
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        # Cargamos el catálogo de las películas
+        catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+        catalogue = json.loads(catalogue_data)
+
+        # Cargamos las categorías
+        categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
+        categories = json.loads(categories_data)
+
+        search = request.form['search']
+        # Si la búsqueda no es una cadena vacía, eso significa que estamos buscando algo.
+        if(search != ""):
+            print("Looking for: " + search)
+            searchMovies = []
+            for movie in catalogue['peliculas']:
+                print(movie['título'] + ": ", end = "")
+                if search.lower() in movie["título"].lower():
+                    print("V", end = "\n")
+                    searchMovies.append(movie)
+                else:
+                    print("x", end = "\n")
+            return render_template('home.html', movies=searchMovies, categories=categories['categorias'])
+
+        else:
+            return redirect(url_for('home'))
+
+    else:
+        return redirect(url_for('home'))
+
+@app.route('/cesta')
+@app.route('/cesta_add/<int:add>')
+@app.route('/cesta_delete/<int:delete>')
+def cesta(add = None, delete = None):
+    # Cargamos el catálogo de las películas
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    # Si no existe, creamos una cesta con las películas en la sesión
+    if 'cesta' not in session:
+        session['cesta'] = []
+
+    # Tenemos como argumento el id de la película a eliminar de la cesta
+    if delete != None:
+        for item in session['cesta']:
+            if item['id'] == delete:
+                # Eliminamos de la cesta la película
+                session['cesta'].remove(item)
+                session.modified = True
+                break
+        return redirect(url_for('cesta'))
+
+    # Tenemos como argumento el id de la película a añadir a la cesta
+    elif add != None:
+        # Buscamos la película dada por el id en el catálogo
+        for item in catalogue['peliculas']:
+            if item['id'] == add:
+                movie = item.copy()
+
+        # Añadimos a la cesta de la sesión la película
+        session['cesta'].append(movie)
+        session.modified = True
+        return redirect(url_for('movie', id=add))
+        
+    # No hay argumentos, accedemos a la cesta
+    else:
+        # Calculamos el precio total de la cesta
+        precio = 0.0
+        for pritem in session['cesta']:
+            for prcatalog in catalogue['peliculas']:
+                if pritem['id'] == prcatalog['id']:
+                    precio += prcatalog['precio']
+
+        return render_template('cesta.html', cesta=session['cesta'], precio=precio)
+
+@app.route('/buy/<float:precio>')
+def buy(precio):
+    # El usuario no ha iniciado sesión, por lo que comprar las películas
+    if 'usuario' not in session:
+        return redirect(url_for('home', login=True))
+    else:
+        # Hallamos la ruta de la carpeta de usuarios
+        this_dir = os.path.dirname(__file__)
+        previous_dir = os.path.dirname(this_dir)
+        users_path = os.path.join(previous_dir, "usuarios/")
+
+        # Accedemos a los datos de la carpeta del usuario
+        user_dir = os.path.join(users_path, "%s" %session['usuario'])
+        datos_path = os.path.join(user_dir, "datos.dat")
+
+        saldo = 0.0
+        segmented_data = []
+        # Vemos si el saldo del usuario es suficiente para comprar la cesta
+        with open(datos_path, "r") as f_datos:
+            segmented_data = f_datos.readline().split(" | ")
+            saldo = float(segmented_data[4])
+
+            # Descontamos el precio total al saldo
+            saldo = saldo - precio
+
+        # No hay saldo suficiente
+        if saldo < 0.0:
+            return redirect(url_for('cesta'))
+            
+        else:
+            # Actualizamos el saldo del usuario tras la compra
+            session['saldo'] = saldo
+            with open(datos_path, "w") as f_datos:
+                data = ""
+                for i in range(4):
+                    data += segmented_data[i] + " | "
+                
+                data += str(saldo)
+                f_datos.write(data)
+            
+            # Añadir las películas compradas al historial.json
+            historial_path = os.path.join(user_dir, "historial.json")
+            printJson(historial_path, session['cesta'])
+
+            # Borrar la cesta
+            session.pop('cesta', None)
+            return redirect(url_for('home'))
+
+# Función auxiliar para imprimir el historial.json del usuario
+def printJson(path, movies):
+    # Hallamos la fecha en la que se compraron las películas
+    dt = datetime.datetime.today()
+
+    f = open(path, "r")
+    oldData = f.readline()
+
+    if oldData == "":
+        data = []
+    else:
+        data = json.loads(oldData)
+    f.close()
+
+    # Incluimos los detalles de las películas compradas
+    for movie in movies:
+        data.append({
+            'titulo': movie["título"],
+            'precio': movie["precio"],
+            'fecha': str(dt.day) + "/" + str(dt.month) + "/" + str(dt.year)
+        })
+
+    # Accedemos al historial.json del usuario y lo actualizamos
+    with open(path, 'w') as f_historial:
+        json.dump(data, f_historial)
