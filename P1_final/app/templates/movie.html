@@ -42,9 +42,11 @@
                 </a>
                 {% endif %}
 
-                <button class = "actionButton buyButton col-2" type="submit">
-                    Comprar Ahora
-                </button>
+                <a href="{{ url_for('buy_direct', id=movie.id) }}">
+                    <button class = "actionButton buyButton col-2" type="submit">
+                        Comprar Ahora
+                    </button>
+                </a>
             </div>
 
             <!-- Sinopsis, reparto y otros textos. -->

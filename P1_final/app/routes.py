@@ -287,9 +287,24 @@ def cesta(add = None, delete = None):
 
         return render_template('cesta.html', cesta=session['cesta'], precio=precio)
 
-@app.route('/buy/<float:precio>')
-def buy(precio):
-    # El usuario no ha iniciado sesión, por lo que comprar las películas
+@app.route('/buy')
+def buy():
+    # Si no existe, creamos una cesta con las películas en la sesión
+    if 'cesta' not in session:
+        session['cesta'] = []
+
+    # Cargamos el catálogo de las películas
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    # Calculamos el precio total de la cesta
+    precio = 0.0
+    for pritem in session['cesta']:
+        for prcatalog in catalogue['peliculas']:
+            if pritem['id'] == prcatalog['id']:
+                precio += prcatalog['precio']
+
+    # El usuario no ha iniciado sesión, por lo que no podrá comprar las películas
     if 'usuario' not in session:
         return redirect(url_for('home', login=True))
     else:
@@ -304,7 +319,7 @@ def buy(precio):
 
         saldo = 0.0
         segmented_data = []
-        # Vemos si el saldo del usuario es suficiente para comprar la cesta
+        # Vemos si el saldo del usuario es suficiente para comprar las películas
         with open(datos_path, "r") as f_datos:
             segmented_data = f_datos.readline().split(" | ")
             saldo = float(segmented_data[4])
@@ -314,7 +329,7 @@ def buy(precio):
 
         # No hay saldo suficiente
         if saldo < 0.0:
-            return redirect(url_for('cesta'))
+            return redirect(url_for('profile'))
             
         else:
             # Actualizamos el saldo del usuario tras la compra
@@ -333,6 +348,74 @@ def buy(precio):
 
             # Borrar la cesta
             session.pop('cesta', None)
+
+            return redirect(url_for('home'))
+
+@app.route('/buy_direct/<int:id>')
+def buy_direct(id = 0):
+    # Cargamos el catálogo de las películas
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    # Buscamos la película dada por el id en el catálogo
+    movie = None
+    for item in movies:
+        if item['id'] == id:
+            movie = item.copy()
+
+    # Si la película no existe te redirige a la página principal
+    if (movie == None):
+        return redirect(url_for('home'))
+
+    # Hallamos el precio de la película
+    precio = movie['precio']
+
+    # El usuario no ha iniciado sesión, por lo que no podrá comprar las películas
+    if 'usuario' not in session:
+        return redirect(url_for('home', login=True))
+    else:
+        # Hallamos la ruta de la carpeta de usuarios
+        this_dir = os.path.dirname(__file__)
+        previous_dir = os.path.dirname(this_dir)
+        users_path = os.path.join(previous_dir, "usuarios/")
+
+        # Accedemos a los datos de la carpeta del usuario
+        user_dir = os.path.join(users_path, "%s" %session['usuario'])
+        datos_path = os.path.join(user_dir, "datos.dat")
+
+        saldo = 0.0
+        segmented_data = []
+        # Vemos si el saldo del usuario es suficiente para comprar la película
+        with open(datos_path, "r") as f_datos:
+            segmented_data = f_datos.readline().split(" | ")
+            saldo = float(segmented_data[4])
+
+            # Descontamos el precio total al saldo
+            saldo = saldo - precio
+
+        # No hay saldo suficiente
+        if saldo < 0.0:
+            return redirect(url_for('profile'))
+            
+        else:
+            # Actualizamos el saldo del usuario tras la compra
+            session['saldo'] = saldo
+            with open(datos_path, "w") as f_datos:
+                data = ""
+                for i in range(4):
+                    data += segmented_data[i] + " | "
+                
+                data += str(saldo)
+                f_datos.write(data)
+            
+            # Añadir la película comprada al historial.json
+            historial_path = os.path.join(user_dir, "historial.json")
+
+            movieList = []
+            movieList.append(movie)
+            printJson(historial_path, movieList)
+
             return redirect(url_for('home'))
 
 # Función auxiliar para imprimir el historial.json del usuario
