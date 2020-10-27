@@ -38,6 +38,36 @@
     {
       "nombre": "Bélico", 
       "icono": "../static/media/icons/Bélico.png"
+    },
+    
+    {
+      "nombre": "Infantil", 
+      "icono": "../static/media/icons/Infantil.png"
+    },
+
+    {
+      "nombre": "Histórico", 
+      "icono": "../static/media/icons/Histórico.png"
+    },
+
+    {
+      "nombre": "Aventuras", 
+      "icono": "../static/media/icons/Aventuras.png"
+    },
+
+    {
+      "nombre": "Terror", 
+      "icono": "../static/media/icons/Terror.png"
+    },
+
+    {
+      "nombre": "Suspense", 
+      "icono": "../static/media/icons/Suspense.png"
+    },
+
+    {
+      "nombre": "Selección", 
+      "icono": "../static/media/icons/Award.png"
     }
   ]
 }

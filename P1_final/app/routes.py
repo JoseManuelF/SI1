@@ -75,6 +75,47 @@ def profile():
 
     return render_template('profile.html', history=data)
 
+@app.route('/sumar_saldo', methods=['GET', 'POST'])
+def sumarSaldo():
+    
+    # Si el usuario no ha iniciado sesión, te redirige a hacer login
+    if 'usuario' not in session:
+        return redirect(url_for('home', login=True))
+
+    # Si el usuario tiene algún problema con el saldos en su sesión se cierra
+    if 'saldo' not in session:
+        return redirect(url_for('logout'))
+
+    if request.method == 'POST':
+        # Actualizamos el saldo de la sesión del usuario
+        session['saldo'] = float(session['saldo']) + float(request.form['saldo'])
+
+        # Hallamos la ruta de la carpeta de usuarios
+        this_dir = os.path.dirname(__file__)
+        previous_dir = os.path.dirname(this_dir)
+        users_path = os.path.join(previous_dir, "usuarios/")
+
+        # Accedemos a los datos de la carpeta del usuario
+        user_dir = os.path.join(users_path, "%s" %session['usuario'])
+        datos_path = os.path.join(user_dir, "datos.dat")
+
+        # Cargamos los datos del perfil, para poder sobreescribir el saldo.
+        segmented_data = []
+        with open(datos_path, "r") as f_datos:
+            segmented_data = f_datos.readline().split(" | ")
+            
+        # Actualizamos el saldo del usuario tras el ingreso.
+        with open(datos_path, "w") as f_datos:
+            data = ""
+            for i in range(4):
+                data += segmented_data[i] + " | "
+            
+            print("------------ Saldo: " + str(session['saldo']))
+            data += str(session['saldo'])
+            f_datos.write(data)
+
+    return redirect(url_for('profile'))
+    
 @app.route('/movie_id_<int:id>')
 def movie(id):
     print (url_for('static', filename='css/movieTemplate.css'), file=sys.stderr)
@@ -152,6 +193,7 @@ def login():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    session.pop('saldo', None)
     session.pop('usuario', None)
     return redirect(url_for('home'))
 
@@ -190,7 +232,7 @@ def register():
         historial_path = os.path.join(user_dir, "historial.json")
 
         saldo = 0
-        with open(datos_path, "w+") as f_datos:
+        with open(datos_path, "w") as f_datos:
             # Hasheamos la contraseña
             hash_password = hashlib.sha512(("%s" %password).encode('utf-8')).hexdigest()
 

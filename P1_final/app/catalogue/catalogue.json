@@ -5,7 +5,7 @@
 			"título": "Interestellar",
       "poster": "../static/media/movies/Interestellar.png",
       "precio": 12.99,
-      "categoria": ["Acción", "Sci-Fi"],
+      "categoria": ["Aventuras", "Sci-Fi", "Selección"],
       "año": 2014,
       "preview": "../static/media/previews/Interestellar.png",
       "sinopsis": "Cuando la vida humana en la Tierra se ve amenazada por una plaga que mata los cultivos, Cooper, ex-piloto de la Nasa, se embarcará en una aventura por el espacio en busca de un planeta habitable al que puedan trasladar a la humanidad.",
@@ -55,7 +55,7 @@
 			"título": "Coherence",
       "poster": "../static/media/movies/Coherence.png",
       "precio": 9.99,
-      "categoria": ["Psicológica"],
+      "categoria": ["Psicológica", "Suspense"],
       "año": 2013,
       "preview": "../static/media/previews/Coherence.png",
       "sinopsis": "El paso de un cometa hace que los habitantes de un pueblo queden completamente desorientados, originando comportamientos muy extraños.",
@@ -93,7 +93,7 @@
 			"título": "About Time",
       "poster": "../static/media/movies/aboutTime.png",
       "precio": 9.99,
-      "categoria": ["Romance"],
+      "categoria": ["Romance", "Comedia", "Selección"],
       "año": 2013,
       "preview": "../static/media/previews/aboutTime.png",
       "sinopsis": "Tim Lake (Domhnall Gleeson) es un joven de 21 años que descubre que puede viajar en el tiempo. Su padre (Bill Nighy) le cuenta que todos los hombres de la familia han tenido desde siempre ese don, el de regresar en el tiempo a un momento determinado, una y otra vez, hasta conseguir hacer \"lo correcto\".",
@@ -112,7 +112,7 @@
 			"título": "John Doe: Vigilante",
       "poster": "../static/media/movies/John Doe Vigilante.png",
       "precio": 7.99,
-      "categoria": ["Acción","Psicológica"],
+      "categoria": ["Acción", "Psicológica", "Suspense", "Selección"],
       "año": 2014,
       "preview": "../static/media/previews/John Doe Vigilante.png",
       "sinopsis": "John Doe, el vigilante, exige que exista justicia al ver que los criminales más violentos quedan siempre exentos y recuperando su libertad, a los que decide asesinar. Pronto él inspira a un grupo de vigilantes que le seguirán los pasos.",
@@ -131,7 +131,7 @@
 			"título": "Il Prefetto di Ferro",
       "poster": "../static/media/movies/Il Prefetto di Ferro.png",
       "precio": 0.99,
-      "categoria": ["Drama", "Acción"],
+      "categoria": ["Drama", "Acción", "Suspense", "Selección"],
       "año": 1977,
       "preview": "../static/media/previews/Il Prefetto di Ferro.png",
       "sinopsis": "La Mafia ha invadido una parte del ruinoso país, de modo que un hombre muy severo (Giuliano Gemma), ha sido enviado por el gobierno para ser el gobernador de esa región. Se le ha dado mucho poder y autoridad y no tiene miedo de usarla. De hecho, en alguna ocasión ha tenido que hacer uso de ella, enfrentándose a algún criminal. Él no para hasta que consigue descubrir la verdadera corrupción local, y sus conexiones con otros lugares.",
@@ -150,7 +150,7 @@
 			"título": "Ratatouille",
       "poster": "../static/media/movies/Ratatouille.png",
       "precio": 4.99,
-      "categoria": ["Animación"],
+      "categoria": ["Animación", "Infantil"],
       "año": 2007,
       "preview": "../static/media/previews/Ratatouille.png",
       "sinopsis": "Esta película trata de Remy, una rata con un desarrollado sentido del olfato, cuando descubre un libro del Chef más grande de París. Remy se enamora del mundo culinario, y sueña con convertirse en un gran chef francés a pesar de la oposición de su familia, su padre y su hermano Emile, sin olvidar del problema evidente que supone ser una rata en una profesión que detesta a los roedores. Luego de separarse de su familia en un accidente, el destino lleva a Remy a las alcantarillas de París, pero su situación no podría ser mejor, ya que se encuentra justo debajo de un restaurante que se ha hecho famoso gracias a Auguste Gusteau, una estrella de la cocina. A pesar del peligro que representa ser un visitante poco común en los fogones de un exquisito restaurante francés, la pasión de Remy por la cocina pone patas arriba al mundo culinario parisino en una divertidísima y emocionante aventura. Ahí conoce al inexperto y algo torpe lavaplatos Linguini, con quien hace una profunda amistad, para así juntos lograr ser los más prestigiosos chefs de Francia. Cuando todo parece mejorar, Remy se topa con su hermano Emile, quien le pide regresar con su familia, el roedor se debate entre su vocación y sus seres queridos.",
@@ -188,7 +188,7 @@
 			"título": "El hundimiento",
       "poster": "../static/media/movies/El hundimiento.png",
       "precio": 6.99,
-      "categoria": ["Drama", "Bélico"],
+      "categoria": ["Drama", "Bélico", "Histórico", "Selección"],
       "año": 2004,
       "preview": "../static/media/previews/El hundimiento.png",
       "sinopsis": "Berlín, abril de 1945. Una nación está a punto de sufrir su hundimiento. Una encarnizada batalla se libra en las calles de la capital. Hitler y su círculo de confianza se han atrincherado en el búnker del Führer. Entre ellos se encuentra Traudl Junge, secretaria personal de Hitler. En el exterior, la situación se recrudece. A pesar de que Berlín ya no puede resistir más, el Führer se niega a abandonar la ciudad. Mientras el sangriento peso de la guerra cae sobre sus últimos defensores, Hitler, acompañado de Eva Braun, prepara su despedida final.",
@@ -207,9 +207,351 @@
 			"título": "Sully",
       "poster": "../static/media/movies/Sully.png",
       "precio": 9.99,
-      "categoria": ["Drama"],
+      "categoria": ["Drama", "Suspense", "Selección"],
       "año": 2016,
       "preview": "../static/media/previews/Sully.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 12,
+			"título": "El Padrino",
+      "poster": "../static/media/movies/El Padrino.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Acción", "Selección"],
+      "año": 1972,
+      "preview": "../static/media/previews/El Padrino.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 13,
+			"título": "La brújula dorada",
+      "poster": "../static/media/movies/La brújula dorada.png",
+      "precio": 9.99,
+      "categoria": ["Infantil", "Aventuras"],
+      "año": 2007,
+      "preview": "../static/media/previews/La brújula dorada.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 14,
+			"título": "Amadeus",
+      "poster": "../static/media/movies/Amadeus.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Histórico", "Selección"],
+      "año": 1984,
+      "preview": "../static/media/previews/Amadeus.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 15,
+			"título": "Germinal",
+      "poster": "../static/media/movies/Germinal.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Histórico"],
+      "año": 1993,
+      "preview": "../static/media/previews/Germinal.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 16,
+			"título": "Evolution",
+      "poster": "../static/media/movies/Evolution.png",
+      "precio": 9.99,
+      "categoria": ["Sci-Fi", "Comedia"],
+      "año": 2001,
+      "preview": "../static/media/previews/Evolution.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 17,
+			"título": "Expediente Warren: El caso Enfield",
+      "poster": "../static/media/movies/Expediente Warren El caso Enfield.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Terror"],
+      "año": 2016,
+      "preview": "../static/media/previews/Expediente Warren El caso Enfield.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 18,
+			"título": "Insidious",
+      "poster": "../static/media/movies/Insidious.png",
+      "precio": 9.99,
+      "categoria": ["Terror"],
+      "año": 2010,
+      "preview": "../static/media/previews/Insidious.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 19,
+			"título": "Mindscape",
+      "poster": "../static/media/movies/Mindscape.png",
+      "precio": 9.99,
+      "categoria": ["Psicológica", "Suspense", "Selección"],
+      "año": 2013,
+      "preview": "../static/media/previews/Mindscape.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 20,
+			"título": "Indiana Jones y los cazadores del Arca Perdida",
+      "poster": "../static/media/movies/Indiana Jones y los cazadores del arca perdida.png",
+      "precio": 9.99,
+      "categoria": ["Aventuras", "Acción"],
+      "año": 1981,
+      "preview": "../static/media/previews/Indiana Jones y los cazadores del arca perdida.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 21,
+			"título": "Golpe de Altura",
+      "poster": "../static/media/movies/Un golpe de altura.png",
+      "precio": 9.99,
+      "categoria": ["Acción", "Comedia"],
+      "año": 2011,
+      "preview": "../static/media/previews/Un golpe de altura.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 22,
+			"título": "León, el profesional",
+      "poster": "../static/media/movies/León.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Suspense", "Selección"],
+      "año": 1994,
+      "preview": "../static/media/previews/León.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 23,
+			"título": "Blade Runner",
+      "poster": "../static/media/movies/Blade Runner.png",
+      "precio": 9.99,
+      "categoria": ["Sci-Fi", "Suspense"],
+      "año": 1982,
+      "preview": "../static/media/previews/Blade Runner.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 24,
+			"título": "Blade Runner 2049",
+      "poster": "../static/media/movies/Blade Runner 2049.png",
+      "precio": 9.99,
+      "categoria": ["Sci-Fi", "Suspense"],
+      "año": 2017,
+      "preview": "../static/media/previews/Blade Runner 2049.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 25,
+			"título": "Inside Out",
+      "poster": "../static/media/movies/Inside Out.png",
+      "precio": 9.99,
+      "categoria": ["Infantil", "Animación"],
+      "año": 2015,
+      "preview": "../static/media/previews/Inside Out.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 26,
+			"título": "Los Simpson: la película",
+      "poster": "../static/media/movies/Los Simpson La película.png",
+      "precio": 9.99,
+      "categoria": ["Animación", "Comedia"],
+      "año": 2007,
+      "preview": "../static/media/previews/Los Simpson La película.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 27,
+			"título": "Overlord",
+      "poster": "../static/media/movies/Overlord.png",
+      "precio": 9.99,
+      "categoria": ["Terror", "Bélico"],
+      "año": 2018,
+      "preview": "../static/media/previews/Overlord.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 28,
+			"título": "El Pianista",
+      "poster": "../static/media/movies/El Pianista.png",
+      "precio": 9.99,
+      "categoria": ["Drama", "Bélico"],
+      "año": 2002,
+      "preview": "../static/media/previews/El Pianista.png",
+      "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
+      "crítica": "--",
+      "puntuación": 8.5,
+      "reparto": 
+      [
+        { "nombre": "--",
+          "personaje": "--"
+        }
+      ]
+    },
+
+    { 
+			"id": 29,
+			"título": "Tengo ganas de ti",
+      "poster": "../static/media/movies/Tengo ganas de ti.png",
+      "precio": 9.99,
+      "categoria": ["Romance"],
+      "año": 2012,
+      "preview": "../static/media/previews/Tengo ganas de ti.png",
       "sinopsis": "Chesley “Sully” Sullenberger es un piloto aéreo que en 2009 se convirtió en un héroe cuando, al poco de despegar, su avión se averió y logró realizar un aterrizaje forzoso del aparato en pleno río Hudson, en Nueva York, con 155 pasajeros a bordo.",
       "crítica": "--",
       "puntuación": 8.5,

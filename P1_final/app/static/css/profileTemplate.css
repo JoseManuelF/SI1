@@ -32,6 +32,16 @@
 .saldo {
     padding-bottom: 20px;
     font-size: 18px;
+    display: inline-block;
+}
+
+.increaseSaldo {
+    width: 70%;
+    float: right;
+}
+
+.increaseSaldo input[type=text] {
+    width: 20%;
 }
 
 table {
