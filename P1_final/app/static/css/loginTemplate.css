@@ -22,12 +22,11 @@
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     width: 360px;
-    height: 450px;
+    height: 470px;
 }
 
 .container {
     padding: 16px;
-    padding-bottom: 40px;
 }
 
 .container input[type=text],
@@ -78,6 +77,15 @@ img.avatar {
 .close:hover{
     color: red;
     cursor: pointer;
+}
+
+.login_error {
+    padding: 0px 16px;
+}
+
+.login_mess {
+    width: auto !important;
+    color: red;
 }
 
 .gotoRegister {
