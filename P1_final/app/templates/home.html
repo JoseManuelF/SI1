@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 
 <!-- Código html de la página principal y del formulario de iniciar sesión -->
-<html>
+<html lang="es">
     <head>
         <title>Filmbrary</title>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="../static/js/home.js"></script>
-        <link rel="icon" href="../static/media/icons/favicon.ico"> <!-- Para mostrar el icono de la página en el navegador -->
-        <link rel="stylesheet" href="../static/css/main.css" />
-        <link rel="stylesheet" href="../static/css/homeTemplate.css" />
-        <link rel="stylesheet" href="../static/css/loginTemplate.css" />
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/homeTemplate.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/loginTemplate.css') }}" />
     </head>
     
     <body {% if login %} onload="loginWindow()" {% endif %}>
         <div class="nav">
             <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
-                <img class = "menuIcon" src = "../static/media/icons/threeDots.png"></img>
+                <img class = "menuIcon" src = "{{ url_for('static', filename='media/icons/threeDots.png') }}" alt="Menú">
             </div>
             <a href="{{ url_for('home') }}">
                 <h1 class="toTheCenter vitalSpace col-3">Filmbrary</h1>
@@ -23,7 +24,9 @@
             <div class="searchBar col-2">
                 <form action="{{ url_for('search') }}" method="post">
                     <input type="text" placeholder="Buscar..." name="search">
-                    <button type="submit"><img class = "menuIcon" src= "../static/media/icons/Search.png"></button>
+                    <button type="submit">
+                        <img class = "menuIcon" src= "{{ url_for('static', filename='media/icons/Search.png') }}" alt="Búsqueda">
+                    </button>
                 </form>
             </div>
             <div class="login">
@@ -34,7 +37,7 @@
                     <button>{{ session['usuario'] }}</button>
                 </a>
                 {% endif %}
-                <img class="profileButton col-4" src = "../static/media/icons/Login.png">
+                <img class="profileButton col-4" src = "{{ url_for('static', filename='media/icons/Login.png') }}" alt="Perfil">
             </div>
         </div>
           
@@ -59,23 +62,23 @@
             <div class="sidebar" id="menu">
                 <div class="sidebarOptionButton">
                     <a href = "{{ url_for('cesta') }}">
-                        <img class="sidebarOptionIcon col-5" src = "../static/media/icons/ShoppingCart1.png"></img>
+                        <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/ShoppingCart1.png') }}" alt="Cesta">
                     </a>
                     <a href = "{{ url_for('cesta') }}" class="sidebarOptionText col-1">
                         Cesta
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
-                    <a href = "{{ url_for('movie', id=8) }}">
-                        <img class="sidebarOptionIcon col-5" src = "../static/media/icons/Ticket.png"></img>
+                    <a href = "{{ url_for('movieOfTheDay') }}">
+                        <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/Ticket.png') }}" alt="Película del día">
                     </a>
-                    <a href = "{{ url_for('movie', id=8) }}" class="sidebarOptionText col-1">
+                    <a href = "{{ url_for('movieOfTheDay') }}" class="sidebarOptionText col-1">
                         Película del día
                     </a>
                 </div>
                 <div class="sidebarOptionButton">
                     <a onclick="categoriesButton()">
-                        <img id="desplegable" class="sidebarOptionIcon col-5" src = "../static/media/icons/Desplegable.png"></img>
+                        <img id="desplegable" class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/Desplegable.png') }}" alt="Categorías">
                     </a>
                     <a onclick="categoriesButton()" class="sidebarOptionText col-1">
                         Categorías
@@ -84,7 +87,7 @@
                 <div id="category" class="hidden vitalSpace categoryListSidebar">
                     <div class="sidebarOptionButton">
                         <a href = "{{ url_for('home') }}">
-                            <img class="sidebarOptionIcon col-5" src = "../static/media/icons/AllCategories.png"></img>
+                            <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/AllCategories.png') }}" alt="Todas las categorías">
                         </a>
                         <a href = "{{ url_for('home') }}" class="sidebarOptionText col-1">
                             Todas
@@ -94,7 +97,7 @@
                     {% for category in categories %}
                     <div class="sidebarOptionButton">
                         <a href = "{{ url_for('home', category=category.nombre) }}">
-                            <img class="sidebarOptionIcon col-5" src = "{{ category.icono }}"></img>
+                            <img class="sidebarOptionIcon col-5" src = "{{ category.icono }}" alt="{{ category.nombre }}">
                         </a>
                         <a href = "{{ url_for('home', category=category.nombre) }}" class="sidebarOptionText col-1">
                             {{ category.nombre }}
@@ -115,7 +118,7 @@
             <form class="modal-content" action="{{ url_for('login') }}" method="post">
                 <div class="imgcontainer">
                     <span class="close" onclick="loginWindow()" title="Close Window">&times;</span>
-                    <img src="../static/media/icons/Login.png" alt="Avatar" class="avatar">
+                    <img src="{{ url_for('static', filename='media/icons/Login.png') }}" alt="Avatar" class="avatar">
                 </div>
             
                 <div class="container">
@@ -125,11 +128,19 @@
                     <label for="psw"><b>Contraseña</b></label>
                     <input type="password" placeholder="Escribir Contraseña" name="psw" required>
                     
-                <button type="submit">Iniciar sesión</button>
+                    <button type="submit">Iniciar sesión</button>
                     <label>
                         <input type="checkbox" checked="checked" name="remember"> Recuérdame
                     </label>
                 </div>
+
+                {% if login_error %}
+                <div class="login_error">  
+                    <span class="login_mess">
+                        {{ login_error }}
+                    </span>
+                </div>
+                {% endif %}
             
                 <div class="container">
                     <span class="gotoRegister">

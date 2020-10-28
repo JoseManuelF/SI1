@@ -3,12 +3,14 @@
 
 <!-- Código html de la cesta del usuario -->
 {% block content %}
-<html>
+<html lang="es">
     <head>
-        <link rel="icon" href="../static/media/icons/favicon.ico"> <!-- Para mostrar el icono de la página en el navegador -->
-        <link rel="stylesheet" href="../static/css/main.css" />
-        <link rel="stylesheet" href="../static/css/homeTemplate.css" />
-        <link rel="stylesheet" href="../static/css/cestaTemplate.css" />
+        <title>Filmbrary - Cesta</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/homeTemplate.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cestaTemplate.css') }}" />
     </head>
     
     <body>
@@ -16,7 +18,7 @@
             <div class="cesta-title">
                 Tu Cesta
             </div>
-            <a href="{{ url_for('buy')}}">
+            <a href="{{ url_for('buy') }}">
                 <div class="actionButton">
                     Pagar y Terminar ({{ precio }}€)
                 </div>

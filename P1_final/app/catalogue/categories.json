@@ -2,72 +2,72 @@
   [
     {
       "nombre": "Sci-Fi", 
-      "icono": "../static/media/icons/Sci-Fi.png"
+      "icono": "static/media/icons/SciFi.png"
     },
 
     {
       "nombre": "Animación", 
-      "icono": "../static/media/icons/Animation.png"
+      "icono": "static/media/icons/Animation.png"
     },
 
     {
       "nombre": "Romance", 
-      "icono": "../static/media/icons/Romance.png"
+      "icono": "static/media/icons/Romance.png"
     },
 
     {
       "nombre": "Psicológica", 
-      "icono": "../static/media/icons/Psicológica.png"
+      "icono": "static/media/icons/Psicologica.png"
     },
     
     {
       "nombre": "Comedia", 
-      "icono": "../static/media/icons/Comedy.png"
+      "icono": "static/media/icons/Comedy.png"
     },
     
     {
       "nombre": "Acción", 
-      "icono": "../static/media/icons/Action.png"
+      "icono": "static/media/icons/Action.png"
     },
     
     {
       "nombre": "Drama", 
-      "icono": "../static/media/icons/Drama.png"
+      "icono": "static/media/icons/Drama.png"
     },
 
     {
       "nombre": "Bélico", 
-      "icono": "../static/media/icons/Bélico.png"
+      "icono": "static/media/icons/Belico.png"
     },
     
     {
       "nombre": "Infantil", 
-      "icono": "../static/media/icons/Infantil.png"
+      "icono": "static/media/icons/Infantil.png"
     },
 
     {
       "nombre": "Histórico", 
-      "icono": "../static/media/icons/Histórico.png"
+      "icono": "static/media/icons/Historico.png"
     },
 
     {
       "nombre": "Aventuras", 
-      "icono": "../static/media/icons/Aventuras.png"
+      "icono": "static/media/icons/Aventuras.png"
     },
 
     {
       "nombre": "Terror", 
-      "icono": "../static/media/icons/Terror.png"
+      "icono": "static/media/icons/Terror.png"
     },
 
     {
       "nombre": "Suspense", 
-      "icono": "../static/media/icons/Suspense.png"
+      "icono": "static/media/icons/Suspense.png"
     },
 
     {
       "nombre": "Selección", 
-      "icono": "../static/media/icons/Award.png"
+      "icono": "static/media/icons/Award.png"
     }
   ]
 }

@@ -10,26 +10,28 @@ import random
 import hashlib
 import datetime
 
+# Cargamos el catálogo de las películas
+catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+catalogue = json.loads(catalogue_data)
+
+# Cargamos las categorías
+categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
+categories = json.loads(categories_data)
+
 @app.route('/')
 @app.route('/<category>')
-@app.route('/login/<login>')
-def home(category = None, login = False):
+@app.route('/login_<login>')
+@app.route('/login_error:<login_error>')
+def home(category = None, login = False, login_error = ""):
     print (url_for('static', filename='css/homeTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/loginTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
-    # Cargamos el catálogo de las películas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-
-    # Cargamos las categorías
-    categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
-    categories = json.loads(categories_data)
-
     # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
     # Por lo que muestra todas las películas en el catalogue.json
     if(category == None):
-        return render_template('home.html', movies=catalogue['peliculas'], categories=categories['categorias'], login=login)
+        return render_template('home.html', movies=catalogue['peliculas'],
+                               categories=categories['categorias'], login=login, login_error=login_error)
 
     # Si una categoría ha sido especificada, la filtramos y solo mostramos
     # las películas que tengan esa categoría.
@@ -43,7 +45,8 @@ def home(category = None, login = False):
                 categoryMovies.append(movie)
             else:
                 print("x", end = "\n")
-        return render_template('home.html', movies=categoryMovies, categories=categories['categorias'], login=login)
+        return render_template('home.html', movies=categoryMovies,
+                               categories=categories['categorias'], login=login, login_error=login_error)
 
 @app.route('/profile')
 def profile():
@@ -73,7 +76,7 @@ def profile():
     else:
         data = json.loads(oldData)
 
-    return render_template('profile.html', history=data)
+    return render_template('profile.html', history=data, categories=categories['categorias'])
 
 @app.route('/sumar_saldo', methods=['GET', 'POST'])
 def sumarSaldo():
@@ -88,7 +91,7 @@ def sumarSaldo():
 
     if request.method == 'POST':
         # Actualizamos el saldo de la sesión del usuario
-        session['saldo'] = float(session['saldo']) + float(request.form['saldo'])
+        session['saldo'] = round(float(session['saldo']) + float(request.form['saldo']), 2)
 
         # Hallamos la ruta de la carpeta de usuarios
         this_dir = os.path.dirname(__file__)
@@ -122,8 +125,6 @@ def movie(id):
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
     # Cargamos el catálogo de las películas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
     # Buscamos la película dada por el id en el catálogo
@@ -146,7 +147,7 @@ def movie(id):
         if m['id'] == id:
             added += 1
             
-    return render_template('movie.html', movie=movie, added=added)
+    return render_template('movie.html', movie=movie, added=added, categories=categories['categorias'])
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -155,6 +156,9 @@ def login():
         this_dir = os.path.dirname(__file__)
         previous_dir = os.path.dirname(this_dir)
         users_path = os.path.join(previous_dir, "usuarios/")
+
+        # Mensaje de error en caso de que no se pueda iniciar sesión
+        login_error = "El nombre de usuario o la contraseña no coinciden."
 
         # Comprobamos si el usuario dado está registrado
         users_list = os.listdir(users_path)
@@ -178,10 +182,11 @@ def login():
                         session.modified=True
                         return redirect(url_for('home'))
                     else:
-                        return redirect(url_for('home'))
+                        # Las contraseñas no coinciden, mensaje de error
+                        return redirect(url_for('home', login_error=login_error))
 
         # El usuario no está registrado en la carpeta de usuarios
-        return redirect(url_for('register'))
+        return redirect(url_for('home', login_error=login_error))
     else:
         # se puede guardar la pagina desde la que se invoca 
         session['url_origen']=request.referrer
@@ -189,12 +194,13 @@ def login():
         
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return redirect(url_for('home'))
+        return redirect(url_for('home', login=True))
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('saldo', None)
     session.pop('usuario', None)
+    session.pop('cesta', None)
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -256,13 +262,6 @@ def register():
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
-        # Cargamos el catálogo de las películas
-        catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-        catalogue = json.loads(catalogue_data)
-
-        # Cargamos las categorías
-        categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
-        categories = json.loads(categories_data)
 
         search = request.form['search']
         # Si la búsqueda no es una cadena vacía, eso significa que estamos buscando algo.
@@ -288,9 +287,6 @@ def search():
 @app.route('/cesta_add/<int:add>')
 @app.route('/cesta_delete/<int:delete>')
 def cesta(add = None, delete = None):
-    # Cargamos el catálogo de las películas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
 
     # Si no existe, creamos una cesta con las películas en la sesión
     if 'cesta' not in session:
@@ -325,9 +321,9 @@ def cesta(add = None, delete = None):
         for pritem in session['cesta']:
             for prcatalog in catalogue['peliculas']:
                 if pritem['id'] == prcatalog['id']:
-                    precio += prcatalog['precio']
+                    precio += round(prcatalog['precio'], 2)
 
-        return render_template('cesta.html', cesta=session['cesta'], precio=precio)
+        return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories['categorias'])
 
 @app.route('/buy')
 def buy():
@@ -335,16 +331,12 @@ def buy():
     if 'cesta' not in session:
         session['cesta'] = []
 
-    # Cargamos el catálogo de las películas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-
     # Calculamos el precio total de la cesta
     precio = 0.0
     for pritem in session['cesta']:
         for prcatalog in catalogue['peliculas']:
             if pritem['id'] == prcatalog['id']:
-                precio += prcatalog['precio']
+                precio += round(prcatalog['precio'], 2)
 
     # El usuario no ha iniciado sesión, por lo que no podrá comprar las películas
     if 'usuario' not in session:
@@ -367,7 +359,7 @@ def buy():
             saldo = float(segmented_data[4])
 
             # Descontamos el precio total al saldo
-            saldo = saldo - precio
+            saldo = round((saldo - precio), 2)
 
         # No hay saldo suficiente
         if saldo < 0.0:
@@ -396,8 +388,6 @@ def buy():
 @app.route('/buy_direct/<int:id>')
 def buy_direct(id = 0):
     # Cargamos el catálogo de las películas
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
 
     # Buscamos la película dada por el id en el catálogo
@@ -434,7 +424,7 @@ def buy_direct(id = 0):
             saldo = float(segmented_data[4])
 
             # Descontamos el precio total al saldo
-            saldo = saldo - precio
+            saldo = round((saldo - precio), 2)
 
         # No hay saldo suficiente
         if saldo < 0.0:
@@ -485,3 +475,12 @@ def printJson(path, movies):
     # Accedemos al historial.json del usuario y lo actualizamos
     with open(path, 'w') as f_historial:
         json.dump(data, f_historial)
+
+@app.route('/movieOfTheDay')
+def movieOfTheDay():
+    dt = datetime.datetime.today()
+    
+    # Pseudo random generator (1, 29)
+    todays = ((dt.day*31 + dt.month*17 + dt.year*29) % 28) + 1
+
+    return redirect(url_for('movie', id=todays))
