@@ -26,8 +26,8 @@ BEGIN
     FROM
         FullTable
     WHERE
-        price_ >= 320000 OR
-        sold_ >= 19000;
+        price_ >= money OR
+        sold_ >= products;
 END;
 $$ LANGUAGE plpgsql;
 

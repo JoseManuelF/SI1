@@ -1,4 +1,4 @@
--- Creamos una view para obtener una tabla com el precio y año
+-- Creamos una view para obtener una tabla con el precio y año
 -- de cada producto de todos los pedidos
 CREATE OR REPLACE VIEW YearVsPrice AS
 SELECT

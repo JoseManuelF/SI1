@@ -1,1 +1,12 @@
-O   Añadir Foreign Keys a Orderdetails
+Detalles de la actualización 1.1:
+
+Añadir Foreign Keys a Orderdetail, inventory, orders, imdb_actormovies
+Crear languages, countries and genres tables
+Eliminar la relación imdb_moviecountries (ya que creamos la tabla countries)
+Sustituir country (texto) de customers por una foreign key a la tabla countries
+Quitar el año al movietitle de imdb_movies
+
+Próximas actualizaciones:
+Hashear la contraseña del customer
+Hacer que el address y el creditcard en customer sean foreign keys a tablas con sus
+atributos correspondientes (de tal forma no habrá tantos atributos en customer)
