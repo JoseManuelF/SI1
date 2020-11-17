@@ -10,3 +10,15 @@ Próximas actualizaciones:
 Hashear la contraseña del customer
 Hacer que el address y el creditcard en customer sean foreign keys a tablas con sus
 atributos correspondientes (de tal forma no habrá tantos atributos en customer)
+**Meter los create view dentro de los procedimientos almacenados
+
+Restaurar base de datos versión 1.1:
+-- Exportamos los datos de la base de datos
+export PGUSER=alumnodb
+export PGPASSWORD=alumnodb
+export PGDATABASE=si1
+
+-- Eliminamos la base de datos y la creamos de nuevo con los datos en el archivo dump_v1.4.sql
+dropdb si1
+createdb -U alumnodb si1
+cat dump_v1.4.sql | psql -U alumnodb si1
