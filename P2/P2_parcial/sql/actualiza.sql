@@ -154,3 +154,13 @@ ALTER TABLE customers
 
 -- Borramos la tabla moviecountry que ya no necesitamos
 DROP TABLE imdb_moviecountries;
+
+-- Creamos una nueva tabla alertas que requiere el trigger updInventory para indicar
+-- si no hay stock de una película que se quiere comprar
+CREATE TABLE alertas (
+    prod_id integer NOT NULL,
+    alertadate date NOT NULL,
+
+    CONSTRAINT alertas_prod_id_fkey foreign key (prod_id)
+    REFERENCES products(prod_id)
+);
