@@ -160,6 +160,7 @@ DROP TABLE imdb_moviecountries;
 CREATE TABLE alertas (
     prod_id integer NOT NULL,
     alertadate date NOT NULL,
+    stock integer NOT NULL,
 
     CONSTRAINT alertas_prod_id_fkey foreign key (prod_id)
     REFERENCES products(prod_id)

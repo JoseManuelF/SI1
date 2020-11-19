@@ -27,7 +27,7 @@ BEGIN
         -- En caso de que no haya stock, añadimos una alerta
         IF (prod.quantity >= prod.stock) THEN
             INSERT INTO alertas
-            VALUES (prod.prod_id, NOW());
+            VALUES (prod.prod_id, NOW(), prod.stock - prod.quantity);
         END IF;
     END LOOP;
 
