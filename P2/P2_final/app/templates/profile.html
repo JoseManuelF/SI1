@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% extends "home.html" %}
+
+<!-- Código html del perfil del usuario -->
+{% block content %}
+<html lang="es">
+    <head>
+        <title>Filmbrary - Perfil</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/profileTemplate.css') }}" />
+    </head>
+    
+    {% if session['usuario'] %}
+    <body>
+        <div class="buttonPadding">
+            <div class="username">
+                {{ session['usuario'] }}
+            </div>
+            <a href="{{ url_for('logout') }}">
+                <div class="actionButton">
+                    Cerrar Sesión
+                </div>
+            </a>
+        </div>
+            
+        <div>
+            <div class="saldo">
+                Saldo: {{ session['saldo'] }}€
+            </div>
+            <form class="increaseSaldo" action="{{ url_for('sumarSaldo') }}" method=post>
+                <label class="saldo" for="increaseSaldo">Añadir saldo</label>
+                <input type="text" placeholder="Escribir dinero que añadir a saldo" name="saldo"
+                pattern="[0-9]+\.+[0-9]" title = "Debes introducir un número positivo decimal con punto" required>
+
+                <button type="submit">Confirmar</button>
+            </form>
+        </div>
+
+        <table>
+            <tr>
+                <th>Película</th>
+                <th>Precio</th>
+                <th>Fecha</th>
+            </tr>
+            
+            {% for movie in history %}
+            <tr>
+                <td>{{ movie.titulo }}</th>
+                <td>{{ movie.precio }}</th>
+                <td>{{ movie.fecha }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+    {% endif %}
+
+</html>
+{% endblock %}
