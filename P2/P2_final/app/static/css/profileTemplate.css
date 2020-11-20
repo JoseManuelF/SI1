@@ -59,3 +59,14 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+@media only screen and (max-width: 1050px){
+    .profile-col-1{
+        font-size: 18px;
+        width: 40%;
+    }
+    .profile-col-2{
+        width: 100%;
+    }
+}

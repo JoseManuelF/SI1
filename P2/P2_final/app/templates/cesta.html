@@ -20,7 +20,12 @@
             </div>
             <a href="{{ url_for('buy') }}">
                 <div class="actionButton">
-                    Pagar y Terminar ({{ precio }}€)
+                    <div class="actionButtonText cesta-col-1">
+                        Pagar y Terminar
+                    </div>
+                    <div class="actionButtonText cesta-col-2">
+                        ({{ precio }}€)
+                    </div>
                 </div>
             </a>
 

@@ -29,6 +29,10 @@
     background: #3a9c73;
 }
 
+.actionButtonText {
+    display: inline-block;
+}
+
 .delete-sign {
     position: absolute;
     width: 75%;
@@ -52,4 +56,20 @@
     font-size: 20px;
     display: inline-block;
     width: 25%;
+}
+
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+@media only screen and (max-width: 1050px){
+    .cesta-col-1{
+        font-size: 18px;
+    }
+    .cesta-col-2{
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 760px){
+    .cesta-col-1{
+        display: none;
+    }
 }

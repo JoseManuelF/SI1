@@ -19,7 +19,7 @@
                 {{ session['usuario'] }}
             </div>
             <a href="{{ url_for('logout') }}">
-                <div class="actionButton">
+                <div class="actionButton profile-col-1">
                     Cerrar Sesión
                 </div>
             </a>
@@ -29,7 +29,7 @@
             <div class="saldo">
                 Saldo: {{ session['saldo'] }}€
             </div>
-            <form class="increaseSaldo" action="{{ url_for('sumarSaldo') }}" method=post>
+            <form class="increaseSaldo profile-col-2" action="{{ url_for('sumarSaldo') }}" method=post>
                 <label class="saldo" for="increaseSaldo">Añadir saldo</label>
                 <input type="text" placeholder="Escribir dinero que añadir a saldo" name="saldo"
                 pattern="[0-9]+\.+[0-9]" title = "Debes introducir un número positivo decimal con punto" required>

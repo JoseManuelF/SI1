@@ -322,7 +322,7 @@ def cesta(add = None, delete = None):
         for pritem in session['cesta']:
             for prcatalog in catalogue['peliculas']:
                 if pritem['id'] == prcatalog['id']:
-                    precio += round(prcatalog['precio'], 2)
+                    precio = round((precio + prcatalog['precio']), 2)
 
         return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories['categorias'])
 
@@ -337,7 +337,7 @@ def buy():
     for pritem in session['cesta']:
         for prcatalog in catalogue['peliculas']:
             if pritem['id'] == prcatalog['id']:
-                precio += round(prcatalog['precio'], 2)
+                precio = round((precio + prcatalog['precio']), 2)
 
     # El usuario no ha iniciado sesión, por lo que no podrá comprar las películas
     if 'usuario' not in session:
