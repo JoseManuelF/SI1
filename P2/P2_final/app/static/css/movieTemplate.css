@@ -72,7 +72,7 @@ p{
 }
 
 /* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
-@media only screen and (max-width: 1150px){
+@media only screen and (max-width: 1200px){
     .movie-col-1{
         font-size: 22px;
     }
