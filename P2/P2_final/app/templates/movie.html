@@ -18,11 +18,11 @@
             <div>
                 <img class="previewImg" src = "{{ movie.preview }}" alt="Escena de película">
             
-                <div class="title col-1">
+                <div class="title movie-col-1">
                     <div class="floatLeft"> {{ movie.título }} ({{ movie.año }})</div>
-                    <div class="price floatRight">
+                    <div class="price floatRight movie-col-3">
                         {{ movie.precio }} €
-                    </div>  
+                    </div>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
             <div class="actionDisplay">
                 
                 <a href="{{ url_for('cesta', add=movie.id) }}">
-                    <button class = "actionButton buyButton col-2" type="submit">
+                    <button class = "actionButton buyButton movie-col-2" type="submit">
                         <img class = "addCartButton" src= "{{ url_for('static', filename='media/icons/AddShoppingCart.png') }}" alt="Añadir a la cesta">
                         {% if added > 0 %}
                         ({{ added }})
@@ -39,7 +39,7 @@
                 </a>
 
                 <a href="{{ url_for('buy_direct', id=movie.id) }}">
-                    <button class = "actionButton buyButton col-2" type="submit">
+                    <button class = "actionButton buyButton movie-col-1 movie-col-2" type="submit">
                         Comprar Ahora
                     </button>
                 </a>
@@ -47,17 +47,17 @@
 
             <!-- Sinopsis, reparto y otros textos. -->
             <div class="movieText">
-                <t>Sinopsis:</t>
+                <t class="movie-col-1">Sinopsis:</t>
                 <p>{{ movie.sinopsis }}</p>
                 </br>
-                <t>Reparto:</t>
+                <t class="movie-col-1">Reparto:</t>
                 <p>
                     {% for actor in movie.reparto %}
                     {{ actor.nombre }} como <strong>{{ actor.personaje }}</strong> </br>
                     {% endfor %}
                 </p>
                 </br>
-                <t>Crítica:</t>
+                <t class="movie-col-1">Crítica:</t>
                 <p>
                     {{ movie.puntuación }} / 10 </br>
                     {{ movie.crítica }}
