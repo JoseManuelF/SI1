@@ -24,4 +24,7 @@ except ImportError as e:
     sys.stderr.write ("Flask-Session no disponible, usando sesiones de Flask en cookie")
 
 
-from app import routes
+from app import routes, database
+
+# Actualizamos el catalogue.json con películas de la base de datos
+database.update_catalogue()

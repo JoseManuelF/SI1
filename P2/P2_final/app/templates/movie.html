@@ -14,12 +14,18 @@
     
     <body>
         <div class="movieBody">
-            <!-- Foto, título, precio, año... -->
+            <!-- Foto, titulo, precio, ano... -->
             <div>
-                <img class="previewImg" src = "{{ movie.preview }}" alt="Escena de película">
+                <img class="previewImg"
+                    {% if movie.preview %}
+                    src = "{{ movie.preview }}"
+                    {% else %}
+                    src = "{{ url_for('static', filename='media/previews/NoPreview.jpg') }}"
+                    {% endif %}
+                    alt="Escena de película">
             
                 <div class="title movie-col-1">
-                    <div class="floatLeft"> {{ movie.título }} ({{ movie.año }})</div>
+                    <div class="floatLeft"> {{ movie.titulo }} ({{ movie.ano }})</div>
                     <div class="price floatRight movie-col-3">
                         {{ movie.precio }} €
                     </div>
@@ -57,10 +63,10 @@
                     {% endfor %}
                 </p>
                 </br>
-                <t class="movie-col-1">Crítica:</t>
+                <t class="movie-col-1">critica:</t>
                 <p>
-                    {{ movie.puntuación }} / 10 </br>
-                    {{ movie.crítica }}
+                    {{ movie.puntuacion }} / 10 </br>
+                    {{ movie.critica }}
                 </p>
             </div>
         </div>

@@ -31,7 +31,10 @@ def home(category = None, login = False, login_error = ""):
     # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
     # Por lo que muestra todas las películas en el catalogue.json
     if(category == None):
-        return render_template('home.html', movies=catalogue['peliculas'],
+        # Conseguimos las películas más vendidas entre 2018 y 2020 de la base de datos
+        moviesTopVentas = database.db_getTopVentas()
+
+        return render_template('home.html', movies=catalogue,
                                categories=categories['categorias'], login=login, login_error=login_error)
 
     # Si una categoría ha sido especificada, la filtramos y solo mostramos
@@ -39,8 +42,8 @@ def home(category = None, login = False, login_error = ""):
     else:
         print(category)
         categoryMovies = []
-        for movie in catalogue['peliculas']:
-            print(movie['título'] + ": ", end = "")
+        for movie in catalogue:
+            print(movie['titulo'] + ": ", end = "")
             if category in movie["categoria"]:
                 print("V", end = "\n")
                 categoryMovies.append(movie)
@@ -126,7 +129,7 @@ def movie(id):
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
     # Cargamos el catálogo de las películas
-    movies=catalogue['peliculas']
+    movies=catalogue
 
     # Buscamos la película dada por el id en el catálogo
     movie = None
@@ -269,9 +272,9 @@ def search():
         if(search != ""):
             print("Looking for: " + search)
             searchMovies = []
-            for movie in catalogue['peliculas']:
-                print(movie['título'] + ": ", end = "")
-                if search.lower() in movie["título"].lower():
+            for movie in catalogue:
+                print(movie['titulo'] + ": ", end = "")
+                if search.lower() in movie["titulo"].lower():
                     print("V", end = "\n")
                     searchMovies.append(movie)
                 else:
@@ -306,7 +309,7 @@ def cesta(add = None, delete = None):
     # Tenemos como argumento el id de la película a añadir a la cesta
     elif add != None:
         # Buscamos la película dada por el id en el catálogo
-        for item in catalogue['peliculas']:
+        for item in catalogue:
             if item['id'] == add:
                 movie = item.copy()
 
@@ -320,7 +323,7 @@ def cesta(add = None, delete = None):
         # Calculamos el precio total de la cesta
         precio = 0.0
         for pritem in session['cesta']:
-            for prcatalog in catalogue['peliculas']:
+            for prcatalog in catalogue:
                 if pritem['id'] == prcatalog['id']:
                     precio = round((precio + prcatalog['precio']), 2)
 
@@ -335,7 +338,7 @@ def buy():
     # Calculamos el precio total de la cesta
     precio = 0.0
     for pritem in session['cesta']:
-        for prcatalog in catalogue['peliculas']:
+        for prcatalog in catalogue:
             if pritem['id'] == prcatalog['id']:
                 precio = round((precio + prcatalog['precio']), 2)
 
@@ -389,7 +392,7 @@ def buy():
 @app.route('/buy_direct/<int:id>')
 def buy_direct(id = 0):
     # Cargamos el catálogo de las películas
-    movies=catalogue['peliculas']
+    movies=catalogue
 
     # Buscamos la película dada por el id en el catálogo
     movie = None
@@ -468,7 +471,7 @@ def printJson(path, movies):
     # Incluimos los detalles de las películas compradas
     for movie in movies:
         data.append({
-            'titulo': movie["título"],
+            'titulo': movie["titulo"],
             'precio': movie["precio"],
             'fecha': str(dt.day) + "/" + str(dt.month) + "/" + str(dt.year)
         })
@@ -481,7 +484,11 @@ def printJson(path, movies):
 def movieOfTheDay():
     dt = datetime.datetime.today()
     
-    # Pseudo random generator (1, 29)
-    todays = ((dt.day*31 + dt.month*17 + dt.year*29) % 28) + 1
+    # Pseudo random generator (0, número de películas en el catálogo - 1)
+    movie_pos = ((dt.day*31 + dt.month*17 + dt.year*29) % len(catalogue))
 
-    return redirect(url_for('movie', id=todays))
+    # Hallamos el id de la película en la posición random dentro del catálogo
+    today_movie = catalogue[movie_pos]
+    movie_id = today_movie['id']
+
+    return redirect(url_for('movie', id=movie_id))

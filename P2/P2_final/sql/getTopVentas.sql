@@ -1,12 +1,13 @@
 CREATE OR REPLACE FUNCTION getTopVentas(year1 INTEGER, year2 INTEGER)
-RETURNS TABLE(year_ DOUBLE PRECISION, movie_ CHARACTER VARYING(255), top_ BIGINT) AS $$
+RETURNS TABLE(year_ DOUBLE PRECISION, movie_ CHARACTER VARYING(255), top_ BIGINT, id_ INTEGER) AS $$
 BEGIN
     -- Creamos una view para obtener todas las películas vendidas y el
     -- año en el que se vendieron
     CREATE OR REPLACE VIEW MoviesYear AS
         SELECT 
             extract(year FROM orders.orderdate) as year_, 
-            imdb_movies.movietitle as movie_
+            imdb_movies.movietitle as movie_,
+            imdb_movies.movieid as id_
         FROM 
             public.products, 
             public.orders, 
@@ -22,11 +23,11 @@ BEGIN
     -- vendida cada año
     CREATE OR REPLACE VIEW CountYear AS
         SELECT
-            year_, movie_, count(movie_) as frequency_
+            year_, movie_, count(movie_) as frequency_, id_
         FROM
             MoviesYear
         GROUP BY
-            year_, movie_
+            year_, movie_, id_
     ;
 
     -- Creamos una view para obtener el número de veces que ha sido vendida
@@ -45,14 +46,16 @@ BEGIN
     RETURN QUERY
 	SELECT
         CountYear.year_, CountYear.movie_,
-        CountTop.top_
+        CountTop.top_, CountYear.id_
     FROM
         CountTop, CountYear
     WHERE
         CountTop.year_ = CountYear.year_ AND
         CountTop.top_ = CountYear.frequency_ AND
         CountTop.year_ >= year1 AND
-        CountTop.year_ <= year2;
+        CountTop.year_ <= year2
+    ORDER BY
+        CountTop.top_ DESC;
 
 END;
 $$ LANGUAGE plpgsql;

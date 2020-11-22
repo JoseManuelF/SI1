@@ -39,10 +39,16 @@
         {% for item in cesta %}
         <div class="content-margin cont-col-1">
             <div class="content-display">
-                <div class="content-title">{{ item.título }} ({{ item.año }})</div>
+                <div class="content-title">{{ item.titulo }} ({{ item.ano }})</div>
                 <a class="delete-sign" href="{{ url_for('cesta', delete=item.id) }}">Eliminar</a>
                 <a href="{{ url_for('movie', id=item.id) }}">
-                    <img class="content-image" src="{{ item.poster }}" alt="{{ item.título }}">
+                    <img class="content-image"
+                        {% if item.poster %}
+                        src="{{ item.poster }}"
+                        {% else %}
+                        src="{{ url_for('static', filename='media/movies/NoPoster.jpg') }}"
+                        {% endif %}
+                        alt="{{ item.titulo }}">
                 </a>
             </div>
         </div>

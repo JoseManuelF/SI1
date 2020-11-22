@@ -114,9 +114,12 @@ INSERT INTO countries
 SELECT DISTINCT country
 FROM imdb_moviecountries;
 
--- Añadir a movies una foreign key al id del país
+-- Añadir a movies una foreign key al id del país y dos campos de texto
+-- (poster y preview) correspondientes a las rutas de las fotos
 ALTER TABLE imdb_movies
     ADD countryid integer,
+    ADD poster character varying(128),
+    ADD preview character varying(128),
 
     ADD CONSTRAINT imdb_movies_countryid_fkey FOREIGN KEY (countryid)
         REFERENCES countries(countryid)
@@ -165,3 +168,25 @@ CREATE TABLE alertas (
     CONSTRAINT alertas_prod_id_fkey foreign key (prod_id)
     REFERENCES products(prod_id)
 );
+
+-- Insertamos nuestras películas a la tabla imdb_movies
+INSERT INTO imdb_movies
+VALUES ('800000', 'Interestellar', '', '0', '2014', '0', '35',
+        'static/media/movies/Interestellar.jpg', 'static/media/previews/Interestellar.jpg'),
+       ('800001', 'Your Name', '', '0', '2016', '0', '52',
+        'static/media/movies/YourName.jpg', 'static/media/previews/YourName.jpg')
+;
+
+-- Insertamos el precio de nuestras películas a la tabla products
+INSERT INTO products
+VALUES ('6657', '800000', '12.99', 'Standard'),
+       ('6658', '800001', '8.99', 'Standard')
+;
+
+-- Insertamos los géneros de nuestras películas a la tabla imdb_moviegenres
+INSERT INTO imdb_moviegenres
+VALUES ('800000', '9'),
+       ('800000', '22'),
+       ('800001', '6'),
+       ('800001', '14')
+;
