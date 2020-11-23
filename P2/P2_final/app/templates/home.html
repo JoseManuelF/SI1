@@ -102,11 +102,17 @@
 
                     {% for category in categories %}
                     <div class="sidebarOptionButton">
-                        <a href = "{{ url_for('home', category=category.nombre) }}">
-                            <img class="sidebarOptionIcon col-5" src = "{{ category.icono }}" alt="{{ category.nombre }}">
+                        <a href = "{{ url_for('home', category=category.genre) }}">
+                            <img class="sidebarOptionIcon col-5"
+                                {% if category.icon %}
+                                src="{{ category.icon }}"
+                                {% else %}
+                                src="{{ url_for('static', filename='media/icons/NoIcon.png') }}"
+                                {% endif %}
+                                alt="{{ category.genre }}">
                         </a>
-                        <a href = "{{ url_for('home', category=category.nombre) }}" class="sidebarOptionText col-1">
-                            {{ category.nombre }}
+                        <a href = "{{ url_for('home', category=category.genre) }}" class="sidebarOptionText col-1">
+                            {{ category.genre }}
                         </a>
                     </div>
                     {% endfor %}

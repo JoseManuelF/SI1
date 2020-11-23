@@ -25,6 +25,3 @@ except ImportError as e:
 
 
 from app import routes, database
-
-# Actualizamos el catalogue.json con películas de la base de datos
-database.update_catalogue()

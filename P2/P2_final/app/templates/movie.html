@@ -56,17 +56,9 @@
                 <t class="movie-col-1">Sinopsis:</t>
                 <p>{{ movie.sinopsis }}</p>
                 </br>
-                <t class="movie-col-1">Reparto:</t>
-                <p>
-                    {% for actor in movie.reparto %}
-                    {{ actor.nombre }} como <strong>{{ actor.personaje }}</strong> </br>
-                    {% endfor %}
-                </p>
-                </br>
-                <t class="movie-col-1">critica:</t>
+                <t class="movie-col-1">Puntuación:</t>
                 <p>
                     {{ movie.puntuacion }} / 10 </br>
-                    {{ movie.critica }}
                 </p>
             </div>
         </div>

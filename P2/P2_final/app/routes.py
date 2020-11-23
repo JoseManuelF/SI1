@@ -11,13 +11,15 @@ import random
 import hashlib
 import datetime
 
+# Actualizamos el catalogue.json con películas de la base de datos
+database.update_catalogue()
+
 # Cargamos el catálogo de las películas
 catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
 catalogue = json.loads(catalogue_data)
 
-# Cargamos las categorías
-categories_data = open(os.path.join(app.root_path,'catalogue/categories.json'), encoding="utf-8").read()
-categories = json.loads(categories_data)
+# Cargamos las categorías de la base de datos
+categories = database.db_update_categories()
 
 @app.route('/')
 @app.route('/<category>')
@@ -31,11 +33,8 @@ def home(category = None, login = False, login_error = ""):
     # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
     # Por lo que muestra todas las películas en el catalogue.json
     if(category == None):
-        # Conseguimos las películas más vendidas entre 2018 y 2020 de la base de datos
-        moviesTopVentas = database.db_getTopVentas()
-
         return render_template('home.html', movies=catalogue,
-                               categories=categories['categorias'], login=login, login_error=login_error)
+                               categories=categories, login=login, login_error=login_error)
 
     # Si una categoría ha sido especificada, la filtramos y solo mostramos
     # las películas que tengan esa categoría.
@@ -50,7 +49,7 @@ def home(category = None, login = False, login_error = ""):
             else:
                 print("x", end = "\n")
         return render_template('home.html', movies=categoryMovies,
-                               categories=categories['categorias'], login=login, login_error=login_error)
+                               categories=categories, login=login, login_error=login_error)
 
 @app.route('/profile')
 def profile():
@@ -61,30 +60,14 @@ def profile():
     # Si el usuario no ha iniciado sesión, te redirige a hacer login
     if 'usuario' not in session:
         return redirect(url_for('home', login=True))
-
-    # Hallamos la ruta de la carpeta de usuarios
-    this_dir = os.path.dirname(__file__)
-    previous_dir = os.path.dirname(this_dir)
-    users_path = os.path.join(previous_dir, "usuarios/")
-
-    # Accedemos al historial de la carpeta del usuario
-    user_dir = os.path.join(users_path, "%s" %session['usuario'])
-    historial_path = os.path.join(user_dir, "historial.json")
     
-    # Cargamos el historial.json del usuario
-    f = open(historial_path, "r")
-    oldData = f.readline()
+    #TODO: Accedemos a la base de datos para ver las películas compradas por el usuario logeado
+    data =""
 
-    if oldData == "":
-        data = []
-    else:
-        data = json.loads(oldData)
-
-    return render_template('profile.html', history=data, categories=categories['categorias'])
+    return render_template('profile.html', history=data, categories=categories)
 
 @app.route('/sumar_saldo', methods=['GET', 'POST'])
 def sumarSaldo():
-    
     # Si el usuario no ha iniciado sesión, te redirige a hacer login
     if 'usuario' not in session:
         return redirect(url_for('home', login=True))
@@ -96,30 +79,9 @@ def sumarSaldo():
     if request.method == 'POST':
         # Actualizamos el saldo de la sesión del usuario
         session['saldo'] = round(float(session['saldo']) + float(request.form['saldo']), 2)
-
-        # Hallamos la ruta de la carpeta de usuarios
-        this_dir = os.path.dirname(__file__)
-        previous_dir = os.path.dirname(this_dir)
-        users_path = os.path.join(previous_dir, "usuarios/")
-
-        # Accedemos a los datos de la carpeta del usuario
-        user_dir = os.path.join(users_path, "%s" %session['usuario'])
-        datos_path = os.path.join(user_dir, "datos.dat")
-
-        # Cargamos los datos del perfil, para poder sobreescribir el saldo.
-        segmented_data = []
-        with open(datos_path, "r") as f_datos:
-            segmented_data = f_datos.readline().split(" | ")
             
-        # Actualizamos el saldo del usuario tras el ingreso.
-        with open(datos_path, "w") as f_datos:
-            data = ""
-            for i in range(4):
-                data += segmented_data[i] + " | "
-            
-            print("------------ Saldo: " + str(session['saldo']))
-            data += str(session['saldo'])
-            f_datos.write(data)
+        # Accedemos a la base de datos para actualizar el saldo del usuario tras el ingreso
+        database.db_update_saldo(session['usuario'], session['saldo'])
 
     return redirect(url_for('profile'))
     
@@ -151,48 +113,29 @@ def movie(id):
         if m['id'] == id:
             added += 1
             
-    return render_template('movie.html', movie=movie, added=added, categories=categories['categorias'])
+    return render_template('movie.html', movie=movie, added=added, categories=categories)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Hallamos la ruta de la carpeta de usuarios
-        this_dir = os.path.dirname(__file__)
-        previous_dir = os.path.dirname(this_dir)
-        users_path = os.path.join(previous_dir, "usuarios/")
-
         # Mensaje de error en caso de que no se pueda iniciar sesión
         login_error = "El nombre de usuario o la contraseña no coinciden."
 
-        # Comprobamos si el usuario dado está registrado
-        users_list = os.listdir(users_path)
-        for u in users_list:
-            if request.form['uname'] == u:
-                # Accedemos a los datos de la carpeta del usuario
-                user_dir = os.path.join(users_path, "%s" %u)
-                datos_path = os.path.join(user_dir, "datos.dat")
+        # Llamamos a la función login de la database que devuelve false si
+        # el usuario no está registrado o true en caso contrario
+        if (database.db_login(request.form['uname'], request.form['psw']) == False):
+            # El usuario no está registrado en la base de datos
+            return redirect(url_for('home', login_error=login_error))
 
-                # Comprobamos si la hash password coincide con la dada en el login
-                login_password = request.form['psw']
-                with open(datos_path, "r+") as f_datos:
-                    # Hasheamos la contraseña dada en el login
-                    hash_login = hashlib.sha512(("%s" %login_password).encode('utf-8')).hexdigest()
+        # El usuario está registrado en la base de datos, se inicia sesión
+        session['usuario'] = request.form['uname']
 
-                    # Vemos si las contraseñas son iguales
-                    line = f_datos.readline()
-                    if hash_login == line.split(" | ")[1]:
-                        session['usuario'] = request.form['uname']
-                        session['saldo'] = line.split(" | ")[4]
-                        session.modified=True
-                        return redirect(url_for('home'))
-                    else:
-                        # Las contraseñas no coinciden, mensaje de error
-                        return redirect(url_for('home', login_error=login_error))
-
-        # El usuario no está registrado en la carpeta de usuarios
-        return redirect(url_for('home', login_error=login_error))
+        # Conseguimos el saldo del usuario en la base de datos
+        session['saldo'] = database.db_saldo(request.form['uname'])
+        session.modified=True
+        return redirect(url_for('home'))
     else:
-        # se puede guardar la pagina desde la que se invoca 
+        # se puede guardar la página desde la que se invoca 
         session['url_origen']=request.referrer
         session.modified=True
         
@@ -219,41 +162,15 @@ def register():
         password = request.form['psw']
         card = request.form['tarjeta']
 
-        # Hallamos la ruta de la carpeta de usuarios
-        this_dir = os.path.dirname(__file__)
-        previous_dir = os.path.dirname(this_dir)
-        users_path = os.path.join(previous_dir, "usuarios/")
+        # Asignamos al saldo inicial del usuario que se registra un valor random entre 0 y 100
+        saldo = random.randint(0, 100)
 
-        # Vemos si el usuario ya existe
-        users_list = os.listdir(users_path)
-        for u in users_list:
-            if (u == username):
-                # El usuario ya existe
-                user_exists = "El usuario dado está ya en uso. Intente otro por favor."
-                return render_template('register.html', user_exists=user_exists)
-
-        # El usuario no existe. Creamos una nueva carpeta del usuario
-        user_dir = os.path.join(users_path, "%s" %username)
-        os.mkdir(user_dir)
-        os.chmod(user_dir, 0o777) # Permisos para leer/escribir/ejecutar en la carpeta
-
-        # Creamos datos.dat e historial.json en la carpeta del usuario
-        datos_path = os.path.join(user_dir, "datos.dat")
-        historial_path = os.path.join(user_dir, "historial.json")
-
-        saldo = 0
-        with open(datos_path, "w") as f_datos:
-            # Hasheamos la contraseña
-            hash_password = hashlib.sha512(("%s" %password).encode('utf-8')).hexdigest()
-
-            # Asignamos al saldo inicial un valor random entre 0 y 100
-            saldo = random.randint(0, 100)
-
-            # Incluimos la info del usuario en los datos
-            f_datos.write(username + ' | ' + hash_password + ' | ' + email + ' | ' + card + ' | ' + str(saldo))
-
-        with open(historial_path, "x") as f_hist:
-            pass
+        # Llamamos a la función register de la database que devuelve false si
+        # ya existe el nombre de usuario o te lo añade a la base de datos en caso contrario  
+        if (database.db_register(username, password, email, card, saldo) == False):
+            # El usuario ya existe
+            user_exists = "El usuario dado está ya en uso. Intente otro por favor."
+            return render_template('register.html', user_exists=user_exists)
 
         # Registración completa. Volver a la página principal ya con la sesión iniciada
         session['usuario'] = request.form['uname']
@@ -279,7 +196,7 @@ def search():
                     searchMovies.append(movie)
                 else:
                     print("x", end = "\n")
-            return render_template('home.html', movies=searchMovies, categories=categories['categorias'])
+            return render_template('home.html', movies=searchMovies, categories=categories)
 
         else:
             return redirect(url_for('home'))
@@ -327,7 +244,7 @@ def cesta(add = None, delete = None):
                 if pritem['id'] == prcatalog['id']:
                     precio = round((precio + prcatalog['precio']), 2)
 
-        return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories['categorias'])
+        return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories)
 
 @app.route('/buy')
 def buy():
@@ -346,43 +263,22 @@ def buy():
     if 'usuario' not in session:
         return redirect(url_for('home', login=True))
     else:
-        # Hallamos la ruta de la carpeta de usuarios
-        this_dir = os.path.dirname(__file__)
-        previous_dir = os.path.dirname(this_dir)
-        users_path = os.path.join(previous_dir, "usuarios/")
+        # Conseguimos el saldo del usuario en la base de datos
+        saldo = database.db_saldo(session['usuario'])
 
-        # Accedemos a los datos de la carpeta del usuario
-        user_dir = os.path.join(users_path, "%s" %session['usuario'])
-        datos_path = os.path.join(user_dir, "datos.dat")
-
-        saldo = 0.0
-        segmented_data = []
-        # Vemos si el saldo del usuario es suficiente para comprar las películas
-        with open(datos_path, "r") as f_datos:
-            segmented_data = f_datos.readline().split(" | ")
-            saldo = float(segmented_data[4])
-
-            # Descontamos el precio total al saldo
-            saldo = round((saldo - precio), 2)
+        # Descontamos el precio total al saldo
+        saldo = round((saldo - precio), 2)
 
         # No hay saldo suficiente
         if saldo < 0.0:
             return redirect(url_for('profile'))
-            
+
         else:
             # Actualizamos el saldo del usuario tras la compra
             session['saldo'] = saldo
-            with open(datos_path, "w") as f_datos:
-                data = ""
-                for i in range(4):
-                    data += segmented_data[i] + " | "
-                
-                data += str(saldo)
-                f_datos.write(data)
+            database.db_update_saldo(session['usuario'], saldo)
             
-            # Añadir las películas compradas al historial.json
-            historial_path = os.path.join(user_dir, "historial.json")
-            printJson(historial_path, session['cesta'])
+            # TODO: Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
 
             # Borrar la cesta
             session.pop('cesta', None)
@@ -411,24 +307,11 @@ def buy_direct(id = 0):
     if 'usuario' not in session:
         return redirect(url_for('home', login=True))
     else:
-        # Hallamos la ruta de la carpeta de usuarios
-        this_dir = os.path.dirname(__file__)
-        previous_dir = os.path.dirname(this_dir)
-        users_path = os.path.join(previous_dir, "usuarios/")
+        # Conseguimos el saldo del usuario en la base de datos
+        saldo = database.db_saldo(session['usuario'])
 
-        # Accedemos a los datos de la carpeta del usuario
-        user_dir = os.path.join(users_path, "%s" %session['usuario'])
-        datos_path = os.path.join(user_dir, "datos.dat")
-
-        saldo = 0.0
-        segmented_data = []
-        # Vemos si el saldo del usuario es suficiente para comprar la película
-        with open(datos_path, "r") as f_datos:
-            segmented_data = f_datos.readline().split(" | ")
-            saldo = float(segmented_data[4])
-
-            # Descontamos el precio total al saldo
-            saldo = round((saldo - precio), 2)
+        # Descontamos el precio total al saldo
+        saldo = round((saldo - precio), 2)
 
         # No hay saldo suficiente
         if saldo < 0.0:
@@ -437,48 +320,11 @@ def buy_direct(id = 0):
         else:
             # Actualizamos el saldo del usuario tras la compra
             session['saldo'] = saldo
-            with open(datos_path, "w") as f_datos:
-                data = ""
-                for i in range(4):
-                    data += segmented_data[i] + " | "
-                
-                data += str(saldo)
-                f_datos.write(data)
-            
-            # Añadir la película comprada al historial.json
-            historial_path = os.path.join(user_dir, "historial.json")
+            database.db_update_saldo(session['usuario'], saldo)
 
-            movieList = []
-            movieList.append(movie)
-            printJson(historial_path, movieList)
+            # TODO: Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
 
             return redirect(url_for('home'))
-
-# Función auxiliar para imprimir el historial.json del usuario
-def printJson(path, movies):
-    # Hallamos la fecha en la que se compraron las películas
-    dt = datetime.datetime.today()
-
-    f = open(path, "r")
-    oldData = f.readline()
-
-    if oldData == "":
-        data = []
-    else:
-        data = json.loads(oldData)
-    f.close()
-
-    # Incluimos los detalles de las películas compradas
-    for movie in movies:
-        data.append({
-            'titulo': movie["titulo"],
-            'precio': movie["precio"],
-            'fecha': str(dt.day) + "/" + str(dt.month) + "/" + str(dt.year)
-        })
-
-    # Accedemos al historial.json del usuario y lo actualizamos
-    with open(path, 'w') as f_historial:
-        json.dump(data, f_historial)
 
 @app.route('/movieOfTheDay')
 def movieOfTheDay():

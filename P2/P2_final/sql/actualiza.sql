@@ -35,6 +35,7 @@ ALTER TABLE imdb_movielanguages
 CREATE TABLE genres (
 	genre character varying(32) NOT NULL,
     genreid integer NOT NULL,
+    icon character varying(128),
 
     CONSTRAINT genres_pkey PRIMARY KEY (genreid)
 );
@@ -120,7 +121,8 @@ ALTER TABLE imdb_movies
     ADD countryid integer,
     ADD poster character varying(128),
     ADD preview character varying(128),
-
+    ADD sinopsis character varying(512),
+    ADD puntuacion numeric,
     ADD CONSTRAINT imdb_movies_countryid_fkey FOREIGN KEY (countryid)
         REFERENCES countries(countryid)
 ;
@@ -172,9 +174,15 @@ CREATE TABLE alertas (
 -- Insertamos nuestras películas a la tabla imdb_movies
 INSERT INTO imdb_movies
 VALUES ('800000', 'Interestellar', '', '0', '2014', '0', '35',
-        'static/media/movies/Interestellar.jpg', 'static/media/previews/Interestellar.jpg'),
+        'static/media/movies/Interestellar.jpg', 'static/media/previews/Interestellar.jpg',
+        'Cuando la vida humana en la Tierra se ve amenazada por una plaga que mata los
+         cultivos, Cooper, ex-piloto de la Nasa, se embarcará en una aventura por el espacio en
+         busca de un planeta habitable al que puedan trasladar a la humanidad.', '8.5'),
        ('800001', 'Your Name', '', '0', '2016', '0', '52',
-        'static/media/movies/YourName.jpg', 'static/media/previews/YourName.jpg')
+        'static/media/movies/YourName.jpg', 'static/media/previews/YourName.jpg',
+        'El joven Taki vive en Tokio: la joven Mitsuha, en un pequeño pueblo en las montañas.
+         Durante el sueño, los cuerpos de ambos se intercambian. Recluidos en un cuerpo que les
+         resulta extraño, comienzan a comunicarse.', '6.8')
 ;
 
 -- Insertamos el precio de nuestras películas a la tabla products
@@ -189,4 +197,24 @@ VALUES ('800000', '9'),
        ('800000', '22'),
        ('800001', '6'),
        ('800001', '14')
+;
+
+-- Actualizamos la tabla genres con los iconos de las categorías
+UPDATE genres
+SET icon = (CASE WHEN genre = 'History'      THEN 'static/media/icons/Historico.png'
+                 WHEN genre = 'Action'       THEN 'static/media/icons/Action.png'
+                 WHEN genre = 'Animation'    THEN 'static/media/icons/Animation.png'
+                 WHEN genre = 'Adventure'    THEN 'static/media/icons/Aventuras.png'
+                 WHEN genre = 'Comedy'       THEN 'static/media/icons/Comedy.png'
+                 WHEN genre = 'Romance'      THEN 'static/media/icons/Romance.png'
+                 WHEN genre = 'War'          THEN 'static/media/icons/Belico.png'
+                 WHEN genre = 'Drama'        THEN 'static/media/icons/Drama.png'
+                 WHEN genre = 'Family'       THEN 'static/media/icons/Infantil.png'
+                 WHEN genre = 'Sci-Fi'       THEN 'static/media/icons/SciFi.png'
+                 WHEN genre = 'Film-Noir'    THEN 'static/media/icons/Suspense.png'
+                 WHEN genre = 'Thriller'     THEN 'static/media/icons/Psicologica.png'
+                 WHEN genre = 'Horror'       THEN 'static/media/icons/Terror.png'
+            END)
+WHERE genre IN ('History', 'Action', 'Animation', 'Adventure', 'Comedy', 'Romance',
+                'War', 'Drama', 'Family', 'Sci-Fi', 'Film-Noir', 'Thriller', 'Horror')
 ;

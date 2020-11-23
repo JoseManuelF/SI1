@@ -13,43 +13,6 @@ db_meta = MetaData(bind=db_engine)
 # cargar una tabla
 db_table_movies = Table('imdb_movies', db_meta, autoload=True, autoload_with=db_engine)
 
-def db_listOfMovies1949():
-    try:
-        # conexion a la base de datos
-        db_conn = None
-        db_conn = db_engine.connect()
-
-        # Seleccionar las peliculas del anno 1949
-        db_movies_1949 = select([db_table_movies]).where(text("year = '1949'"))
-        db_result = db_conn.execute(db_movies_1949)
-        #db_result = db_conn.execute("Select * from imdb_movies where year = '1949'")
-
-        db_conn.close()
-
-        return list(db_result)
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'Something is broken'
-
-def db_login(username, password):
-    try:
-        pass
-    except:
-        if db_conn is not None:
-            db_conn.close()
-        print("Exception in DB access:")
-        print("-"*60)
-        traceback.print_exc(file=sys.stderr)
-        print("-"*60)
-
-        return 'ERROR in login'
-
 def db_getTopVentas():
     try:
         # Conexión a la base de datos
@@ -76,20 +39,33 @@ def db_getTopVentas():
 
         return 'ERROR in getTopVentas'
 
-def db_register():
+def db_register(usr, psw, email, card, saldo):
     try:
         # Conexión a la base de datos
         db_conn = None
         db_conn = db_engine.connect()
 
-        # Seleccionar las peliculas más vendidas en los últimos tres años
-        db_result = db_conn.execute("Select * from getTopVentas(2018, 2020)")
+        # Cargamos el nombre de todos los demás usuarios
+        db_users = db_conn.execute("Select username from customers")
+
+        # Buscamos si el nombre de usuario ya está en uso
+        if usr in list(db_users):
+            # Desconectamos la base de datos
+            db_conn.close()
+            return False
+
+        # Hallamos la customer id a incluir al nuevo usuario que se registra
+        db_customerid = list(db_conn.execute("Select customerid from customers order by customerid desc limit 1"))[0]
+        customerid = db_customerid[0] + 1
+        
+        # Creamos al nuevo usuario en la BBDD
+        db_conn.execute("Insert into customers values('" + str(customerid) + "', '', '', '', '', '', '', '', '', '" + email + "', '', '', '" + card + "', '', '" + usr + "', '" + psw + "', '0', '" + str(saldo) + "', '', '1')")
 
         # Desconectamos la base de datos
         db_conn.close()
 
-        # Devolvemos la lista de películas que nos da la función getTopVentas
-        return list(db_result)
+        # Devolvemos true, el usuario se ha registrado en la base de datos correctamente
+        return True
     
     except:
         # Control de errores en la base de datos
@@ -100,7 +76,94 @@ def db_register():
         traceback.print_exc(file=sys.stderr)
         print("-"*60)
 
-        return 'ERROR in getTopVentas'
+        return False
+
+def db_login(usr, psw):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Cogemos el username y la contraseña de la base de datos para el usuario con el nombre dado
+        user = list(db_conn.execute("Select password from customers where '" + usr + "' = username"))
+
+        # No hay ningún usuario con ese nombre, por lo que no está registrado en la base de datos
+        if(len(user) <= 0):
+            # Desconectamos la base de datos
+            db_conn.close()
+            return False
+
+        # Conseguimos la contraseña dada por la conexión a la base de datos
+        password = user[0][0]
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+        # Si la contraseña coincide devolvemos True, si no, False
+        if(password == psw):
+            return True
+        else:
+            return False
+
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return False
+
+def db_saldo(usr):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+        
+        # Cogemos el saldo del usuario con el nombre dado y lo devolvemos
+        saldo = db_conn.execute("Select income from customers where '" + usr + "' = username")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+        return int(list(saldo)[0][0])
+
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 0
+
+def db_update_saldo(usr, saldo):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Actualizamos el saldo del usuario en la tabla customers de la base de datos
+        saldo = int(saldo)
+        db_result = db_conn.execute("Update customers set income = '" + str(saldo) + "' where username = '" + usr + "'")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+    
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'ERROR in update_saldo'
 
 def update_catalogue():
     # Hallamos la ruta de la carpeta del catalogue
@@ -157,6 +220,14 @@ def update_catalogue():
                 for name in genre_name:
                     genres.append(name[0])
 
+            # Hallamos la puntuación de la película
+            movie_puntuacion = movie['puntuacion']
+            if (movie_puntuacion == None):
+                # En caso de que no se haya encontrado puntuación a la película
+                movie_puntuacion = '-'
+            else:
+                movie_puntuacion = float(movie_puntuacion)
+
             # Guardamos la información de la película en el catálogo
             data.append({
                 'id': movie_id,
@@ -166,9 +237,8 @@ def update_catalogue():
                 'categoria': genres,
                 'ano': movie['year'],
                 'preview': movie['preview'],
-                'sinopsis': "",
-                'critica': "",
-                'puntuacion': "-"
+                'sinopsis': movie['sinopsis'],
+                'puntuacion': movie_puntuacion
             })
 
         # Desconectamos la base de datos
@@ -188,3 +258,29 @@ def update_catalogue():
     # Accedemos al catalogue.json y lo actualizamos
     with open(path, 'w') as f_catalogue:
         json.dump(data, f_catalogue)
+
+def db_update_categories():
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Seleccionar las categorías de la base de datos
+        db_result = db_conn.execute("Select * from genres")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+        # Devolvemos la lista de películas que nos da la función getTopVentas
+        return list(db_result)
+    
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'ERROR in update_categories' 

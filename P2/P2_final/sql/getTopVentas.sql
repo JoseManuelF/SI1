@@ -7,7 +7,8 @@ BEGIN
         SELECT 
             extract(year FROM orders.orderdate) as year_, 
             imdb_movies.movietitle as movie_,
-            imdb_movies.movieid as id_
+            imdb_movies.movieid as id_,
+            orderdetail.quantity as quantity_
         FROM 
             public.products, 
             public.orders, 
@@ -23,7 +24,7 @@ BEGIN
     -- vendida cada año
     CREATE OR REPLACE VIEW CountYear AS
         SELECT
-            year_, movie_, count(movie_) as frequency_, id_
+            year_, movie_, sum(quantity_) as frequency_, id_
         FROM
             MoviesYear
         GROUP BY
