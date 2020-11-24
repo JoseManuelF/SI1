@@ -194,12 +194,12 @@ def update_catalogue():
         for movie in movies_json:
             movie_id = movie['movieid']
 
-            # Calcular el precio medio de la película
-            db_price = db_conn.execute("Select round (avg(price), 2) from products where movieid='" + str(movie_id) + "'")
+            # Conseguir el precio estándar de las películas (Standard)
+            db_price = db_conn.execute("Select price from products where movieid='" + str(movie_id) + "' and description = 'Standard'")
             aux_price = list(db_price)[0]
             movie_price = aux_price[0]
 
-            # Precio estándar en caso de que no se haya encontrado precio en la base de datos
+            # Precio en caso de que no se haya encontrado precio en la base de datos
             if (movie_price == None):
                 movie_price = 10.0
 
@@ -284,3 +284,91 @@ def db_update_categories():
         print("-"*60)
 
         return 'ERROR in update_categories' 
+
+def db_add_order(usr):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Hallamos la order id a incluir a la tabla orders
+        db_orderid = list(db_conn.execute("Select orderid from orders order by orderid desc limit 1"))[0]
+        orderid = db_orderid[0] + 1
+
+        # Hallamos el customer id del usuario que está haciendo una order
+        db_customerid = list(db_conn.execute("Select customerid from customers where username = '" + usr + "'"))[0]
+        customerid = db_customerid[0]
+
+        # Creamos una nueva order con el orderid en la base de datos
+        db_conn.execute("Insert into orders values ('" + str(orderid) + "', 'NOW()', '" + str(customerid) + "', '0', '10', '0', 'Processed')")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+        # Devolvemos la orderid para saber en qué order estamos operando
+        return orderid
+    
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 0 
+
+def db_update_order(orderid, movieid, update):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Hallamos el prodid y el precio estándar de la película a tratar
+        db_prodid = list(db_conn.execute("Select prod_id, price from products where movieid = '" + str(movieid) + "' and description = 'Standard'"))[0]
+        prodid = db_prodid[0]
+        price = db_prodid[1]
+
+        # Conseguimos el quantity de la película de nuestra order en la base de datos
+        db_quantity = list(db_conn.execute("Select quantity from orderdetail where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'"))
+
+        # Comprobamos si hay que eliminar, actualizar o añadir la película al order
+        if (update == 'Delete'):
+            # Comprobamos si ya está la película en la order para eliminarla o actualizar el quantity
+            if not db_quantity:
+                # Borramos la película de la order con la orderid dada
+                db_conn.execute("Delete from orderdetail where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
+            
+            else:
+                quantity = db_quantity[0][0] - 1
+
+                # Actualizamos el quantity y precio de la película de la order con la orderid dada
+                db_conn.execute("Update orderdetail set price = (price * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
+
+        else:
+            # Comprobamos si ya está la película en la order para insertarla como nueva o actualizar el quantity
+            if not db_quantity:
+                # Insertamos la película a la order con la orderid dada
+                db_conn.execute("Insert into orderdetail values('" + str(orderid) + "', '" + str(prodid) + "', '" + str(price) + "', '1')")
+
+            else:
+                # Añadimos una película más a la order
+                quantity = db_quantity[0][0] + 1
+
+                # Actualizamos el quantity y precio de la película de la order con la orderid dada
+                db_conn.execute("Update orderdetail set price = (price * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'ERROR in update_order'

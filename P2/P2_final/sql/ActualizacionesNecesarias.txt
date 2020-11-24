@@ -16,7 +16,7 @@ Hashear la contraseña del customer
 Hacer que el address y el creditcard en customer sean foreign keys a tablas con sus
 atributos correspondientes (de tal forma no habrá tantos atributos en customer)
 Incluir en el diagrama la tabla alertas
-Incluir en el diagrama los atributos poster y preview a la tabla imdb_movies
+Incluir en el diagrama los atributos poster, preview, sinopsis y puntuacion a la tabla imdb_movies
 
 ** IMPORTANTE **
 No entregar dump_v1.4.sql
@@ -53,3 +53,9 @@ Probar el trigger updOrders (Descomentar lo que se quiera testear):
 -- Comprobar cambios en orders
 SELECT * FROM public.orders
 WHERE orderid = '1';
+
+Matar procesos en la base de datos:
+-- Vemos todos los pid de los procesos
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+-- Sustituir 36729 por el pid que quieres matar (client_port para ser más específico)
+SELECT pg_cancel_backend(36729) FROM pg_stat_activity WHERE client_port = '35824';

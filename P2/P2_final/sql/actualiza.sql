@@ -199,6 +199,8 @@ VALUES ('800000', '9'),
        ('800001', '14')
 ;
 
+-- Insertamos a la tabla inventory el stock de nuestras películas
+
 -- Actualizamos la tabla genres con los iconos de las categorías
 UPDATE genres
 SET icon = (CASE WHEN genre = 'History'      THEN 'static/media/icons/Historico.png'

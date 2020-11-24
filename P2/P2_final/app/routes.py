@@ -112,7 +112,9 @@ def movie(id):
     for m in session['cesta']:
         if m['id'] == id:
             added += 1
-            
+
+    # TODO: Vemos cuántas veces la película ya ha sido añadida a la cesta en la base de datos
+
     return render_template('movie.html', movie=movie, added=added, categories=categories)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -132,6 +134,13 @@ def login():
 
         # Conseguimos el saldo del usuario en la base de datos
         session['saldo'] = database.db_saldo(request.form['uname'])
+
+        # Llamamos a la función add_order para añadir una nueva order a la base de datos
+        orderid = database.db_add_order(session['usuario'])
+        if (orderid != 0):
+            # Guardamos la orderid dada por la base de datos a la sesión
+            session['order'] = orderid
+
         session.modified=True
         return redirect(url_for('home'))
     else:
@@ -148,6 +157,7 @@ def logout():
     session.pop('saldo', None)
     session.pop('usuario', None)
     session.pop('cesta', None)
+    session.pop('order', None)
     return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -221,6 +231,12 @@ def cesta(add = None, delete = None):
                 session['cesta'].remove(item)
                 session.modified = True
                 break
+
+        # Si un usuario ha iniciado sesión actualizamos la base de datos
+        if 'usuario' in session:
+            # Llamamos a la función update_order para eliminar la película de la order en la base de datos
+            database.db_update_order(session['order'], delete, 'Delete')
+
         return redirect(url_for('cesta'))
 
     # Tenemos como argumento el id de la película a añadir a la cesta
@@ -233,6 +249,12 @@ def cesta(add = None, delete = None):
         # Añadimos a la cesta de la sesión la película
         session['cesta'].append(movie)
         session.modified = True
+
+        # Si un usuario ha iniciado sesión actualizamos la base de datos
+        if 'usuario' in session:
+            # Llamamos a la función update_order para añadir una película a la order en la base de datos
+            database.db_update_order(session['order'], add, 'Insert')
+
         return redirect(url_for('movie', id=add))
         
     # No hay argumentos, accedemos a la cesta
@@ -243,6 +265,8 @@ def cesta(add = None, delete = None):
             for prcatalog in catalogue:
                 if pritem['id'] == prcatalog['id']:
                     precio = round((precio + prcatalog['precio']), 2)
+
+        # TODO: Calculamos el precio total de la cesta en la base de datos
 
         return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories)
 
