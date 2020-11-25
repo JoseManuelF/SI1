@@ -135,11 +135,20 @@ def login():
         # Conseguimos el saldo del usuario en la base de datos
         session['saldo'] = database.db_saldo(request.form['uname'])
 
-        # Llamamos a la función add_order para añadir una nueva order a la base de datos
-        orderid = database.db_add_order(session['usuario'])
-        if (orderid != 0):
-            # Guardamos la orderid dada por la base de datos a la sesión
-            session['order'] = orderid
+        # Llamamos a la función get_order para conseguir una order de la base de datos conforme al usuario
+        orderid = database.db_get_order(session['usuario'])
+
+        # Guardamos la orderid dada por la base de datos a la sesión
+        session['order'] = orderid
+        
+        # Si no existe, creamos una cesta con las películas en la sesión
+        if 'cesta' not in session:
+            session['cesta'] = []
+
+        # Añadimos a la order en la base de datos las películas que estaban en el carrito
+        for movie in session['cesta']:
+            database.db_update_order(orderid, movie['id'], 'Insert')
+        session['cesta'] = []
 
         session.modified=True
         return redirect(url_for('home'))
@@ -185,6 +194,13 @@ def register():
         # Registración completa. Volver a la página principal ya con la sesión iniciada
         session['usuario'] = request.form['uname']
         session['saldo'] = saldo
+
+        # Llamamos a la función get_order para conseguir una order de la base de datos conforme al usuario
+        orderid = database.db_get_order(session['usuario'])
+
+        # Guardamos la orderid dada por la base de datos a la sesión
+        session['order'] = orderid
+
         session.modified=True
         return redirect(url_for('home'))
     else:
@@ -218,7 +234,6 @@ def search():
 @app.route('/cesta_add/<int:add>')
 @app.route('/cesta_delete/<int:delete>')
 def cesta(add = None, delete = None):
-
     # Si no existe, creamos una cesta con las películas en la sesión
     if 'cesta' not in session:
         session['cesta'] = []
@@ -267,6 +282,14 @@ def cesta(add = None, delete = None):
                     precio = round((precio + prcatalog['precio']), 2)
 
         # TODO: Calculamos el precio total de la cesta en la base de datos
+        if 'usuario' in session:
+            movies = []
+            for movieid in database.db_get_cesta(session['order']):
+                for prcatalog in catalogue:
+                    if movieid == prcatalog['id']:
+                        movies.append(prcatalog)
+
+            return render_template('cesta.html', cesta=movies, precio=precio, categories=categories)
 
         return render_template('cesta.html', cesta=session['cesta'], precio=precio, categories=categories)
 
@@ -301,8 +324,9 @@ def buy():
             # Actualizamos el saldo del usuario tras la compra
             session['saldo'] = saldo
             database.db_update_saldo(session['usuario'], saldo)
-            
-            # TODO: Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
+
+            # Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
+            database.db_buy_order(session['order'])
 
             # Borrar la cesta
             session.pop('cesta', None)
@@ -346,7 +370,8 @@ def buy_direct(id = 0):
             session['saldo'] = saldo
             database.db_update_saldo(session['usuario'], saldo)
 
-            # TODO: Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
+            # Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
+            database.db_buy_order(session['order'])
 
             return redirect(url_for('home'))
 

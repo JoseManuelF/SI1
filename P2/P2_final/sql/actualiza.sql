@@ -200,6 +200,10 @@ VALUES ('800000', '9'),
 ;
 
 -- Insertamos a la tabla inventory el stock de nuestras películas
+INSERT INTO inventory
+VALUES ('6657', '100', '0'),
+       ('6658', '100', '0')
+;
 
 -- Actualizamos la tabla genres con los iconos de las categorías
 UPDATE genres

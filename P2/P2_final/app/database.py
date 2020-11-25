@@ -317,7 +317,39 @@ def db_add_order(usr):
         traceback.print_exc(file=sys.stderr)
         print("-"*60)
 
-        return 0 
+        return 0
+
+def db_get_order(usr):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Hallamos el customer id del usuario que recibe como argumento
+        db_customerid = list(db_conn.execute("Select customerid from customers where username = '" + usr + "'"))[0]
+        customerid = db_customerid[0]
+
+        # Hallamos la order id del carrito del usuario
+        db_orderid = list(db_conn.execute("Select orderid from orders where customerid = '" + str(customerid) + "' and status = 'Processed'"))
+        if not db_orderid:
+            return db_add_order(usr)
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+        # Si tiene ya un carrito, cargamos ese
+        return db_orderid[0][0]
+    
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 0
 
 def db_update_order(orderid, movieid, update):
     try:
@@ -344,7 +376,7 @@ def db_update_order(orderid, movieid, update):
                 quantity = db_quantity[0][0] - 1
 
                 # Actualizamos el quantity y precio de la película de la order con la orderid dada
-                db_conn.execute("Update orderdetail set price = (price * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
+                db_conn.execute("Update orderdetail set price = (" + str(price) + " * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
 
         else:
             # Comprobamos si ya está la película en la order para insertarla como nueva o actualizar el quantity
@@ -357,7 +389,7 @@ def db_update_order(orderid, movieid, update):
                 quantity = db_quantity[0][0] + 1
 
                 # Actualizamos el quantity y precio de la película de la order con la orderid dada
-                db_conn.execute("Update orderdetail set price = (price * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
+                db_conn.execute("Update orderdetail set price = (" + str(price) + " * " + str(quantity) + "), quantity = '" + str(quantity) + "' where orderid = '" + str(orderid) + "' and prod_id = '" + str(prodid) + "'")
 
         # Desconectamos la base de datos
         db_conn.close()
@@ -372,3 +404,66 @@ def db_update_order(orderid, movieid, update):
         print("-"*60)
 
         return 'ERROR in update_order'
+
+def db_buy_order(orderid):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Actualizamos la tabla orders de la base de datos poniendo el estado en 'Pagado'
+        # El trigger updInventory se encargará de actualizar el inventario
+        db_conn.execute("Update orders set status = 'Paid' where orderid = '" + str(orderid) + "'")
+
+        # Desconectamos la base de datos
+        db_conn.close()
+
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'ERROR in buy_order'
+
+def db_get_cesta(orderid):
+    try:
+        # Conexión a la base de datos
+        db_conn = None
+        db_conn = db_engine.connect()
+
+        # Conseguimos los prodid y quantity de las películas de la order dada por la orderid
+        products = list(db_conn.execute("Select prod_id, quantity from orderdetail where orderid = '" + str(orderid) + "'"))
+
+        # Lista de movie id de las películas de la order
+        movies = []
+
+        # Iteramos a través de todos los products de la order
+        for p in products:
+            prod_id = p[0]
+            quantity = p[1]
+
+            # Conseguimos el movie id del producto de la order
+            movie_id = list(db_conn.execute("Select movieid from products where prod_id = '" + str(prod_id) + "'"))[0][0]
+
+            # Añadimos tantas películas como nos marca la quantity
+            for i in range(quantity):
+                movies.append(movie_id)
+
+        # Desconectamos la base de datos
+        db_conn.close()
+        return movies
+
+    except:
+        # Control de errores en la base de datos
+        if db_conn is not None:
+            db_conn.close()
+        print("Exception in DB access:")
+        print("-"*60)
+        traceback.print_exc(file=sys.stderr)
+        print("-"*60)
+
+        return 'ERROR in get_cesta'
