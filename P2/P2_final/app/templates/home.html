@@ -48,7 +48,13 @@
                 {% for item in movies %}
                 <div class="content-margin cont-col-1">
                     <div class="content-display">
-                        <div class="content-title">{{ item.titulo }} ({{ item.ano }})</div>
+                        <div class="content-title">
+                            {% if item.id in topVentas.keys() %}
+                                BEST SELLER of {{topVentas[item.id]}}: {{item.titulo}} ({{ item.ano }})
+                            {% else %}
+                                {{ item.titulo }} ({{ item.ano }})
+                            {% endif %}
+                        </div>
                         <a href="{{ url_for('movie', id=item.id) }}">
                             <img class="content-image"
                                 {% if item.poster %}

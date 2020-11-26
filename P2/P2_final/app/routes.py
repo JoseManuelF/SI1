@@ -30,10 +30,18 @@ def home(category = None, login = False, login_error = ""):
     print (url_for('static', filename='css/loginTemplate.css'), file=sys.stderr)
     print (url_for('static', filename='css/main.css'), file=sys.stderr)
 
+    # Accedemos a la base de datos para hallar las películas más vendidas de los últimos tres años
+    movies_topVentas = database.db_getTopVentas()
+
+    topVentas = {}
+    for movie in movies_topVentas:
+        # Obtenemos el id de la película y el año en el que fue la más popular
+        topVentas[movie[3]] = int(movie[0])
+
     # Si una categoría es None, significa que no hemos elegido categoría que filtrar.
     # Por lo que muestra todas las películas en el catalogue.json
     if(category == None):
-        return render_template('home.html', movies=catalogue,
+        return render_template('home.html', movies=catalogue, topVentas=topVentas,
                                categories=categories, login=login, login_error=login_error)
 
     # Si una categoría ha sido especificada, la filtramos y solo mostramos
@@ -48,7 +56,7 @@ def home(category = None, login = False, login_error = ""):
                 categoryMovies.append(movie)
             else:
                 print("x", end = "\n")
-        return render_template('home.html', movies=categoryMovies,
+        return render_template('home.html', movies=categoryMovies, topVentas=topVentas,
                                categories=categories, login=login, login_error=login_error)
 
 @app.route('/profile')
@@ -235,6 +243,14 @@ def search():
         search = request.form['search']
         # Si la búsqueda no es una cadena vacía, eso significa que estamos buscando algo.
         if(search != ""):
+            # Accedemos a la base de datos para hallar las películas más vendidas de los últimos tres años
+            movies_topVentas = database.db_getTopVentas()
+
+            topVentas = {}
+            for movie in movies_topVentas:
+                # Obtenemos el id de la película y el año en el que fue la más popular
+                topVentas[movie[3]] = int(movie[0])
+
             print("Looking for: " + search)
             searchMovies = []
             for movie in catalogue:
@@ -244,7 +260,7 @@ def search():
                     searchMovies.append(movie)
                 else:
                     print("x", end = "\n")
-            return render_template('home.html', movies=searchMovies, categories=categories)
+            return render_template('home.html', movies=searchMovies, categories=categories, topVentas=topVentas)
 
         else:
             return redirect(url_for('home'))
