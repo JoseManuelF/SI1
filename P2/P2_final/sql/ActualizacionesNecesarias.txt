@@ -11,12 +11,16 @@ Meter los create view dentro de los procedimientos almacenados
 Arreglado pequeño fallo en getTopMonths.sql
 Crear la tabla alertas para el trigger updInventory
 
+Detalles de la actualización 1.3:
+Incluir en el diagrama la tabla alertas
+Incluir en el diagrama los atributos poster, preview, sinopsis y puntuacion a la tabla imdb_movies
+Incluir en el diagrama el atributo icon a la tabla genres
+
 Próximas actualizaciones:
 Hashear la contraseña del customer
 Hacer que el address y el creditcard en customer sean foreign keys a tablas con sus
 atributos correspondientes (de tal forma no habrá tantos atributos en customer)
-Incluir en el diagrama la tabla alertas
-Incluir en el diagrama los atributos poster, preview, sinopsis y puntuacion a la tabla imdb_movies
+Cambiar el atributo income de customer de integer a numeric
 
 ** IMPORTANTE **
 No entregar dump_v1.4.sql
@@ -57,5 +61,7 @@ WHERE orderid = '1';
 Matar procesos en la base de datos:
 -- Vemos todos los pid de los procesos
 SELECT * FROM pg_stat_activity WHERE state = 'active';
--- Sustituir 36729 por el pid que quieres matar (client_port para ser más específico)
-SELECT pg_cancel_backend(36729) FROM pg_stat_activity WHERE client_port = '35824';
+-- A través de la terminal
+ps -aux | grep postgres
+-- Matar el proceso con el pid que cause el problema
+kill -9 <pid>

@@ -27,7 +27,7 @@
             
         <div>
             <div class="saldo">
-                Saldo: {{ session['saldo'] }}€
+                Saldo: {{ saldo }}€
             </div>
             <form class="increaseSaldo profile-col-2" action="{{ url_for('sumarSaldo') }}" method=post>
                 <label class="saldo" for="increaseSaldo">Añadir saldo</label>

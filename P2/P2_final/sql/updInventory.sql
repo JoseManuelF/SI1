@@ -42,7 +42,7 @@ $$ LANGUAGE plpgsql;
 -- se finalice la compra (status = Paid). También crea una alerta en la
 -- tabla alertas cuando el stock de alguna película a comprar llega a cero
 CREATE TRIGGER updInventory
-BEFORE UPDATE ON orders
+BEFORE UPDATE OF STATUS ON orders
 FOR EACH ROW
     WHEN (NEW.status = 'Paid')
     EXECUTE PROCEDURE updInventory();
