@@ -1,0 +1,21 @@
+** IMPORTANTE **
+No entregar dump_v1.2-P3.sql
+
+Restaurar base de datos versión 1.2-P3:
+-- Exportamos los datos de la base de datos
+export PGUSER=alumnodb
+export PGPASSWORD=alumnodb
+export PGDATABASE=si1
+
+-- Eliminamos la base de datos y la creamos de nuevo con los datos en el archivo dump_v1.2-P3
+dropdb si1
+createdb -U alumnodb si1
+cat dump_v1.2-P3.sql | psql -U alumnodb si1
+
+Matar procesos en la base de datos:
+-- Vemos todos los pid de los procesos
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+-- A través de la terminal
+ps -aux | grep postgres
+-- Matar el proceso con el pid que cause el problema
+kill -9 <pid>
