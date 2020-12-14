@@ -1,0 +1,75 @@
+/* CSS de la cesta */
+
+.buttonPadding{
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+.cesta-title{
+    display: inline-block;
+    padding-right: 25px;
+    font-size: 27px;
+    font-family: 'Sansita Swashed', cursive;
+}
+
+.actionButton {
+    width: 49.7%;
+    border-style: solid;
+    height: 35px;
+    border-color: rgb(26, 25, 25);
+    background-color: #208f61fa;
+    cursor: pointer;
+    text-align: center;
+    font-size: 22px;
+    display: inline-block;
+    color: black;
+}
+
+.actionButton:hover {
+    background: #3a9c73;
+}
+
+.actionButtonText {
+    display: inline-block;
+}
+
+.delete-sign {
+    position: absolute;
+    width: 75%;
+    background-color: rgba(100, 0, 0, 0.8);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    bottom: 3px;
+    left: 0;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.delete-sign:hover {
+    background-color: rgb(180, 0, 0);
+}
+
+.saldo{
+    padding-left: 35px;
+    color: black;
+    font-size: 20px;
+    display: inline-block;
+    width: 25%;
+}
+
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+@media only screen and (max-width: 1050px){
+    .cesta-col-1{
+        font-size: 18px;
+    }
+    .cesta-col-2{
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 760px){
+    .cesta-col-1{
+        display: none;
+    }
+}

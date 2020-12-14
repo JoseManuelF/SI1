@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<!-- Código html de la página principal y del formulario de iniciar sesión -->
+<html lang="es">
+    <head>
+        <title>Filmbrary</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/homeTemplate.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/loginTemplate.css') }}" />
+    </head>
+    
+    <body {% if login %} onload="loginWindow()" {% endif %}>
+        <div class="nav">
+            <div class="sidebarOpenButton toTheLeft vitalSpace" onclick="menuButton()">
+                <img class = "menuIcon" src = "{{ url_for('static', filename='media/icons/threeDots.png') }}" alt="Menú">
+            </div>
+            <a href="{{ url_for('home') }}">
+                <h1 class="toTheCenter vitalSpace col-3">Filmbrary</h1>
+            </a>
+            <div class="searchBar col-2">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input type="text" placeholder="Buscar..." name="search">
+                    <button type="submit">
+                        <img class = "menuIcon" src= "{{ url_for('static', filename='media/icons/Search.png') }}" alt="Búsqueda">
+                    </button>
+                </form>
+            </div>
+            <div class="login">
+                {% if not session['usuario'] %}
+                <button id="profile" onclick="loginWindow()">Iniciar sesión</button>
+                {% else %}
+                <a href= "{{ url_for('profile') }}">
+                    <button>{{ session['usuario'] }}</button>
+                </a>
+                {% endif %}
+                <img class="profileButton col-4" src = "{{ url_for('static', filename='media/icons/Login.png') }}" alt="Perfil">
+            </div>
+        </div>
+          
+        <div class="row">
+            <!-- Contenido con las películas -->
+            <div class="content">
+                {% block content %}
+                {% for item in movies %}
+                <div class="content-margin cont-col-1">
+                    <div class="content-display">
+                        <div class="content-title">
+                            {% if item.id in topVentas.keys() %}
+                                BEST SELLER of {{topVentas[item.id]}}: {{item.titulo}} ({{ item.ano }})
+                            {% else %}
+                                {{ item.titulo }} ({{ item.ano }})
+                            {% endif %}
+                        </div>
+                        <a href="{{ url_for('movie', id=item.id) }}">
+                            <img class="content-image"
+                                {% if item.poster %}
+                                src="{{ item.poster }}"
+                                {% else %}
+                                src="{{ url_for('static', filename='media/movies/NoPoster.jpg') }}"
+                                {% endif %}
+                                alt="{{ item.titulo }}">
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endblock %}
+            </div>
+
+            <!-- Menu lateral -->
+            <div class="sidebar" id="menu">
+                <div class="sidebarOptionButton">
+                    <a href = "{{ url_for('cesta') }}">
+                        <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/ShoppingCart1.png') }}" alt="Cesta">
+                    </a>
+                    <a href = "{{ url_for('cesta') }}" class="sidebarOptionText col-1">
+                        Cesta
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a href = "{{ url_for('movieOfTheDay') }}">
+                        <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/Ticket.png') }}" alt="Película del día">
+                    </a>
+                    <a href = "{{ url_for('movieOfTheDay') }}" class="sidebarOptionText col-1">
+                        Película del día
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a href = "{{ url_for('topUsa') }}">
+                        <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/Award.png') }}" alt="Top USA">
+                    </a>
+                    <a href = "{{ url_for('topUsa') }}" class="sidebarOptionText col-1">
+                        Top USA
+                    </a>
+                </div>
+                <div class="sidebarOptionButton">
+                    <a onclick="categoriesButton()">
+                        <img id="desplegable" class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/Desplegable.png') }}" alt="Categorías">
+                    </a>
+                    <a onclick="categoriesButton()" class="sidebarOptionText col-1">
+                        Categorías
+                    </a>
+                </div>
+                <div id="category" class="hidden vitalSpace categoryListSidebar">
+                    <div class="sidebarOptionButton">
+                        <a href = "{{ url_for('home') }}">
+                            <img class="sidebarOptionIcon col-5" src = "{{ url_for('static', filename='media/icons/AllCategories.png') }}" alt="Todas las categorías">
+                        </a>
+                        <a href = "{{ url_for('home') }}" class="sidebarOptionText col-1">
+                            Todas
+                        </a>
+                    </div>
+
+                    {% for category in categories %}
+                    <div class="sidebarOptionButton">
+                        <a href = "{{ url_for('home', category=category.genre) }}">
+                            <img class="sidebarOptionIcon col-5"
+                                {% if category.icon %}
+                                src="{{ category.icon }}"
+                                {% else %}
+                                src="{{ url_for('static', filename='media/icons/NoIcon.png') }}"
+                                {% endif %}
+                                alt="{{ category.genre }}">
+                        </a>
+                        <a href = "{{ url_for('home', category=category.genre) }}" class="sidebarOptionText col-1">
+                            {{ category.genre }}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer information -->
+        <div class="footer">
+            © Copyright Filmbrary.com | J.M Freire - Miguel Herrera
+        </div>
+
+        <!-- Login formulario -->
+        <div id="loginForm" class="modal">
+            <form class="modal-content" action="{{ url_for('login') }}" method="post">
+                <div class="imgcontainer">
+                    <span class="close" onclick="loginWindow()" title="Close Window">&times;</span>
+                    <img src="{{ url_for('static', filename='media/icons/Login.png') }}" alt="Avatar" class="avatar">
+                </div>
+            
+                <div class="container">
+                    <label for="uname"><b>Nombre de Usuario</b></label>
+                    <input type="text" placeholder="Escribir Nombre de Usuario" name="uname" required>
+            
+                    <label for="psw"><b>Contraseña</b></label>
+                    <input type="password" placeholder="Escribir Contraseña" name="psw" required>
+                    
+                    <button type="submit">Iniciar sesión</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember"> Recuérdame
+                    </label>
+                </div>
+
+                {% if login_error %}
+                <div class="login_error">  
+                    <span class="login_mess">
+                        {{ login_error }}
+                    </span>
+                </div>
+                {% endif %}
+            
+                <div class="container">
+                    <span class="gotoRegister">
+                        Compra de forma segura y a un click totalmente gratis.
+                        <a href="{{ url_for('register') }}">¡Hazte una cuenta!</a>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+    </body>
+
+</html>

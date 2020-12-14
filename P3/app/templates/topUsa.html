@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+{% extends "home.html" %}
+
+<!-- Código html de las 800 películas estadounidenses más actuales en mongodb -->
+{% block content %}
+<html lang="es">
+    <head>
+        <title>Filmbrary - Top USA</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/topUsaTemplate.css') }}" />
+    </head>
+
+    <body>
+        <div>
+            Películas que son comedias del año 1997 y que contienen la palabra "Life" en el título
+        </div>
+        <table>
+            <tr>
+                <th>Película</th>
+                <th>Géneros</th>
+                <th>Año</th>
+                <th>Directores</th>
+                <th>Actores</th>
+                <th>Películas más relacionadas</th>
+                <th>Películas relacionadas</th>
+            </tr>
+            
+            {% for movie in table1 %}
+            <tr>
+                <td>{{ movie.title }}</th>
+                
+                <td>
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                {% endfor %}
+                </th>
+
+                <td>{{ movie.year }}</th>
+                <td>{{ movie.directors }}</th>
+                <td>{{ movie.actors }}</th>
+                <td>{{ movie.most_related_movies }}</th>
+                <td>{{ movie.related_movies }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div>
+            Películas que han sido dirigidas por Woody Allen en los años 90
+        </div>
+        <table>
+            <tr>
+                <th>Película</th>
+                <th>Géneros</th>
+                <th>Año</th>
+                <th>Directores</th>
+                <th>Actores</th>
+                <th>Películas más relacionadas</th>
+                <th>Películas relacionadas</th>
+            </tr>
+            
+            {% for movie in table2 %}
+            <tr>
+                <td>{{ movie.title }}</th>
+
+                <td>
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                {% endfor %}
+                </th>
+                
+                <td>{{ movie.year }}</th>
+                <td>{{ movie.directors }}</th>
+                <td>{{ movie.actors }}</th>
+                <td>{{ movie.most_related_movies }}</th>
+                <td>{{ movie.related_movies }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div>
+            Películas en las que Jim Parsons y Johnny Galecki han compartido reparto
+        </div>
+        <table>
+            <tr>
+                <th>Película</th>
+                <th>Géneros</th>
+                <th>Año</th>
+                <th>Directores</th>
+                <th>Actores</th>
+                <th>Películas más relacionadas</th>
+                <th>Películas relacionadas</th>
+            </tr>
+            
+            {% for movie in table3 %}
+            <tr>
+                <td>{{ movie.title }}</th>
+
+                <td>
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                {% endfor %}
+                </th>
+
+                <td>{{ movie.year }}</th>
+                <td>{{ movie.directors }}</th>
+                <td>{{ movie.actors }}</th>
+                <td>{{ movie.most_related_movies }}</th>
+                <td>{{ movie.related_movies }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+
+</html>
+{% endblock %}

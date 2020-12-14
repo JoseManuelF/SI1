@@ -1,0 +1,72 @@
+/* CSS de la ventana de perfil */
+
+.buttonPadding{
+    width: 100%;
+    padding-bottom: 40px;
+}
+
+.username{
+    padding-right: 35px;
+    font-size: 30px;
+    display: inline-block;
+    color: black;
+}
+
+.actionButton {
+    width: 20%;
+    border-style: solid;
+    height: 35px;
+    border-color: rgb(26, 25, 25);
+    background-color: #208f61fa;
+    cursor: pointer;
+    text-align: center;
+    font-size: 22px;
+    display: inline-block;
+    color: black;
+}
+
+.actionButton:hover {
+    background: #3a9c73;
+}
+
+.saldo {
+    padding-bottom: 20px;
+    font-size: 18px;
+    display: inline-block;
+}
+
+.increaseSaldo {
+    width: 70%;
+    float: right;
+}
+
+.increaseSaldo input[type=text] {
+    width: 20%;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+/* Para ajustar los elementos a la pantalla dependiendo de su tamaño */
+@media only screen and (max-width: 1050px){
+    .profile-col-1{
+        font-size: 18px;
+        width: 40%;
+    }
+    .profile-col-2{
+        width: 100%;
+    }
+}

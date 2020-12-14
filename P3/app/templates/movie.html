@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% extends "home.html" %}
+
+<!-- Código html de la información de la película -->
+{% block content %}
+<html lang="es">
+    <head>
+        <title>Filmbrary - Película</title>
+        <meta charset="UTF-8">
+        <link rel="icon" href="{{ url_for('static', filename='media/icons/favicon.ico') }}" type="image/x-icon"> <!-- Para mostrar el icono de la página en el navegador -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/movieTemplate.css') }}" />
+    </head>
+    
+    <body>
+        <div class="movieBody">
+            <!-- Foto, titulo, precio, ano... -->
+            <div>
+                <img class="previewImg"
+                    {% if movie.preview %}
+                    src = "{{ movie.preview }}"
+                    {% else %}
+                    src = "{{ url_for('static', filename='media/previews/NoPreview.jpg') }}"
+                    {% endif %}
+                    alt="Escena de película">
+            
+                <div class="title movie-col-1">
+                    <div class="floatLeft"> {{ movie.titulo }} ({{ movie.ano }})</div>
+                    <div class="price floatRight movie-col-3">
+                        {{ movie.precio }} €
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones para añadir al carrito y comprar -->
+            <div class="actionDisplay">
+                
+                <a href="{{ url_for('cesta', add=movie.id) }}">
+                    <button class = "actionButton buyButton movie-col-2" type="submit">
+                        <img class = "addCartButton" src= "{{ url_for('static', filename='media/icons/AddShoppingCart.png') }}" alt="Añadir a la cesta">
+                        {% if added > 0 %}
+                        ({{ added }})
+                        {% endif %}
+                    </button>
+                </a>
+
+                <a href="{{ url_for('buy_direct', id=movie.id) }}">
+                    <button class = "actionButton buyButton movie-col-1 movie-col-2" type="submit">
+                        Comprar Ahora
+                    </button>
+                </a>
+            </div>
+
+            <!-- Sinopsis, reparto y otros textos. -->
+            <div class="movieText">
+                <t class="movie-col-1">Sinopsis:</t>
+                <p>{{ movie.sinopsis }}</p>
+                </br>
+                <t class="movie-col-1">Puntuación:</t>
+                <p>
+                    {{ movie.puntuacion }} / 10 </br>
+                </p>
+            </div>
+        </div>
+    </body>
+    
+</html>
+{% endblock %}
