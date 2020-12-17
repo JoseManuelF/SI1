@@ -65,6 +65,10 @@ try:
         for actorname in db_movieActors[:10]:
             movieActors.append(actorname[0])
 
+        # Limitamos el número de actores que participan en la película
+        if (len(movieActors) == 10):
+            movieActors.append("Y más...")
+
         # Obtenemos hasta las 10 películas más actuales y más relacionadas (100%)
         mostRelatedIds = []
         # Obtenemos hasta las 10 películas más actuales y relacionadas al 50%

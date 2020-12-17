@@ -1,5 +1,12 @@
 /* CSS de la ventana de perfil */
 
+.table_title {
+    padding-bottom: 50px;
+    padding-top: 50px;
+    font-size: 27px;
+    font-family: 'Sansita Swashed', cursive;
+}
+
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;

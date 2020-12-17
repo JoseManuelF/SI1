@@ -13,7 +13,7 @@
     </head>
 
     <body>
-        <div>
+        <div class="table_title">
             Películas que son comedias del año 1997 y que contienen la palabra "Life" en el título
         </div>
         <table>
@@ -33,39 +33,41 @@
                 
                 <td>
                 {% for genre in movie.genres %}
-                    {{ genre }}
+                    {{ genre }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>{{ movie.year }}</th>
                 <td>
                 {% for director in movie.directors %}
-                    {{ director }}
+                    {{ director }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for actor in movie.actors %}
-                    {{ actor }}
+                    {{ actor }} <br/> 
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for most_related_movie in movie.most_related_movies %}
-                    {{ most_related_movie }}
+                    {{ most_related_movie.year }},
+                    {{ most_related_movie.title }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for related_movie in movie.related_movies %}
-                    {{ related_movie }}
+                    {{ related_movie.year }},
+                    {{ related_movie.title }} <br/>
                 {% endfor %}
                 </th>
             </tr>
             {% endfor %}
         </table>
 
-        <div>
+        <div class="table_title">
             Películas que han sido dirigidas por Woody Allen en los años 90
         </div>
         <table>
@@ -85,39 +87,41 @@
                 
                 <td>
                 {% for genre in movie.genres %}
-                    {{ genre }}
+                    {{ genre }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>{{ movie.year }}</th>
                 <td>
                 {% for director in movie.directors %}
-                    {{ director }}
+                    {{ director }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for actor in movie.actors %}
-                    {{ actor }}
+                    {{ actor }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for most_related_movie in movie.most_related_movies %}
-                    {{ most_related_movie }}
+                    {{ most_related_movie.year }},
+                    {{ most_related_movie.title }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for related_movie in movie.related_movies %}
-                    {{ related_movie }}
+                    {{ related_movie.year }},
+                    {{ related_movie.title }} <br/>
                 {% endfor %}
                 </th>
             </tr>
             {% endfor %}
         </table>
 
-        <div>
+        <div class="table_title">
             Películas en las que Jim Parsons y Johnny Galecki han compartido reparto
         </div>
         <table>
@@ -137,32 +141,34 @@
                 
                 <td>
                 {% for genre in movie.genres %}
-                    {{ genre }}
+                    {{ genre }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>{{ movie.year }}</th>
                 <td>
                 {% for director in movie.directors %}
-                    {{ director }}
+                    {{ director }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for actor in movie.actors %}
-                    {{ actor }}
+                    {{ actor }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for most_related_movie in movie.most_related_movies %}
-                    {{ most_related_movie }}
+                    {{ most_related_movie.year }},
+                    {{ most_related_movie.title }} <br/>
                 {% endfor %}
                 </th>
 
                 <td>
                 {% for related_movie in movie.related_movies %}
-                    {{ related_movie }}
+                    {{ related_movie.year }},
+                    {{ related_movie.title }} <br/>
                 {% endfor %}
                 </th>
             </tr>
