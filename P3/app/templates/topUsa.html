@@ -38,10 +38,29 @@
                 </th>
 
                 <td>{{ movie.year }}</th>
-                <td>{{ movie.directors }}</th>
-                <td>{{ movie.actors }}</th>
-                <td>{{ movie.most_related_movies }}</th>
-                <td>{{ movie.related_movies }}</th>
+                <td>
+                {% for director in movie.directors %}
+                    {{ director }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for actor in movie.actors %}
+                    {{ actor }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for most_related_movie in movie.most_related_movies %}
+                    {{ most_related_movie }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for related_movie in movie.related_movies %}
+                    {{ related_movie }}
+                {% endfor %}
+                </th>
             </tr>
             {% endfor %}
         </table>
@@ -63,18 +82,37 @@
             {% for movie in table2 %}
             <tr>
                 <td>{{ movie.title }}</th>
-
+                
                 <td>
                 {% for genre in movie.genres %}
                     {{ genre }}
                 {% endfor %}
                 </th>
-                
+
                 <td>{{ movie.year }}</th>
-                <td>{{ movie.directors }}</th>
-                <td>{{ movie.actors }}</th>
-                <td>{{ movie.most_related_movies }}</th>
-                <td>{{ movie.related_movies }}</th>
+                <td>
+                {% for director in movie.directors %}
+                    {{ director }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for actor in movie.actors %}
+                    {{ actor }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for most_related_movie in movie.most_related_movies %}
+                    {{ most_related_movie }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for related_movie in movie.related_movies %}
+                    {{ related_movie }}
+                {% endfor %}
+                </th>
             </tr>
             {% endfor %}
         </table>
@@ -96,7 +134,7 @@
             {% for movie in table3 %}
             <tr>
                 <td>{{ movie.title }}</th>
-
+                
                 <td>
                 {% for genre in movie.genres %}
                     {{ genre }}
@@ -104,10 +142,29 @@
                 </th>
 
                 <td>{{ movie.year }}</th>
-                <td>{{ movie.directors }}</th>
-                <td>{{ movie.actors }}</th>
-                <td>{{ movie.most_related_movies }}</th>
-                <td>{{ movie.related_movies }}</th>
+                <td>
+                {% for director in movie.directors %}
+                    {{ director }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for actor in movie.actors %}
+                    {{ actor }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for most_related_movie in movie.most_related_movies %}
+                    {{ most_related_movie }}
+                {% endfor %}
+                </th>
+
+                <td>
+                {% for related_movie in movie.related_movies %}
+                    {{ related_movie }}
+                {% endfor %}
+                </th>
             </tr>
             {% endfor %}
         </table>

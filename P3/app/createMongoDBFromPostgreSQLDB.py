@@ -62,7 +62,7 @@ try:
                                                where movieid = '" + str(movieId) + "' and\
                                                imdb_actormovies.actorid = imdb_actors.actorid"))
         movieActors = []
-        for actorname in db_movieActors:
+        for actorname in db_movieActors[:10]:
             movieActors.append(actorname[0])
 
         # Obtenemos hasta las 10 películas más actuales y más relacionadas (100%)
