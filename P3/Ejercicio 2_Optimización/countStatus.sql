@@ -16,4 +16,4 @@ explain analyze select count(*)
 from orders
 where status ='Processed';
 
-DROP INDEX myIndex
+DROP INDEX myIndex;
