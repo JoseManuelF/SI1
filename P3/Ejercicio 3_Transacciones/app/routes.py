@@ -10,18 +10,18 @@ import time
 
 @app.route('/borraCliente', methods=['POST','GET'])
 def borraCliente():
-    if 'customerid' in request.form:
-        customerid = request.form["customerid"]
-        bSQL       = request.form["txnSQL"]
-        bCommit = "bCommit" in request.form
-        bFallo  = "bFallo"  in request.form
-        duerme  = request.form["duerme"]
+    if 'customerid' in request.values:
+        customerid = request.values["customerid"]
+        bSQL       = request.values["txnSQL"]
+        bCommit = "bCommit" in request.values
+        bFallo  = "bFallo"  in request.values
+        duerme  = request.values["duerme"]
         dbr = database.delCustomer(customerid, bFallo, bSQL=='1', int(duerme), bCommit)
         return render_template('borraCliente.html', dbr=dbr)
     else:
         return render_template('borraCliente.html')
 
-    
+
 @app.route('/listaClientesMes', methods=['GET', 'POST'])
 def listaClientesMes():
     if 'fecha' in request.form:
