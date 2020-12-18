@@ -8,6 +8,7 @@ import os
 import sys
 import time
 
+@app.route('/', methods=['POST','GET'])
 @app.route('/borraCliente', methods=['POST','GET'])
 def borraCliente():
     if 'customerid' in request.values:

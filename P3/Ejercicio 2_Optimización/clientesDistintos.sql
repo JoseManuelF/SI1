@@ -1,26 +1,6 @@
-﻿--DROP INDEX myIndex;
---CREATE INDEX myIndex ON public.orders (orderdate);
---;
+﻿CREATE INDEX myIndex ON public.orders (orderdate);
 
-SELECT
-    tablename,
-    indexname,
-    indexdef
-FROM
-    pg_indexes
-WHERE
-    schemaname = 'public'
-ORDER BY
-    tablename,
-    indexname;
-
----------------------------------------------------------
-
-ALTER TABLE orders DROP CONSTRAINT orders_pkey CASCADE;
-
-----------------------------------------------------------
-
-SELECT
+EXPLAIN SELECT
 	COUNT(CustomerAmount.customerid)
 FROM
 	(
@@ -38,10 +18,4 @@ WHERE
 	CustomerAmount.amount >= 2
 ;
 
-------------------------------------------------------------
-
---DROP INDEX orders_pkey;
---CREATE UNIQUE INDEX orders_pkey ON public.orders USING btree (orderid);
-
---DROP INDEX myIndex;
---CREATE INDEX myIndex ON public.orders USING btree (totalamount);
+DROP INDEX myIndex;
